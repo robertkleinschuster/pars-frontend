@@ -44,6 +44,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $placeholder->setTranslator($translator);
 
         $menuFinder = new CmsMenuBeanFinder($adapter);
+        $menuFinder->setCmsMenuState_Code('active');
         $menuFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT');
 
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'menu', $menuFinder->getBeanListDecorator());
@@ -56,6 +57,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
             return $this->urlHelper->generate(null, ['code' => str_replace('/', '', $code)]);
         });
         $pageFinder = new CmsPageBeanFinder($adapter);
+        $pageFinder->setCmsPageState_Code('active');
         $pageFinder->setArticleTranslation_Code($code);
         if ($pageFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT') === 1) {
             $bean = $pageFinder->getBean();

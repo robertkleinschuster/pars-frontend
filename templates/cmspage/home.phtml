@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?=Locale::getPrimaryLanguage($bean->get('Locale_Code'))?>">
+<html lang="<?= Locale::getPrimaryLanguage($bean->get('Locale_Code')) ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,7 +37,16 @@
         a.nav-link:hover {
             color: #fff;
         }
+        a {
+            color:inherit;
+            text-decoration: none;
+        }
 
+        a:focus,
+        a:hover {
+            color:inherit;
+            text-decoration: underline;
+        }
 
         /*
          * Base structure
@@ -147,21 +156,31 @@
     </header>
 
     <main role="main" class="inner cover my-4">
-        <h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
-        <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
-        <?php if ($bean->isset('File_BeanList') &&  !$bean->get('File_BeanList')->isEmpty()): ?>
-            <?php
-            /**
-             * @var $file \Pars\Model\File\FileBean
-             */
-            $file = $bean->get('File_BeanList')->first();
-            ?>
-            <img class="img-fluid" src="/upload/<?=$file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code?>">
-        <?php endif; ?>
-        <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
-        <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
+        <?php if ($bean->isset('ArticleTranslation_Path')): ?>
+        <a href="<?= $bean->get('ArticleTranslation_Path') ?>">
+            <?php endif; ?>
+            <h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
+            <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
+            <?php if ($bean->isset('File_BeanList') && !$bean->get('File_BeanList')->isEmpty()): ?>
+                <?php
+                /**
+                 * @var $file \Pars\Model\File\FileBean
+                 */
+                $file = $bean->get('File_BeanList')->first();
+                ?>
+                <img class="img-fluid"
+                     src="/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
+            <?php endif; ?>
+            <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
+            <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
+            <?php if ($bean->isset('ArticleTranslation_Path')): ?>
+        </a>
+    <?php endif; ?>
         <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
             <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
+                <?php if ($paragraph->isset('ArticleTranslation_Path')): ?>
+                    <a href="<?= $paragraph->get('ArticleTranslation_Path') ?>">
+                <?php endif; ?>
                 <div class="card mb-4 text-body">
                     <?php if ($paragraph->isset('ArticleTranslation_Title') && !empty($paragraph->get('ArticleTranslation_Title'))): ?>
                         <h4 class="card-header">
@@ -184,18 +203,22 @@
                                 <?= $paragraph->isset('ArticleTranslation_Teaser') ? $placeholder->replace($paragraph->get('ArticleTranslation_Teaser')) : '' ?>
                             </p>
                         <?php endif; ?>
-                        <?php if ($paragraph->isset('File_BeanList') &&  !$paragraph->get('File_BeanList')->isEmpty()): ?>
-                        <?php
+                        <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
+                            <?php
                             /**
                              * @var $file \Pars\Model\File\FileBean
                              */
                             $file = $paragraph->get('File_BeanList')->first();
                             ?>
-                            <img class="img-fluid" src="/upload/<?=$file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code?>">
+                            <img class="img-fluid"
+                                 src="/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
                         <?php endif; ?>
                         <?= $paragraph->isset('ArticleTranslation_Text') && !empty($paragraph->get('ArticleTranslation_Text')) ? $placeholder->replace($paragraph->get('ArticleTranslation_Text')) : '' ?>
                     </div>
                 </div>
+                <?php if ($paragraph->isset('ArticleTranslation_Path')): ?>
+                    </a>
+                <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>
     </main>
