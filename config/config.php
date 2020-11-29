@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
-use Pars\Admin\ConfigProvider;
 
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
@@ -47,6 +46,7 @@ $aggregator = new ConfigAggregator([
     \Pars\Model\ConfigProvider::class,
     \Pars\Core\ConfigProvider::class,
     \Pars\Helper\ConfigProvider::class,
+    \Pars\Frontend\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):

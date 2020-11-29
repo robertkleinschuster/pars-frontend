@@ -2,9 +2,9 @@
 return [
     'db' => [
         'driver' => 'Pdo_Mysql',
-        'database' => {DB_NAME},
-        'username' => {DB_USER},
-        'password' => {DB_PASSWORD},
-        'hostname' => {DB_HOSTNAME},
+        'database' => 'DB_NAME',
+        'username' => 'DB_USER',
+        'password' => 'DB_PASSWORD',
+        'hostname' => 'DB_HOSTNAME',
     ],
 ];
