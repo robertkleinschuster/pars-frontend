@@ -3,9 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
+    <meta name="description" content="<?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?>">
     <title><?= $bean->get('ArticleTranslation_Title') ?></title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -145,7 +143,9 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="masthead mb-auto">
         <div class="inner">
-            <h3 class="masthead-brand"><?= $bean->get('ArticleTranslation_Title') ?></h3>
+            <a href="/">
+                <h3 class="masthead-brand"><?= $bean->get('ArticleTranslation_Title') ?></h3>
+            </a>
             <nav class="nav nav-masthead justify-content-center">
                 <?php foreach ($menu as $item): ?>
                     <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
@@ -159,8 +159,6 @@
         <?php if ($bean->isset('ArticleTranslation_Path')): ?>
         <a href="<?= $bean->get('ArticleTranslation_Path') ?>">
             <?php endif; ?>
-            <h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
-            <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
             <?php if ($bean->isset('File_BeanList') && !$bean->get('File_BeanList')->isEmpty()): ?>
                 <?php
                 /**
@@ -171,6 +169,8 @@
                 <img class="img-fluid"
                      src="<?=$static?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
             <?php endif; ?>
+            <h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
+            <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
             <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
             <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
             <?php if ($bean->isset('ArticleTranslation_Path')): ?>
