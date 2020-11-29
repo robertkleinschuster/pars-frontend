@@ -14,6 +14,7 @@ use Pars\Core\Localization\LocalizationMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
 use Pars\Model\Cms\Menu\CmsMenuBeanFinder;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
+use Pars\Model\Config\ConfigBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -46,9 +47,13 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $menuFinder = new CmsMenuBeanFinder($adapter);
         $menuFinder->setCmsMenuState_Code('active');
         $menuFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT');
+        $configFinder = new ConfigBeanFinder($adapter);
+        $configFinder->setConfig_Code('asset.domain');
+        $config = $configFinder->getBean();
 
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'menu', $menuFinder->getBeanListDecorator());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('Config_Value'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'placeholder', $placeholder);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'url', function ($code) {
             if (trim($code) == '/' || trim($code) == '') {

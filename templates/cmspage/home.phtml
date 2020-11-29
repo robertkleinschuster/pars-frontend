@@ -169,7 +169,7 @@
                 $file = $bean->get('File_BeanList')->first();
                 ?>
                 <img class="img-fluid"
-                     src="/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
+                     src="<?=$static?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
             <?php endif; ?>
             <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
             <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
@@ -211,7 +211,7 @@
                             $file = $paragraph->get('File_BeanList')->first();
                             ?>
                             <img class="img-fluid"
-                                 src="/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
+                                 src="<?=$static?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
                         <?php endif; ?>
                         <?= $paragraph->isset('ArticleTranslation_Text') && !empty($paragraph->get('ArticleTranslation_Text')) ? $placeholder->replace($paragraph->get('ArticleTranslation_Text')) : '' ?>
                     </div>
