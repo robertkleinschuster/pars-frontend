@@ -13,7 +13,7 @@ return [
                     'priority' => 1,
                     'options' => [
 
-                        'application' => 'backoffice',
+                        'application' => 'pars-frontend',
                         'facility' => LOG_LOCAL0,
                         'formatter' => [
                             'name' => Laminas\Log\Formatter\Simple::class,
