@@ -559,6 +559,55 @@
             }
         </style>
 
+
+        <div class="card mb-4 text-body text-left">
+            <div class="card-body" id="result">
+                <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
+                    <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
+                        <?php if ($paragraph->getArticle_Data()->exists('poll_value') && !$paragraph->getArticle_Data()->empty('poll_value')): ?>
+                            <div class="mb-2 row text-center">
+                                <div class="col-sm">
+                                    <?php if ($paragraph->isset('ArticleTranslation_Title') && !($paragraph->empty('ArticleTranslation_Title'))): ?>
+                                        <div class="font-weight-bold" style="font-size: 1.5rem">
+                                            <?= $paragraph->isset('ArticleTranslation_Title') ? $placeholder->replace($paragraph->get('ArticleTranslation_Title')) : '' ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($paragraph->isset('ArticleTranslation_Heading') && !($paragraph->empty('ArticleTranslation_Heading'))): ?>
+                                        <div class="font-weight-bold" style="font-size: 1.5rem">
+                                            <?= $paragraph->isset('ArticleTranslation_Heading') ? $placeholder->replace($paragraph->get('ArticleTranslation_Heading')) : '' ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
+                                        <?php
+                                        /**
+                                         * @var $file \Pars\Model\File\FileBean
+                                         */
+                                        $file = $paragraph->get('File_BeanList')->first();
+                                        ?>
+                                        <img class="img-fluid"
+                                             src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <div class="col-sm">
+                                    <div class="progress">
+                                        <div role="progressbar"
+                                             aria-valuenow=" <?= $paragraph->getArticle_Data()->get('poll_value') ?>"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"
+                                             style=" width: <?= $paragraph->getArticle_Data()->get('poll_value') ?>%;"
+                                             class="progress-bar progress-bar-striped bg-success"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+
+
         <div class="card mb-4 text-body">
             <div class="card-body">
                 <?php if (isset($voted) && $voted): ?>
@@ -649,52 +698,6 @@
             refresh();
         </script>
 
-        <div class="card mb-4 text-body text-left">
-            <div class="card-body" id="result">
-                <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
-                    <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
-                        <?php if ($paragraph->getArticle_Data()->exists('poll_value') && !$paragraph->getArticle_Data()->empty('poll_value')): ?>
-                            <div class="mb-2 row text-center">
-                                <div class="col-sm">
-                                    <?php if ($paragraph->isset('ArticleTranslation_Title') && !($paragraph->empty('ArticleTranslation_Title'))): ?>
-                                        <div class="font-weight-bold" style="font-size: 1.5rem">
-                                            <?= $paragraph->isset('ArticleTranslation_Title') ? $placeholder->replace($paragraph->get('ArticleTranslation_Title')) : '' ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if ($paragraph->isset('ArticleTranslation_Heading') && !($paragraph->empty('ArticleTranslation_Heading'))): ?>
-                                        <div class="font-weight-bold" style="font-size: 1.5rem">
-                                            <?= $paragraph->isset('ArticleTranslation_Heading') ? $placeholder->replace($paragraph->get('ArticleTranslation_Heading')) : '' ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
-                                        <?php
-                                        /**
-                                         * @var $file \Pars\Model\File\FileBean
-                                         */
-                                        $file = $paragraph->get('File_BeanList')->first();
-                                        ?>
-                                        <img class="img-fluid"
-                                             src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <div class="mb-2 row">
-                                <div class="col-sm">
-                                    <div class="progress">
-                                        <div role="progressbar"
-                                             aria-valuenow=" <?= $paragraph->getArticle_Data()->get('poll_value') ?>"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"
-                                             style=" width: <?= $paragraph->getArticle_Data()->get('poll_value') ?>%;"
-                                             class="progress-bar progress-bar-striped bg-success"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-        </div>
 
 
     </main>
