@@ -6,6 +6,8 @@ namespace Pars\Frontend;
 
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Helper\UrlHelper;
+use Mezzio\Session\SessionInterface;
+use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
 use Minifier\TinyMinify;
 
@@ -40,6 +42,10 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $adapter = $request->getAttribute(\Pars\Core\Database\DatabaseMiddleware::ADAPTER_ATTRIBUTE);
         $locale = $request->getAttribute(LocaleInterface::class);
         $translator = $request->getAttribute(TranslatorMiddleware::TRANSLATOR_ATTRIBUTE);
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+        if ($session instanceof SessionInterface) {
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'voted', $session->get('voted'));
+        }
         $code = $request->getAttribute('code', '/');
         $placeholder = new CmsPlaceholder($locale->getLocale_Code());
         $placeholder->setTranslator($translator);

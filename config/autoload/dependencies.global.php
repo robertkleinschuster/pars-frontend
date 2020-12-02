@@ -27,8 +27,8 @@ return [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
             Pars\Frontend\Application::class => Pars\Frontend\ApplicationFactory::class,
             Pars\Frontend\ApplicationContainer::class => Pars\Frontend\ApplicationContainerFactory::class,
-            Pars\Frontend\CmsHandler::class => Pars\Frontend\CmsHandlerFactory::class
-
+            Pars\Frontend\CmsHandler::class => Pars\Frontend\CmsHandlerFactory::class,
+            Pars\Frontend\FormMiddelware::class => Pars\Frontend\FormMiddelware::class,
         ],
     ],
 ];
