@@ -5,11 +5,15 @@ namespace Pars\Frontend;
 
 
 use Laminas\Db\Adapter\Adapter;
+use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
+use Mezzio\Template\TemplateRendererInterface;
+use Minifier\TinyMinify;
 use Pars\Core\Database\DatabaseMiddleware;
 use Pars\Core\Localization\LocaleInterface;
+use Pars\Model\Cms\Page\CmsPageBeanFinder;
 use Pars\Model\Cms\Paragraph\CmsParagraphBean;
 use Pars\Model\Cms\Paragraph\CmsParagraphBeanFinder;
 use Pars\Model\Cms\Paragraph\CmsParagraphBeanProcessor;
@@ -39,11 +43,6 @@ class FormMiddelware implements MiddlewareInterface
             $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
             if ($adapter instanceof Adapter && $locale instanceof LocaleInterface) {
                 if (isset($request->getParsedBody()['poll'])) {
-                    if ($session instanceof SessionInterface) {
-                        if ($session->get('voted')) {
-                            return new RedirectResponse($request->getUri());
-                        }
-                    }
                     $poll = $request->getParsedBody()['poll'];
                     $paragraphFinder = new CmsParagraphBeanFinder($adapter);
                     $paragraphFinder->setArticle_Code($poll);
@@ -61,8 +60,17 @@ class FormMiddelware implements MiddlewareInterface
                             $beanList->push($bean);
                             $paragraphProcessor->setBeanList($beanList);
                             $paragraphProcessor->save();
-                            if ($session instanceof SessionInterface) {
-                                #$session->set('voted', true);
+                            $code = $request->getAttribute('code', '/');
+                            $pageFinder = new CmsPageBeanFinder($adapter);
+                            $pageFinder->setCmsPageState_Code('active');
+                            $pageFinder->setArticleTranslation_Code($code);
+                            if ($pageFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT') === 1) {
+                                $bean = $pageFinder->getBean();
+                                if ($bean->getArticle_Data()->exists('vote_once')
+                                    && $bean->getArticle_Data()->get('vote_once') == 'true'
+                                ) {
+                                    $session->set('voted'. $bean->get('Article_Code'), true);
+                                }
                             }
                             return new RedirectResponse($request->getUri());
                         }

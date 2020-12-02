@@ -43,9 +43,6 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $locale = $request->getAttribute(LocaleInterface::class);
         $translator = $request->getAttribute(TranslatorMiddleware::TRANSLATOR_ATTRIBUTE);
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-        if ($session instanceof SessionInterface) {
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'voted', $session->get('voted'));
-        }
         $code = $request->getAttribute('code', '/');
         $placeholder = new CmsPlaceholder($locale->getLocale_Code());
         $placeholder->setTranslator($translator);
@@ -72,6 +69,9 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $pageFinder->setArticleTranslation_Code($code);
         if ($pageFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT') === 1) {
             $bean = $pageFinder->getBean();
+                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'voted', $session->get('voted'
+                .$bean->get('Article_Code')));
+
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'bean', $bean);
             return new HtmlResponse(TinyMinify::html($this->renderer->render($bean->get('CmsPageType_Template'))));
         }
