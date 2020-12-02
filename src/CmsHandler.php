@@ -5,6 +5,7 @@ namespace Pars\Frontend;
 
 
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Helper\UrlHelper;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
@@ -69,6 +70,17 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $pageFinder->setArticleTranslation_Code($code);
         if ($pageFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT') === 1) {
             $bean = $pageFinder->getBean();
+            if (!$bean->empty('CmsPage_ID_Redirect')) {
+                $pageFinder = new CmsPageBeanFinder($adapter);
+                $pageFinder->setCmsPage_ID($bean->get('CmsPage_ID_Redirect'));
+                if ($pageFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT') === 1) {
+                    $redirectCode = $pageFinder->getBean()->get('ArticleTranslation_Code');
+                    if ($redirectCode == '/') {
+                       return new RedirectResponse($this->urlHelper->generate('cms', ['code' => null]));
+                    }
+                    return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
+                }
+            }
                 $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'voted', $session->get('voted'
                 .$bean->get('Article_Code')));
 
