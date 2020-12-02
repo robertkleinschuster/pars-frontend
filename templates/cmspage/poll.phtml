@@ -519,7 +519,7 @@
         </div>
     </header>
 
-    <main role="main" class="inner cover my-4">
+    <main role="main" class="inner cover my-4" id="main">
         <?php if ($bean->isset('ArticleTranslation_Path')): ?>
         <a href="<?= $bean->get('ArticleTranslation_Path') ?>">
             <?php endif; ?>
@@ -534,37 +534,56 @@
                      src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
             <?php endif; ?>
             <h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
-            <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
             <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
             <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
             <?php if ($bean->isset('ArticleTranslation_Path')): ?>
         </a>
     <?php endif; ?>
-        <div class="card mb-4 text-body text-left">
+
+        <style>
+            .custom-control {
+                padding-left: 0;
+            }
+
+            .custom-control-input:checked ~ .custom-control-label {
+                border-color: #6a6a6a !important;
+                background: #e3e3e3;
+            }
+
+            .custom-control-label::before {
+                display: none;
+            }
+
+            .custom-control-label::after {
+                display: none;
+            }
+        </style>
+
+        <div class="card mb-4 text-body">
             <div class="card-body">
                 <?php if (isset($voted) && $voted): ?>
+                    <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
                 <?php else: ?>
                     <form method="post">
                         <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
                             <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
                                 <div class="form-group">
                                     <div class="custom-control custom-radio">
-
-                                        <input class="custom-control-input" type="radio" name='poll'
+                                        <input class="custom-control-input js-radio " type="radio" name='poll'
                                                value="<?= $paragraph->get('Article_Code') ?>"
                                                id="<?= $paragraph->get('Article_Code') ?>">
 
-                                        <label class="custom-control-label"
+                                        <label class="custom-control-label border border-light rounded px-1 py-1"
                                                for="<?= $paragraph->get('Article_Code') ?>">
                                             <?php if ($paragraph->isset('ArticleTranslation_Title') && !empty($paragraph->get('ArticleTranslation_Title'))): ?>
-                                                <h4>
+                                                <div class="font-weight-bold" style="font-size: 1.5rem">
                                                     <?= $paragraph->isset('ArticleTranslation_Title') ? $placeholder->replace($paragraph->get('ArticleTranslation_Title')) : '' ?>
-                                                </h4>
+                                                </div>
                                             <?php endif; ?>
                                             <?php if ($paragraph->isset('ArticleTranslation_Heading') && !empty($paragraph->get('ArticleTranslation_Heading'))): ?>
-                                                <h5 class="card-title">
+                                                <div class="font-weight-bold" style="font-size: 1.5rem">
                                                     <?= $paragraph->isset('ArticleTranslation_Heading') ? $placeholder->replace($paragraph->get('ArticleTranslation_Heading')) : '' ?>
-                                                </h5>
+                                                </div>
                                             <?php endif; ?>
                                             <?php if ($paragraph->isset('ArticleTranslation_SubHeading') && !empty($paragraph->get('ArticleTranslation_SubHeading'))): ?>
                                                 <p class="card-text">
@@ -597,6 +616,87 @@
                 <?php endif; ?>
             </div>
         </div>
+
+
+        <script>
+            function refresh() {
+                var radios = document.getElementsByClassName('js-radio');
+                var checked = false;
+                for (var i = 0; i < radios.length; i++) {
+                    radio = radios.item(i);
+                    if (radio.checked) {
+                        checked = true;
+                    }
+                }
+                setTimeout(refresh, 1000);
+                if (!checked) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', window.location);
+                    var left = 0;
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            var doc = new DOMParser().parseFromString(xhr.responseText, "text/html")
+                            if (doc.getElementById('result').innerHTML !==  document.getElementById('result').innerHTML) {
+                                document.getElementById('result').replaceWith(doc.getElementById('result'));
+
+                            }
+                         }
+                    };
+                    xhr.send();
+                }
+            }
+
+            refresh();
+        </script>
+
+        <div class="card mb-4 text-body text-left">
+            <div class="card-body" id="result">
+                <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
+                    <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
+                        <?php if ($paragraph->getArticle_Data()->exists('poll_value') && !$paragraph->getArticle_Data()->empty('poll_value')): ?>
+                            <div class="mb-2 row text-center">
+                                <div class="col-sm">
+                                    <?php if ($paragraph->isset('ArticleTranslation_Title') && !($paragraph->empty('ArticleTranslation_Title'))): ?>
+                                        <div class="font-weight-bold" style="font-size: 1.5rem">
+                                            <?= $paragraph->isset('ArticleTranslation_Title') ? $placeholder->replace($paragraph->get('ArticleTranslation_Title')) : '' ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($paragraph->isset('ArticleTranslation_Heading') && !($paragraph->empty('ArticleTranslation_Heading'))): ?>
+                                        <div class="font-weight-bold" style="font-size: 1.5rem">
+                                            <?= $paragraph->isset('ArticleTranslation_Heading') ? $placeholder->replace($paragraph->get('ArticleTranslation_Heading')) : '' ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
+                                        <?php
+                                        /**
+                                         * @var $file \Pars\Model\File\FileBean
+                                         */
+                                        $file = $paragraph->get('File_BeanList')->first();
+                                        ?>
+                                        <img class="img-fluid"
+                                             src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="mb-2 row">
+                                <div class="col-sm">
+                                    <div class="progress">
+                                        <div role="progressbar"
+                                             aria-valuenow=" <?= $paragraph->getArticle_Data()->get('poll_value') ?>"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100"
+                                             style=" width: <?= $paragraph->getArticle_Data()->get('poll_value') ?>%;"
+                                             class="progress-bar progress-bar-striped bg-success"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+
+
     </main>
 
     <footer class="mastfoot mt-auto">

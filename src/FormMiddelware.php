@@ -62,7 +62,7 @@ class FormMiddelware implements MiddlewareInterface
                             $paragraphProcessor->setBeanList($beanList);
                             $paragraphProcessor->save();
                             if ($session instanceof SessionInterface) {
-                              #  $session->set('voted', true);
+                                #$session->set('voted', true);
                             }
                             return new RedirectResponse($request->getUri());
                         }
