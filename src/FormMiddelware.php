@@ -65,7 +65,12 @@ class FormMiddelware implements MiddlewareInterface
                                 $bean->getArticle_Data()->set('poll_names', $name);
                             } else {
                                 $names = $bean->getArticle_Data()->get('poll_names');
-                                $bean->getArticle_Data()->set('poll_names', $names . ', ' . $name);
+                                if (!empty($names)) {
+                                    $names=  $names . ', ' . $name;
+                                } else {
+                                    $names = $name;
+                                }
+                                $bean->getArticle_Data()->set('poll_names', $names);
                             }
                             $paragraphProcessor = new CmsParagraphBeanProcessor($adapter);
                             $beanList = $paragraphFinder->getBeanFactory()->getEmptyBeanList();
