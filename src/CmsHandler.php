@@ -54,7 +54,11 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $configFinder = new ConfigBeanFinder($adapter);
         $configFinder->setConfig_Code('asset.domain');
         $config = $configFinder->getBean();
-
+        if ($session->has('poll_name')) {
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'name', $session->get('poll_name'));
+        } else {
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'name', '');
+        }
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'menu', $menuFinder->getBeanListDecorator());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('Config_Value'));

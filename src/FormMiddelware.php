@@ -44,6 +44,12 @@ class FormMiddelware implements MiddlewareInterface
             if ($adapter instanceof Adapter && $locale instanceof LocaleInterface) {
                 if (isset($request->getParsedBody()['poll'])) {
                     $poll = $request->getParsedBody()['poll'];
+                    if (isset($request->getParsedBody()['name'])) {
+                        $name = $request->getParsedBody()['name'];
+                    } else {
+                        $name = '';
+                    }
+                    $session->set('poll_name', $name);
                     $paragraphFinder = new CmsParagraphBeanFinder($adapter);
                     $paragraphFinder->setArticle_Code($poll);
                     if ($paragraphFinder->count() === 1) {
@@ -54,6 +60,12 @@ class FormMiddelware implements MiddlewareInterface
                             } else {
                                 $number = $bean->getArticle_Data()->get('poll');
                                 $bean->getArticle_Data()->set('poll', $number + 1);
+                            }
+                            if (!$bean->getArticle_Data()->exists('poll_names')) {
+                                $bean->getArticle_Data()->set('poll_names', $name);
+                            } else {
+                                $names = $bean->getArticle_Data()->get('poll_names');
+                                $bean->getArticle_Data()->set('poll_names', $names . ', ' . $name);
                             }
                             $paragraphProcessor = new CmsParagraphBeanProcessor($adapter);
                             $beanList = $paragraphFinder->getBeanFactory()->getEmptyBeanList();

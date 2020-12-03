@@ -609,11 +609,16 @@
 
 
         <div class="card mb-4 text-body">
-            <div class="card-body">
+
                 <?php if (isset($voted) && $voted): ?>
                     <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
                 <?php else: ?>
                     <form method="post">
+                        <div class="form-group card-header text-left">
+                            <label for="name">Name</label>
+                            <input class="form-control" type="text" name="name" id="name" value="<?=$name?>">
+                        </div>
+                        <div class="card-body">
                         <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
                             <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
                                 <div class="form-group">

@@ -37,7 +37,7 @@ return [
         // When TRUE the cookie will be made accessible only through the
         // HTTP protocol. This means that the cookie won't be accessible
         // by scripting languages, such as JavaScript.
-        'cookie_http_only' => true,
+        'cookie_http_only' => false,
 
         // Available since 1.4.0
         //
@@ -85,6 +85,6 @@ return [
         // session instance's `persistSessionFor(int $duration)` method. When
         // that method has been called, the engine will use that value even if
         // the below flag is toggled off.
-        'persistent' => true,
+        'persistent' => false,
     ],
 ];
