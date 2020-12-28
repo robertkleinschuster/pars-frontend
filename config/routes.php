@@ -37,5 +37,7 @@ use Psr\Container\ContainerInterface;
  * );
  */
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
+    $app->get(\Pars\Core\Bundles\BundlesHandler::getRoute(), \Pars\Core\Bundles\BundlesHandler::class, 'bundles');
+    $app->get(\Pars\Core\Assets\AssetsHandler::getRoute(), \Pars\Core\Assets\AssetsHandler::class, 'assets');
     $app->any('[/[{locale}[/[{code}[/]]]]]', \Pars\Frontend\CmsHandler::class, 'cms');
 };
