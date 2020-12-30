@@ -10,7 +10,6 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
-use Minifier\TinyMinify;
 use Pars\Core\Database\DatabaseMiddleware;
 use Pars\Core\Localization\LocaleInterface;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;

@@ -10,8 +10,6 @@ use Mezzio\Helper\UrlHelper;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
-use Minifier\TinyMinify;
-
 use Pars\Core\Localization\LocaleInterface;
 use Pars\Core\Localization\LocalizationMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
@@ -89,9 +87,9 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
                 .$bean->get('Article_Code')));
 
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'bean', $bean);
-            return new HtmlResponse(TinyMinify::html($this->renderer->render($bean->get('CmsPageType_Template'))));
+            return new HtmlResponse($this->renderer->render($bean->get('CmsPageType_Template')));
         }
-        return new HtmlResponse(TinyMinify::html($this->renderer->render('error::404')), 404);
+        return new HtmlResponse($this->renderer->render('error::404'), 404);
     }
 
 }
