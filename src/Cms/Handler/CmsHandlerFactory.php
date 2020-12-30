@@ -1,6 +1,6 @@
 <?php
 
-namespace Pars\Frontend;
+namespace Pars\Frontend\Cms\Handler;
 
 use Mezzio\Helper\UrlHelper;
 use Mezzio\Template\TemplateRendererInterface;

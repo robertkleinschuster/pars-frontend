@@ -1,18 +1,20 @@
 <?php
 
 
-namespace Pars\Frontend;
+namespace Pars\Frontend\Cms\Handler;
 
 
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Helper\UrlHelper;
-use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
 use Pars\Core\Localization\LocaleInterface;
-use Pars\Core\Localization\LocalizationMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
+use Pars\Frontend\Cms\Form\Base\AbstractForm;
+use Pars\Frontend\Cms\Helper\CmsPlaceholder;
+use Pars\Frontend\Cms\Helper\Config;
 use Pars\Model\Cms\Menu\CmsMenuBeanFinder;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
 use Pars\Model\Config\ConfigBeanFinder;
@@ -36,22 +38,23 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $this->renderer = $renderer;
         $this->urlHelper = $urlHelper;
     }
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $adapter = $request->getAttribute(\Pars\Core\Database\DatabaseMiddleware::ADAPTER_ATTRIBUTE);
         $locale = $request->getAttribute(LocaleInterface::class);
         $translator = $request->getAttribute(TranslatorMiddleware::TRANSLATOR_ATTRIBUTE);
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+        $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
         $code = $request->getAttribute('code', '/');
+        $config = new Config($adapter);
         $placeholder = new CmsPlaceholder($locale->getLocale_Code());
         $placeholder->setTranslator($translator);
 
         $menuFinder = new CmsMenuBeanFinder($adapter);
         $menuFinder->setCmsMenuState_Code('active');
+        $menuFinder->order(['CmsMenuType_Code']);
         $menuFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT');
-        $configFinder = new ConfigBeanFinder($adapter);
-        $configFinder->setConfig_Code('asset.domain');
-        $config = $configFinder->getBean();
         if ($session->has('poll_name')) {
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'name', $session->get('poll_name'));
         } else {
@@ -59,8 +62,10 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         }
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'menu', $menuFinder->getBeanListDecorator());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('Config_Value'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'brand', $config->get('frontend.brand'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('asset.domain'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'placeholder', $placeholder);
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'token', $guard->generateToken(AbstractForm::PARAMETER_TOKEN));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'url', function ($code) {
             if (trim($code) == '/' || trim($code) == '') {
                 return $this->urlHelper->generate(null, ['code' => null]);
@@ -87,7 +92,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
                 .$bean->get('Article_Code')));
 
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'bean', $bean);
-            return new HtmlResponse($this->renderer->render($bean->get('CmsPageType_Template')));
+            return new HtmlResponse($this->renderer->render('index::index'));
         }
         return new HtmlResponse($this->renderer->render('error::404'), 404);
     }

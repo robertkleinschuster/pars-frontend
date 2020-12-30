@@ -37,5 +37,5 @@ use Psr\Container\ContainerInterface;
  * );
  */
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
-    $app->any('[/[{locale}[/[{code}[/]]]]]', \Pars\Frontend\CmsHandler::class, 'cms');
+    $app->any('[/[{locale}[/[{code}[/]]]]]', \Pars\Frontend\Cms\Handler\CmsHandler::class, 'cms');
 };

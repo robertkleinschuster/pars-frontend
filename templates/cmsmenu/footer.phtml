@@ -1,4 +1,4 @@
-<nav class="nav nav-masthead justify-content-center">
+<nav class="nav nav-footer">
     <?php foreach ($menu as $item): ?>
         <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
            href="<?= $url($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>

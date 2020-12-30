@@ -23,6 +23,8 @@ return [
             'output' => 'frontend-bundle.css',
             'sources' => [
                 __DIR__ . '/../../bundles/css/bootstrap.min.css',
+                __DIR__ . '/../../bundles/css/globals.css',
+                __DIR__ . '/../../bundles/css/cms.css',
             ]
         ]
     ]

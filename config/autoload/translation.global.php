@@ -9,7 +9,7 @@ return [
         'remote_translation' => [
             [
                 'type' => \Laminas\I18n\Translator\Loader\RemoteLoaderInterface::class,
-                'text_domain' => 'default'
+                'text_domain' => 'frontend'
             ],
         ],
 

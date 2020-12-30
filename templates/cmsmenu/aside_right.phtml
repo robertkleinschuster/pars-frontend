@@ -1,0 +1,10 @@
+<?php if (count($menu)): ?>
+    <ul class="col-md-3 nav-aside order-3 order-md-3">
+        <?php foreach ($menu as $item): ?>
+            <li>
+                <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
+                   href="<?= $url($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

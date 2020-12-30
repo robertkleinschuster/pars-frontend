@@ -1,27 +1,48 @@
-<?php /** @var $this \League\Plates\Template\Template **/?>
+<?php /** @var $this \League\Plates\Template\Template * */ ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?= Locale::getPrimaryLanguage($bean->get('Locale_Code')) ?>">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title><?=$this->e($title)?></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="<?= $this->e($placeholder->replace($bean->get('ArticleTranslation_Teaser'))) ?>">
+    <title><?= $this->e($brand . ' - ' .$bean->get('ArticleTranslation_Title')) ?></title>
     <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/frontend-bundle.css"></noscript>
-    <style>
-        body { padding-top: 70px; }
-        .app { min-height: 100vh; }
-    </style>
-    <?=$this->section('stylesheets')?>
+    <noscript>
+        <link rel="stylesheet" href="/frontend-bundle.css">
+    </noscript>
+    <?= $this->section('stylesheets') ?>
 </head>
-<body class="app">
-    <div class="app-content">
-        <main class="container">
-            <?=$this->section('content')?>
+<body>
+<div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead">
+        <a href="<?= $url('/')?>">
+            <h3 class="masthead-brand"><?= $brand ?></h3>
+        </a>
+            <?= $this->menu($menu, 'header') ?>
+    </header>
+    <div class="row">
+        <?= $this->menu($menu, 'aside_left') ?>
+        <main role="main" class="col order-1 order-md-2">
+            <?= $this->section('content') ?>
+            <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
+                <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
+                    <?= $this->paragraph($paragraph)?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </main>
+        <?= $this->menu($menu, 'aside_right') ?>
     </div>
-    <script src="/script-insertion.js"></script>
-    <script class="script-insertion" data-src="/frontend-bundle.js"></script>
-    <?=$this->section('javascript')?>
+
+    <footer class="mastfoot mt-auto">
+        <?= $this->menu($menu, 'footer') ?>
+        <div class="footer-text">
+            <?= $placeholder->replace($bean->get('ArticleTranslation_Footer')) ?>
+        </div>
+    </footer>
+</div>
+<script src="/script-insertion.js"></script>
+<script class="script-insertion" data-src="/frontend-bundle.js"></script>
+<?= $this->section('javascript') ?>
 </body>
 </html>

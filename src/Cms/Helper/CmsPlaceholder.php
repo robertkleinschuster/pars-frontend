@@ -1,6 +1,6 @@
 <?php
 
-namespace Pars\Frontend;
+namespace Pars\Frontend\Cms\Helper;
 
 use Laminas\I18n\Translator\TranslatorAwareInterface;
 use Laminas\I18n\Translator\TranslatorAwareTrait;

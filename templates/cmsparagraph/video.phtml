@@ -1,0 +1,36 @@
+<?php if (!$bean->empty('ArticleTranslation_Path')): ?>
+    <a href="<?= $bean->get('ArticleTranslation_Path') ?>">
+<?php endif; ?>
+    <div class="card mb-4 text-body">
+        <?php if (!$bean->empty('ArticleTranslation_Title')): ?>
+            <h4 class="card-header">
+                <?= $placeholder->replace($bean->get('ArticleTranslation_Title'))?>
+            </h4>
+        <?php endif; ?>
+        <div class="card-body">
+            <?php if (!$bean->empty('ArticleTranslation_Heading')): ?>
+                <h5 class="card-title">
+                    <?= $placeholder->replace($bean->get('ArticleTranslation_Heading')) ?>
+                </h5>
+            <?php endif; ?>
+            <?php if (!$bean->empty('ArticleTranslation_SubHeading')): ?>
+                <p class="card-text">
+                    <?= $placeholder->replace($bean->get('ArticleTranslation_SubHeading')) ?>
+                </p>
+            <?php endif; ?>
+            <?php if (!$bean->empty('ArticleTranslation_Teaser')): ?>
+                <p class="card-text">
+                    <?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?>
+                </p>
+            <?php endif; ?>
+            <?php if ($bean->isset('File_BeanList') && !$bean->get('File_BeanList')->isEmpty()): ?>
+                <?= $this->file($bean->get('File_BeanList')->first())?>
+            <?php endif; ?>
+            <?php if (!$bean->empty('ArticleTranslation_Text')): ?>
+                <?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php if (!$bean->empty('ArticleTranslation_Path')): ?>
+    </a>
+<?php endif; ?>
