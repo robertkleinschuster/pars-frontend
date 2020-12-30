@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="<?= strip_tags($placeholder->replace($bean->get('ArticleTranslation_Teaser'))) ?>">
     <title><?= $bean->get('ArticleTranslation_Title') ?></title>
-    <link rel="stylesheet" href="/frontend-bundle.css">
+    <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/frontend-bundle.css"></noscript>
+
     <style>
         li.ql-direction-rtl::before {
             margin-left: 0.3em;
@@ -500,6 +502,7 @@
             <?= $placeholder->replace($bean->get('ArticleTranslation_Footer')) ?>
         </div>
     </footer>
+
 </div>
 </body>
 </html>

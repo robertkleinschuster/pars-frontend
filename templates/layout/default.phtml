@@ -1,3 +1,4 @@
+<?php /** @var $this \League\Plates\Template\Template **/?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title><?=$this->e($title)?></title>
-    <link rel="stylesheet" href="/frontend-bundle.css">
+    <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/frontend-bundle.css"></noscript>
     <style>
         body { padding-top: 70px; }
         .app { min-height: 100vh; }
@@ -18,6 +20,8 @@
             <?=$this->section('content')?>
         </main>
     </div>
+    <script src="/script-insertion.js"></script>
+    <script class="script-insertion" data-src="/frontend-bundle.js"></script>
     <?=$this->section('javascript')?>
 </body>
 </html>

@@ -8,8 +8,8 @@
     <meta name="generator" content="Jekyll v4.1.1">
     <title><?= $bean->get('ArticleTranslation_Title') ?></title>
 
-    <link rel="stylesheet" href="/frontend-bundle.css">
-
+    <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/frontend-bundle.css"></noscript>
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -187,6 +187,6 @@
         </div>
     </footer>
 </div>
-<script src="/frontend-bundle.js"></script>
-</body>
+<script src="/script-insertion.js"></script>
+<script class="script-insertion" data-src="/frontend-bundle.js"></script></body>
 </html>
