@@ -71,6 +71,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based authentication
     // - route-based validation
     // - etc.
+    $app->pipe(\Pars\Core\Deployment\DeploymentMiddleware::class);
     $app->pipe(\Pars\Core\Bundles\BundlesMiddleware::class);
     $app->pipe(\Pars\Core\Database\DatabaseMiddleware::class);
     $app->pipe(\Pars\Core\Localization\LocalizationMiddleware::class);
