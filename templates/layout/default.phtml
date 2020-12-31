@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content="<?= $this->e($placeholder->replace($bean->get('ArticleTranslation_Teaser'))) ?>">
-    <title><?= $this->e($brand . ' - ' .$bean->get('ArticleTranslation_Title')) ?></title>
+    <title><?= $this->e($brand . ' - ' . $bean->get('ArticleTranslation_Title')) ?></title>
     <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="/frontend-bundle.css">
@@ -16,10 +16,10 @@
 <body>
 <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="masthead">
-        <a href="<?= $url('/')?>">
+        <a href="<?= $url('/') ?>">
             <h3 class="masthead-brand"><?= $brand ?></h3>
         </a>
-            <?= $this->menu($menu, 'header') ?>
+        <?= $this->menu($menu, 'header') ?>
     </header>
     <div class="row">
         <?= $this->menu($menu, 'aside_left') ?>
@@ -27,7 +27,7 @@
             <?= $this->section('content') ?>
             <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
                 <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
-                    <?= $this->paragraph($paragraph)?>
+                    <?= $this->paragraph($paragraph) ?>
                 <?php endforeach; ?>
             <?php endif; ?>
         </main>

@@ -7,7 +7,9 @@
           content="<?= strip_tags($placeholder->replace($bean->get('ArticleTranslation_Teaser'))) ?>">
     <title><?= $bean->get('ArticleTranslation_Title') ?></title>
     <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/frontend-bundle.css"></noscript>
+    <noscript>
+        <link rel="stylesheet" href="/frontend-bundle.css">
+    </noscript>
     <style>
 
     </style>
@@ -187,7 +189,6 @@
             </form>
         </div>
 </div>
-
 
 
 </main>

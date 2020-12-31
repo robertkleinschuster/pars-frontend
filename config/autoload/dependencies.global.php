@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 
-
 return [
     // Provides application-wide services.
     // We recommend using fully-qualified class names whenever possible as
@@ -23,7 +22,7 @@ return [
             // Fully\Qualified\InterfaceName::class => Fully\Qualified\ClassName::class,
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
-        'factories'  => [
+        'factories' => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
             Pars\Frontend\Application::class => Pars\Frontend\ApplicationFactory::class,
             Pars\Frontend\ApplicationContainer::class => Pars\Frontend\ApplicationContainerFactory::class,

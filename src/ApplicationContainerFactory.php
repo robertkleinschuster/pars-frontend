@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Pars\Frontend;
 
-use Psr\Container\ContainerInterface;
-
 class ApplicationContainerFactory
 {
     public function __invoke()

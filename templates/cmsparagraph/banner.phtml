@@ -1,10 +1,10 @@
 <?php if (!$bean->empty('ArticleTranslation_Path')): ?>
-    <a href="<?= $bean->get('ArticleTranslation_Path') ?>">
-<?php endif; ?>
+<a href="<?= $bean->get('ArticleTranslation_Path') ?>">
+    <?php endif; ?>
     <div class="card mb-4 text-body">
         <?php if (!$bean->empty('ArticleTranslation_Title')): ?>
             <h4 class="card-header">
-                <?= $placeholder->replace($bean->get('ArticleTranslation_Title'))?>
+                <?= $placeholder->replace($bean->get('ArticleTranslation_Title')) ?>
             </h4>
         <?php endif; ?>
         <div class="card-body">
@@ -24,13 +24,13 @@
                 </p>
             <?php endif; ?>
             <?php if ($bean->isset('File_BeanList') && !$bean->get('File_BeanList')->isEmpty()): ?>
-                <?= $this->file($bean->get('File_BeanList')->first())?>
+                <?= $this->file($bean->get('File_BeanList')->first()) ?>
             <?php endif; ?>
             <?php if (!$bean->empty('ArticleTranslation_Text')): ?>
                 <?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?>
             <?php endif; ?>
         </div>
     </div>
-<?php if (!$bean->empty('ArticleTranslation_Path')): ?>
-    </a>
+    <?php if (!$bean->empty('ArticleTranslation_Path')): ?>
+</a>
 <?php endif; ?>

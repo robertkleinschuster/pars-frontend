@@ -21,7 +21,8 @@ class FormFactory
         SessionInterface $session,
         CsrfGuardInterface $guard,
         TranslatorInterface $translator
-    ): AbstractForm {
+    ): AbstractForm
+    {
         switch ($data[AbstractForm::PARAMETER_ID]) {
             case ContactForm::id():
                 return new ContactForm($data, $adapter, $session, $guard, $translator);

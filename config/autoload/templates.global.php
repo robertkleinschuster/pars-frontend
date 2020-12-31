@@ -1,7 +1,7 @@
 <?php
 return [
     'plates' => [
-        'extensions' =>  [
+        'extensions' => [
             \Pars\Frontend\Cms\Extensions\CmsContentExtension::class
         ]
     ],
@@ -15,6 +15,6 @@ return [
             'cmsmenu' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'cmsmenu']),
             'cmspost' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'cmspost']),
             'file' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'file']),
-            ],
+        ],
     ],
 ];

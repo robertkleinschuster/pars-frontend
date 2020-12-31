@@ -17,7 +17,6 @@ use Pars\Frontend\Cms\Helper\CmsPlaceholder;
 use Pars\Frontend\Cms\Helper\Config;
 use Pars\Model\Cms\Menu\CmsMenuBeanFinder;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
-use Pars\Model\Config\ConfigBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -83,13 +82,13 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
                 if ($pageFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT') === 1) {
                     $redirectCode = $pageFinder->getBean()->get('ArticleTranslation_Code');
                     if ($redirectCode == '/') {
-                       return new RedirectResponse($this->urlHelper->generate('cms', ['code' => null]));
+                        return new RedirectResponse($this->urlHelper->generate('cms', ['code' => null]));
                     }
                     return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
                 }
             }
-                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'voted', $session->get('voted'
-                .$bean->get('Article_Code')));
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'voted', $session->get('voted'
+                . $bean->get('Article_Code')));
 
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'bean', $bean);
             return new HtmlResponse($this->renderer->render('index::index'));
