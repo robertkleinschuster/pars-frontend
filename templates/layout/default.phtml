@@ -1,12 +1,12 @@
 <?php /** @var $this \League\Plates\Template\Template * */ ?>
 <!DOCTYPE html>
-<html lang="<?= Locale::getPrimaryLanguage($bean->get('Locale_Code')) ?>">
+<html lang="<?= $this->e($language ?? 'en') ?>">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content="<?= $this->e($placeholder->replace($bean->get('ArticleTranslation_Teaser'))) ?>">
-    <title><?= $this->e($brand . ' - ' . $bean->get('ArticleTranslation_Title')) ?></title>
+    <meta name="description" content="<?= $this->e($description ?? '') ?>">
+    <title><?= $this->e($title ?? '') ?></title>
     <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="/frontend-bundle.css">
@@ -25,11 +25,6 @@
         <?= $this->menu($menu, 'aside_left') ?>
         <main role="main" class="col order-1 order-md-2">
             <?= $this->section('content') ?>
-            <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
-                <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
-                    <?= $this->paragraph($paragraph) ?>
-                <?php endforeach; ?>
-            <?php endif; ?>
         </main>
         <?= $this->menu($menu, 'aside_right') ?>
     </div>
@@ -37,7 +32,7 @@
     <footer class="mastfoot mt-auto">
         <?= $this->menu($menu, 'footer') ?>
         <div class="footer-text">
-            <?= $placeholder->replace($bean->get('ArticleTranslation_Footer')) ?>
+            <?= $footer ?? ''?>
         </div>
     </footer>
 </div>

@@ -53,7 +53,9 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $menuFinder = new CmsMenuBeanFinder($adapter);
         $menuFinder->setCmsMenuState_Code('active');
         $menuFinder->order(['CmsMenuType_Code']);
+        $menuFinder->setCmsMenu_ID_Parent(null);
         $menuFinder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT');
+        $menuFinder->addLinkedFinder(new CmsMenuBeanFinder($adapter), 'Menu_BeanList', 'CmsMenu_ID', 'CmsMenu_ID_Parent');
         if ($session->has('poll_name')) {
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'name', $session->get('poll_name'));
         } else {

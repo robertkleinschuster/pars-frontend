@@ -5,6 +5,15 @@
                 <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
                    href="<?= $url($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
             </li>
+            <?php if (!$item->empty('Menu_BeanList')): ?>
+                <?php foreach ($item->get('Menu_BeanList') as $value): ?>
+                    <li>
+                        <a class="nav-link <?= $value->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
+                           href="<?= $url($value->get('ArticleTranslation_Code')) ?>"><?= $value->get('ArticleTranslation_Name') ?></a>
+
+                    </li>
+                <?php endforeach; ?>
+            <?php endif; ?>
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>
