@@ -1,5 +1,10 @@
 <h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
 <h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
+<?php if (isset($bean) && $bean->isset('File_BeanList')): ?>
+    <?php foreach ($bean->get('File_BeanList') as $file): ?>
+        <?= $this->file($file) ?>
+    <?php endforeach; ?>
+<?php endif; ?>
 <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
 <?php if (isset($bean) && $bean->isset('CmsParagraph_BeanList')): ?>

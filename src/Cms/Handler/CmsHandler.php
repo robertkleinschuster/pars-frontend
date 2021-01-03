@@ -17,6 +17,7 @@ use Pars\Frontend\Cms\Helper\CmsPlaceholder;
 use Pars\Frontend\Cms\Helper\Config;
 use Pars\Model\Cms\Menu\CmsMenuBeanFinder;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
+use Pars\Model\Localization\Locale\LocaleBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -49,7 +50,9 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $config = new Config($adapter);
         $placeholder = new CmsPlaceholder($locale->getLocale_Code());
         $placeholder->setTranslator($translator);
-
+        $localeFinder = new LocaleBeanFinder($adapter);
+        $localeFinder->setLocale_Active(true);
+        $localeFinder->setLocale_Code($locale->getLocale_Code(), true);
         $menuFinder = new CmsMenuBeanFinder($adapter);
         $menuFinder->setCmsMenuState_Code('active');
         $menuFinder->order(['CmsMenuType_Code']);
@@ -64,14 +67,24 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'menu', $menuFinder->getBeanListDecorator());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'brand', $config->get('frontend.brand'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'keywords', $config->get('frontend.keywords'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'author', $config->get('frontend.author'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('asset.domain'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'domain', $config->get('frontend.domain'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'localelist', $localeFinder->getBeanListDecorator());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'placeholder', $placeholder);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'token', $guard->generateToken(AbstractForm::PARAMETER_TOKEN));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'url', function ($code) {
-            if (trim($code) == '/' || trim($code) == '') {
-                return $this->urlHelper->generate(null, ['code' => null]);
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'url', function ($code = null, $localeCode = null) use ($locale) {
+            if ($localeCode == null) {
+                $localeCode = $locale->getLocale_Code();
             }
-            return $this->urlHelper->generate(null, ['code' => str_replace('/', '', $code)]);
+            if ($code == null) {
+                return $this->urlHelper->generate(null, ['locale' => $localeCode]);
+            }
+            if (trim($code) == '/' || trim($code) == '') {
+                return $this->urlHelper->generate(null, ['code' => null, 'locale' => $localeCode]);
+            }
+            return $this->urlHelper->generate(null, ['code' => str_replace('/', '', $code), 'locale' => $localeCode]);
         });
         $pageFinder = new CmsPageBeanFinder($adapter);
         $pageFinder->setCmsPageState_Code('active');
