@@ -71,12 +71,13 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'author', $config->get('frontend.author'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('asset.domain'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'domain', $config->get('frontend.domain'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'charset', $config->get('frontend.charset'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'localelist', $localeFinder->getBeanListDecorator());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'placeholder', $placeholder);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'token', $guard->generateToken(AbstractForm::PARAMETER_TOKEN));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'url', function ($code = null, $localeCode = null) use ($locale) {
             if ($localeCode == null) {
-                $localeCode = $locale->getLocale_Code();
+                $localeCode = $locale->getUrl_Code();
             }
             if ($code == null) {
                 return $this->urlHelper->generate(null, ['locale' => $localeCode]);

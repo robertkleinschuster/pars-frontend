@@ -28,6 +28,7 @@ class Config implements AdapterAwareInterface
         'frontend.keywords',
         'frontend.author',
         'frontend.domain',
+        'frontend.charset',
     ];
 
     /**
