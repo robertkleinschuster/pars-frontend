@@ -52,7 +52,6 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $placeholder->setTranslator($translator);
         $localeFinder = new LocaleBeanFinder($adapter);
         $localeFinder->setLocale_Active(true);
-        $localeFinder->setLocale_Code($locale->getLocale_Code(), true);
         $menuFinder = new CmsMenuBeanFinder($adapter);
         $menuFinder->setCmsMenuState_Code('active');
         $menuFinder->order(['CmsMenuType_Code']);
@@ -72,6 +71,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('asset.domain'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'domain', $config->get('frontend.domain'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'charset', $config->get('frontend.charset'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'favicon', $config->get('frontend.favicon'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'localelist', $localeFinder->getBeanListDecorator());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'placeholder', $placeholder);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'token', $guard->generateToken(AbstractForm::PARAMETER_TOKEN));

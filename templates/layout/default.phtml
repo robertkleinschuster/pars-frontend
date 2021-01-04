@@ -14,10 +14,14 @@
     <meta property="og:url" content="<?= ($domain ?? '') . $url() ?>" />
     <meta property="og:locale" content="<?= $locale ?? '' ?>" />
     <?php foreach ($localelist as $localeBean): ?>
-        <meta property="og:locale:alternate" content="<?= $localeBean->get('Locale_Code') ?>" />
+        <?php if ($localeBean->get('Locale_Code') !== $locale): ?>
+            <meta property="og:locale:alternate" content="<?= $localeBean->get('Locale_Code') ?>" />
+        <?php endif;?>
+        <link rel="alternate" hreflang="<?= $localeBean->get('Locale_UrlCode') ?>" href="<?= ($domain ?? '') . $url(null, $localeBean->get('Locale_UrlCode')) ?>" />
     <?php endforeach; ?>
     <meta property="og:description" content="<?= $this->e(strip_tags($description ?? '')) ?>" />
     <?= $this->section('meta') ?>
+    <link rel="shortcut icon" href="<?= $favicon ?? ''?>">
     <link rel="preload" href="/frontend-bundle.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="/frontend-bundle.css">
