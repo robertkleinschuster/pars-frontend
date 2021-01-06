@@ -3,13 +3,13 @@
         <?php foreach ($menu as $item): ?>
             <li>
                 <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
-                   href="<?= $url($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
+                   href="<?= $this->cmspath($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
             </li>
             <?php if (!$item->empty('Menu_BeanList')): ?>
-                <?php foreach ($item->get('Menu_BeanList') as $value): ?>
+                <?php foreach ($item->get('Menu_BeanList') as $subitem): ?>
                     <li>
-                        <a class="nav-link <?= $value->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
-                           href="<?= $url($value->get('ArticleTranslation_Code')) ?>"><?= $value->get('ArticleTranslation_Name') ?></a>
+                        <a class="nav-link <?= $subitem->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
+                           href="<?= $this->cmspath($subitem->get('ArticleTranslation_Code')) ?>"><?= $subitem->get('ArticleTranslation_Name') ?></a>
 
                     </li>
                 <?php endforeach; ?>

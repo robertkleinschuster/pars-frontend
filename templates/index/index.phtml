@@ -1,9 +1,9 @@
-<?php $this->layout($bean->get('CmsPageLayout_Template'), [
-    'language' => Locale::getPrimaryLanguage($bean->get('Locale_Code')),
-    'locale' => $bean->get('Locale_Code'),
-    'title' => $placeholder->replace($brand . ' - ' . $bean->get('ArticleTranslation_Title')),
-    'description' => $placeholder->replace($bean->get('ArticleTranslation_Teaser')),
-    'keywords' => $placeholder->replace($bean->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
-    'footer' => $placeholder->replace($bean->get('ArticleTranslation_Footer'))
+<?php $this->layout($page->get('CmsPageLayout_Template'), [
+    'language' => Locale::getPrimaryLanguage($page->get('Locale_Code')),
+    'locale' => $page->get('Locale_Code'),
+    'title' => $this->p($brand . ' - ' . $page->get('ArticleTranslation_Title')),
+    'description' => $this->p($page->get('ArticleTranslation_Teaser')),
+    'keywords' => $this->p($page->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
+    'footer' => $this->p($page->get('ArticleTranslation_Footer'))
 ]) ?>
-<?= $this->page($bean) ?>
+<?= $this->page($page) ?>

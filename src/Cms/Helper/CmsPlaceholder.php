@@ -20,9 +20,22 @@ class CmsPlaceholder implements TranslatorAwareInterface
         $this->locale = $locale;
     }
 
+    /**
+     * @param string|null $content
+     * @return string|null
+     */
+    public function __invoke(?string $content)
+    {
+        return $this->replace($content);
+    }
+
+    /**
+     * @param string|null $content
+     * @return string|null
+     */
     public function replace(?string $content): ?string
     {
-        $messages = $this->getTranslator()->getAllMessages('default', $this->locale);
+        $messages = $this->getTranslator()->getAllMessages('frontend', $this->locale);
         if ($messages instanceof \ArrayObject) {
             $messages = (array)$messages;
         }

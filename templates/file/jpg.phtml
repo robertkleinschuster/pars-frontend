@@ -1,2 +1,3 @@
 <img class="img-fluid"
-     src="<?= $static ?>/upload/<?= $bean->FileDirectory_Code . '/' . $bean->File_Code . '.' . $bean->FileType_Code ?>">
+     src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
+<?php $this->og('og:image', $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code) ?>

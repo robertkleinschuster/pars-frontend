@@ -1,4 +1,4 @@
-<h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
-<h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
-<p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
-<p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
+<h1 class="cover-heading mb-4"><?= $page->get('ArticleTranslation_Heading') ?></h1>
+<h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
+<p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
+<p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>

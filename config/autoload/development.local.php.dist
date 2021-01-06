@@ -33,6 +33,9 @@ return [
     'mezzio-session-cache' => [
         'cookie_secure' => false,
     ],
+    'translator' => [
+        'cache' => null,
+    ],
     'assets' => [
         'development' => true,
     ],

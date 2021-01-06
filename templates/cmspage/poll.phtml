@@ -1,7 +1,7 @@
-<h1 class="cover-heading mb-4"><?= $bean->get('ArticleTranslation_Heading') ?></h1>
-<h2><?= $bean->get('ArticleTranslation_SubHeading') ?></h2>
-<p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Teaser')) ?></p>
-<p class="lead"><?= $placeholder->replace($bean->get('ArticleTranslation_Text')) ?></p>
+<h1 class="cover-heading mb-4"><?= $page->get('ArticleTranslation_Heading') ?></h1>
+<h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
+<p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
+<p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
 
 <style>
     .custom-control {
@@ -35,20 +35,20 @@
 
 <div class="card mb-4 text-body text-left">
     <div class="card-body" id="result">
-        <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
-            <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
+        <?php if ($page->isset('CmsParagraph_BeanList')): ?>
+            <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
                 <?php if ($paragraph->getArticle_Data()->exists('poll_value') && !$paragraph->getArticle_Data()->empty('poll_value')): ?>
                     <?php $voted = true ?>
                     <div class="mb-2 row text-center">
                         <div class="col-sm">
                             <?php if ($paragraph->isset('ArticleTranslation_Title') && !($paragraph->empty('ArticleTranslation_Title'))): ?>
                                 <div class="" style="font-size: 1.5rem">
-                                    <?= $paragraph->isset('ArticleTranslation_Title') ? $placeholder->replace($paragraph->get('ArticleTranslation_Title')) : '' ?>
+                                    <?= $paragraph->isset('ArticleTranslation_Title') ? $this->p($paragraph->get('ArticleTranslation_Title')) : '' ?>
                                 </div>
                             <?php endif; ?>
                             <?php if ($paragraph->isset('ArticleTranslation_Heading') && !($paragraph->empty('ArticleTranslation_Heading'))): ?>
                                 <div class="" style="font-size: 1.5rem">
-                                    <?= $paragraph->isset('ArticleTranslation_Heading') ? $placeholder->replace($paragraph->get('ArticleTranslation_Heading')) : '' ?>
+                                    <?= $paragraph->isset('ArticleTranslation_Heading') ? $this->p($paragraph->get('ArticleTranslation_Heading')) : '' ?>
                                 </div>
                             <?php endif; ?>
                             <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
@@ -78,7 +78,7 @@
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>
-        <?= $voted ? '' : $bean->get('ArticleTranslation_SubHeading') ?>
+        <?= $voted ? '' : $page->get('ArticleTranslation_SubHeading') ?>
     </div>
 </div>
 
@@ -90,8 +90,8 @@
             <input class="form-control" type="text" name="name" id="name" value="<?= $name ?>">
         </div>
         <div class="card-body">
-            <?php if ($bean->isset('CmsParagraph_BeanList')): ?>
-                <?php foreach ($bean->get('CmsParagraph_BeanList') as $paragraph): ?>
+            <?php if ($page->isset('CmsParagraph_BeanList')): ?>
+                <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
                     <div class="form-group">
                         <div class="custom-control custom-radio">
                             <input class="custom-control-input js-radio " type="radio" name='poll'
@@ -102,22 +102,22 @@
                                    for="<?= $paragraph->get('Article_Code') ?>">
                                 <?php if ($paragraph->isset('ArticleTranslation_Title') && !empty($paragraph->get('ArticleTranslation_Title'))): ?>
                                     <div class="" style="font-size: 1.5rem">
-                                        <?= $paragraph->isset('ArticleTranslation_Title') ? $placeholder->replace($paragraph->get('ArticleTranslation_Title')) : '' ?>
+                                        <?= $paragraph->isset('ArticleTranslation_Title') ? $this->p($paragraph->get('ArticleTranslation_Title')) : '' ?>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($paragraph->isset('ArticleTranslation_Heading') && !empty($paragraph->get('ArticleTranslation_Heading'))): ?>
                                     <div class="" style="font-size: 1.5rem">
-                                        <?= $paragraph->isset('ArticleTranslation_Heading') ? $placeholder->replace($paragraph->get('ArticleTranslation_Heading')) : '' ?>
+                                        <?= $paragraph->isset('ArticleTranslation_Heading') ? $this->p($paragraph->get('ArticleTranslation_Heading')) : '' ?>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($paragraph->isset('ArticleTranslation_SubHeading') && !empty($paragraph->get('ArticleTranslation_SubHeading'))): ?>
                                     <p class="card-text">
-                                        <?= $paragraph->isset('ArticleTranslation_SubHeading') ? $placeholder->replace($paragraph->get('ArticleTranslation_SubHeading')) : '' ?>
+                                        <?= $paragraph->isset('ArticleTranslation_SubHeading') ? $this->p($paragraph->get('ArticleTranslation_SubHeading')) : '' ?>
                                     </p>
                                 <?php endif; ?>
                                 <?php if ($paragraph->isset('ArticleTranslation_Teaser') && !empty($paragraph->get('ArticleTranslation_Teaser'))): ?>
                                     <p class="card-text">
-                                        <?= $paragraph->isset('ArticleTranslation_Teaser') ? $placeholder->replace($paragraph->get('ArticleTranslation_Teaser')) : '' ?>
+                                        <?= $paragraph->isset('ArticleTranslation_Teaser') ? $this->p($paragraph->get('ArticleTranslation_Teaser')) : '' ?>
                                     </p>
                                 <?php endif; ?>
                                 <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
@@ -130,7 +130,7 @@
                                     <img class="img-fluid"
                                          src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
                                 <?php endif; ?>
-                                <?= $paragraph->isset('ArticleTranslation_Text') && !empty($paragraph->get('ArticleTranslation_Text')) ? $placeholder->replace($paragraph->get('ArticleTranslation_Text')) : '' ?>
+                                <?= $paragraph->isset('ArticleTranslation_Text') && !empty($paragraph->get('ArticleTranslation_Text')) ? $this->p($paragraph->get('ArticleTranslation_Text')) : '' ?>
                             </label>
                         </div>
                     </div>

@@ -28,6 +28,9 @@ return [
             Pars\Frontend\ApplicationContainer::class => Pars\Frontend\ApplicationContainerFactory::class,
             \Pars\Frontend\Cms\Handler\CmsHandler::class => \Pars\Frontend\Cms\Handler\CmsHandlerFactory::class,
             \Pars\Frontend\Cms\Form\CmsFormMiddelware::class => \Pars\Frontend\Cms\Form\CmsFormMiddelware::class,
+            \Pars\Frontend\Cms\Extensions\TranslatorExtension::class => \Pars\Frontend\Cms\Extensions\TranslatorExtensionFactory::class,
+            \Pars\Frontend\Cms\Extensions\PlaceholderExtension::class => \Pars\Frontend\Cms\Extensions\PlaceholderExtensionFactory::class,
+            \Pars\Frontend\Cms\Extensions\PathExtension::class => \Pars\Frontend\Cms\Extensions\PathExtensionFactory::class,
         ],
     ],
 ];

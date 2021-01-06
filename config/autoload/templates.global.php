@@ -2,7 +2,11 @@
 return [
     'plates' => [
         'extensions' => [
-            \Pars\Frontend\Cms\Extensions\CmsContentExtension::class
+            \Pars\Frontend\Cms\Extensions\CmsContentExtension::class,
+            \Pars\Frontend\Cms\Extensions\TranslatorExtension::class,
+            \Pars\Frontend\Cms\Extensions\PlaceholderExtension::class,
+            \Pars\Frontend\Cms\Extensions\PathExtension::class,
+            \Pars\Frontend\Cms\Extensions\OpenGraphExtension::class,
         ]
     ],
     'templates' => [

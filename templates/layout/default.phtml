@@ -1,4 +1,3 @@
-<?php /** @var $this \League\Plates\Template\Template * */ ?>
 <!DOCTYPE html>
 <html lang="<?= $this->e($language ?? 'en') ?>">
 <head>
@@ -11,14 +10,17 @@
     <title><?= $this->e($title ?? '') ?></title>
     <meta property="og:title" content="<?= $this->e($title ?? '') ?>" />
     <meta property="og:site_name" content="<?= $brand ?? '' ?>>" />
-    <meta property="og:url" content="<?= ($domain ?? '') . $url() ?>" />
+    <meta property="og:url" content="<?= $this->cmspaths() ?>" />
     <meta property="og:locale" content="<?= $locale ?? '' ?>" />
+    <?= $this->ogflush() ?>
+    <?php if (isset($localelist)): ?>
     <?php foreach ($localelist as $localeBean): ?>
         <?php if ($localeBean->get('Locale_Code') !== ($locale ?? '')): ?>
+            <link rel="alternate" hreflang="<?= $localeBean->get('Locale_UrlCode') ?>" href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>" />
             <meta property="og:locale:alternate" content="<?= $localeBean->get('Locale_Code') ?>" />
         <?php endif;?>
-        <link rel="alternate" hreflang="<?= $localeBean->get('Locale_UrlCode') ?>" href="<?= ($domain ?? '') . $url(null, $localeBean->get('Locale_UrlCode')) ?>" />
     <?php endforeach; ?>
+    <?php endif; ?>
     <meta property="og:description" content="<?= $this->e(strip_tags($description ?? '')) ?>" />
     <?= $this->section('meta') ?>
     <link rel="shortcut icon" href="<?= $favicon ?? ''?>">
@@ -31,21 +33,21 @@
 <body>
 <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="masthead">
-        <a href="<?= $url('/') ?>">
-            <h3 class="masthead-brand"><?= $brand ?></h3>
+        <a href="<?= $this->cmspath('/') ?>">
+            <h3 class="masthead-brand"><?= $brand ?? '' ?></h3>
         </a>
-        <?= $this->menu($menu, 'header') ?>
+        <?= isset($menu) ? $this->menu($menu, 'header') : '' ?>
     </header>
     <div class="row">
-        <?= $this->menu($menu, 'aside_left') ?>
+        <?= isset($menu) ? $this->menu($menu, 'aside_left') : '' ?>
         <main role="main" class="col order-1 order-md-2">
             <?= $this->section('content') ?>
         </main>
-        <?= $this->menu($menu, 'aside_right') ?>
+        <?= isset($menu) ? $this->menu($menu, 'aside_right') : '' ?>
     </div>
 
     <footer class="mastfoot mt-auto">
-        <?= $this->menu($menu, 'footer') ?>
+        <?= isset($menu) ? $this->menu($menu, 'footer') : '' ?>
         <div class="footer-text">
             <?= $footer ?? ''?>
         </div>
