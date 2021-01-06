@@ -33,4 +33,10 @@ return [
     'mezzio-session-cache' => [
         'cookie_secure' => false,
     ]
+     'assets' => [
+           'development' => true,
+     ],
+                'bundles' => [
+                    'development' => true,
+                ]
 ];

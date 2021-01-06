@@ -15,8 +15,10 @@ use Pars\Core\Translation\TranslatorMiddleware;
 use Pars\Frontend\Cms\Form\Base\AbstractForm;
 use Pars\Frontend\Cms\Helper\CmsPlaceholder;
 use Pars\Frontend\Cms\Helper\Config;
+use Pars\Frontend\Cms\Helper\ImportLoader;
 use Pars\Model\Cms\Menu\CmsMenuBeanFinder;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
+use Pars\Model\Import\ImportBeanFinder;
 use Pars\Model\Localization\Locale\LocaleBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -63,7 +65,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         } else {
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'name', '');
         }
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'menu', $menuFinder->getBeanListDecorator());
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'menu', $menuFinder->getBeanList());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'brand', $config->get('frontend.brand'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'keywords', $config->get('frontend.keywords'));
@@ -72,8 +74,9 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'domain', $config->get('frontend.domain'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'charset', $config->get('frontend.charset'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'favicon', $config->get('frontend.favicon'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'localelist', $localeFinder->getBeanListDecorator());
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'localelist', $localeFinder->getBeanList());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'placeholder', $placeholder);
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'import', new ImportLoader(new ImportBeanFinder($adapter)));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'token', $guard->generateToken(AbstractForm::PARAMETER_TOKEN));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'url', function ($code = null, $localeCode = null) use ($locale) {
             if ($localeCode == null) {

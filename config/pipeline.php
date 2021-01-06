@@ -73,6 +73,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - etc.
     $app->pipe(\Pars\Core\Deployment\DeploymentMiddleware::class);
     $app->pipe(\Pars\Core\Bundles\BundlesMiddleware::class);
+    $app->pipe(\Pars\Core\Assets\AssetsMiddleware::class);
     $app->pipe(\Pars\Core\Database\DatabaseMiddleware::class);
     $app->pipe(\Pars\Core\Localization\LocalizationMiddleware::class);
     $app->pipe(\Pars\Core\Translation\TranslatorMiddleware::class);

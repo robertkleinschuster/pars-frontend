@@ -14,7 +14,7 @@
     <meta property="og:url" content="<?= ($domain ?? '') . $url() ?>" />
     <meta property="og:locale" content="<?= $locale ?? '' ?>" />
     <?php foreach ($localelist as $localeBean): ?>
-        <?php if ($localeBean->get('Locale_Code') !== $locale): ?>
+        <?php if ($localeBean->get('Locale_Code') !== ($locale ?? '')): ?>
             <meta property="og:locale:alternate" content="<?= $localeBean->get('Locale_Code') ?>" />
         <?php endif;?>
         <link rel="alternate" hreflang="<?= $localeBean->get('Locale_UrlCode') ?>" href="<?= ($domain ?? '') . $url(null, $localeBean->get('Locale_UrlCode')) ?>" />
