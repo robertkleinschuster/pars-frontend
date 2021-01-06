@@ -19,24 +19,24 @@ return [
     'dependencies' => [
         'factories' => [
             ErrorResponseGenerator::class => Container\WhoopsErrorResponseGeneratorFactory::class,
-            'Mezzio\Whoops'               => Container\WhoopsFactory::class,
-            'Mezzio\WhoopsPageHandler'    => Container\WhoopsPageHandlerFactory::class,
+            'Mezzio\Whoops' => Container\WhoopsFactory::class,
+            'Mezzio\WhoopsPageHandler' => Container\WhoopsPageHandlerFactory::class,
         ],
     ],
-    'whoops'       => [
+    'whoops' => [
         'json_exceptions' => [
-            'display'    => true,
+            'display' => true,
             'show_trace' => true,
-            'ajax_only'  => true,
+            'ajax_only' => true,
         ],
     ],
     'mezzio-session-cache' => [
         'cookie_secure' => false,
+    ],
+    'assets' => [
+        'development' => true,
+    ],
+    'bundles' => [
+        'development' => true,
     ]
-     'assets' => [
-           'development' => true,
-     ],
-                'bundles' => [
-                    'development' => true,
-                ]
 ];

@@ -1,28 +1,15 @@
 Display name: <?= $data->display_name ?>
-<br>
 Vehicle state: <?= $data->state ?>
-<br>
-
 Charge State: <?= $data->charge_state->charging_state ?>
-<br>
-Battery Level: <?= $data->charge_state->usable_battery_level ?><br>
-
-Battery Range: <?= $data->charge_state->est_battery_range ?><br>
-
-Fast Charge Present: <?= $data->charge_state->fast_charger_present ?><br>
-
-Fast Charge Brand: <?= $data->charge_state->fast_charger_brand ?><br>
-
-Fast Charge Type: <?= $data->charge_state->fast_charger_type ?><br>
-
-Minutes to Full charge: <?= $data->charge_state->minutes_to_full_charge ?><br>
-
-Outside Temp: <?= $data->climate_state->outside_temp ?><br>
-
-Inside Temp: <?= $data->climate_state->inside_temp ?><br>
-
-GPS Latitude: <?= $data->drive_state->latitude ?><br>
-
-GPS Longitude: <?= $data->drive_state->longitude ?><br>
-
-Speed: <?= $data->drive_state->speed ?><br>
+Battery Level: <?= $data->charge_state->usable_battery_level ?>
+Battery Range: <?= $data->charge_state->est_battery_range ?>
+<?php if ($data->charge_state->fast_charger_present): ?>
+    Fast Charge Brand: <?= $data->charge_state->fast_charger_brand ?>
+    Fast Charge Type: <?= $data->charge_state->fast_charger_type ?>
+<?php endif; ?>
+Minutes to Full charge: <?= $data->charge_state->minutes_to_full_charge ?>
+Outside Temp: <?= $data->climate_state->outside_temp ?>
+Inside Temp: <?= $data->climate_state->inside_temp ?>
+GPS Latitude: <?= $data->drive_state->latitude ?>
+GPS Longitude: <?= $data->drive_state->longitude ?>
+Speed: <?= $data->drive_state->speed ?>
