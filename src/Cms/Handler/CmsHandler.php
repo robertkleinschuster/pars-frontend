@@ -4,8 +4,12 @@
 namespace Pars\Frontend\Cms\Handler;
 
 
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Stream;
+use League\Glide\Responses\PsrResponseFactory;
+use League\Glide\ServerFactory;
 use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Helper\UrlHelper;
 use Mezzio\Session\SessionMiddleware;
@@ -19,6 +23,7 @@ use Pars\Frontend\Cms\Helper\ImportLoader;
 use Pars\Frontend\Cms\Model\LocaleModel;
 use Pars\Frontend\Cms\Model\MenuModel;
 use Pars\Frontend\Cms\Model\PageModel;
+use Pars\Frontend\Cms\Model\ParagraphModel;
 use Pars\Model\Import\ImportBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -91,6 +96,13 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'page', $page);
             return new HtmlResponse($this->renderer->render('index::index'));
         }
+        $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config);
+        $paragraph = $paragraphModel->getPage();
+        if ($paragraph != null) {
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'paragraph', $paragraph);
+            return new HtmlResponse($this->renderer->render('index::paragraph'));
+        }
+
         return new HtmlResponse($this->renderer->render('error::404'), 404);
     }
 

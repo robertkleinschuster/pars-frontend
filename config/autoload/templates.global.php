@@ -7,6 +7,7 @@ return [
             \Pars\Frontend\Cms\Extensions\PlaceholderExtension::class,
             \Pars\Frontend\Cms\Extensions\PathExtension::class,
             \Pars\Frontend\Cms\Extensions\OpenGraphExtension::class,
+            \Pars\Frontend\Cms\Extensions\ImagePathExtension::class,
         ]
     ],
     'templates' => [

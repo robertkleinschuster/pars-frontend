@@ -1,14 +1,13 @@
 <h1 class="cover-heading mb-4"><?= $page->get('ArticleTranslation_Heading') ?></h1>
 <h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
-<?php if (isset($page) && $page->isset('File_BeanList')): ?>
-    <?php foreach ($page->get('File_BeanList') as $file): ?>
-        <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1108, 'height' => 622]) ?>
-    <?php endforeach; ?>
-<?php endif; ?>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
 <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
     <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
-        <?= $this->paragraph($paragraph, ['img_width' => 1066, 'img_height' => 599]) ?>
+        <div class="col">
+            <?= $this->paragraph($paragraph, ['img_width' => 307, 'img_height' => 173]) ?>
+        </div>
     <?php endforeach; ?>
+</div>
 <?php endif; ?>

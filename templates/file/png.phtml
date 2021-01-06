@@ -1,3 +1,4 @@
-<img class="img-fluid"
-     src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
-<?php $this->og('og:image', $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code) ?>
+<img loading='lazy' class="img-fluid <?= $class ?? '' ?>"
+     src="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null) ?>" width="<?= $width ?? null ?>" height="<?= $height ?? null ?>">
+
+<?php $this->og('og:image', $this->cmsimg($file, $static ?? null)) ?>

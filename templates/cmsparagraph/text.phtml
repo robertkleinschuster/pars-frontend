@@ -3,9 +3,15 @@
     <?php endif; ?>
     <div class="card mb-4 text-body">
         <?php if (!$paragraph->empty('ArticleTranslation_Title')): ?>
+            <?php if ($paragraph->empty('ArticleTranslation_Path')): ?>
+                <a class="small" href="<?= $this->cmspath($paragraph) ?>">
+            <?php endif; ?>
             <h4 class="card-header">
                 <?= $this->p($paragraph->get('ArticleTranslation_Title')) ?>
             </h4>
+            <?php if ($paragraph->empty('ArticleTranslation_Path')): ?>
+                </a>
+            <?php endif; ?>
         <?php endif; ?>
         <div class="card-body">
             <?php if (!$paragraph->empty('ArticleTranslation_Heading')): ?>
@@ -24,7 +30,7 @@
                 </p>
             <?php endif; ?>
             <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
-                <?= $this->file($paragraph->get('File_BeanList')->first()) ?>
+                <?= $this->file($paragraph->get('File_BeanList')->first(), ['width' => $img_width ?? null, 'height', $img_height ?? null]) ?>
             <?php endif; ?>
             <?php if (!$paragraph->empty('ArticleTranslation_Text')): ?>
                 <?= $this->p($paragraph->get('ArticleTranslation_Text')) ?>

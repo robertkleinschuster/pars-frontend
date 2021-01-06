@@ -8,6 +8,7 @@ use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
+use Pars\Model\Article\Translation\ArticleTranslationBean;
 
 class PathExtension implements ExtensionInterface
 {
@@ -32,13 +33,19 @@ class PathExtension implements ExtensionInterface
     {
         $engine->registerFunction(
             'cmspath',
-            function (?string $code = null, ?array $params = [], ?string $id = null, ?string $locale = null) {
+            function ($code = null, ?array $params = [], ?string $id = null, ?string $locale = null) {
+                if ($code instanceof ArticleTranslationBean) {
+                    $code = $code->get('ArticleTranslation_Code');
+                }
                 return $this->generatePath($code, $locale, $params, $id);
             }
         );
         $engine->registerFunction(
             'cmspaths',
-            function (?string $code = null, array $params = [], ?string $id = null, ?string $locale = null) {
+            function ($code = null, array $params = [], ?string $id = null, ?string $locale = null) {
+                if ($code instanceof ArticleTranslationBean) {
+                    $code = $code->get('ArticleTranslation_Code');
+                }
                 return $this->generateServerPath($code, $locale, $params, $id);
             }
         );
