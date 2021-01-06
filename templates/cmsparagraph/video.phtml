@@ -24,7 +24,9 @@
                 </p>
             <?php endif; ?>
             <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
-                <?= $this->file($paragraph->get('File_BeanList')->first()) ?>
+                <div class="text-center">
+                    <?= $this->file($paragraph->get('File_BeanList')->first(), ['width' => $img_width ?? null, 'height' => $img_height ?? null]) ?>
+                </div>
             <?php endif; ?>
             <?php if (!$paragraph->empty('ArticleTranslation_Text')): ?>
                 <?= $this->p($paragraph->get('ArticleTranslation_Text')) ?>
