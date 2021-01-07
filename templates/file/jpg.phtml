@@ -1,10 +1,22 @@
-<img loading='lazy' class="img-fluid <?= $class ?? '' ?>"
-     src="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null) ?>" width="<?= $width ?? null ?>" height="<?= $height ?? null ?>"
-    srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1) ?> 1x,
-<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2) ?> 2x,
-<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3) ?> 3x
-"
-     alt="<?= $alt ?? '' ?>"
->
+<picture>
+    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'webp') ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'webp') ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'webp') ?> 3x"
+            type="image/webp">
+
+    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'pjpg') ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'pjpg') ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'pjpg') ?> 3x"
+            type="image/jpeg">
+
+    <img
+            loading='lazy'
+            class="img-fluid <?= $class ?? '' ?>"
+            src="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null) ?>"
+            width="<?= $width ?? null ?>"
+            height="<?= $height ?? null ?>"
+            alt="<?= $alt ?? '' ?>"
+    >
+</picture>
 
 <?php $this->og('og:image', $this->cmsimg($file, $static ?? null)) ?>

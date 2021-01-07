@@ -7,3 +7,7 @@
     'footer' => $this->p($page->get('ArticleTranslation_Footer'))
 ]) ?>
 <?= $this->page($page) ?>
+<?= $this->css('/frontend-critical.css', true)?>
+<?= $this->css('/frontend-bundle.css')?>
+<?= $this->js('/script-insertion.js', true)?>
+<?= $this->js('/frontend-minimal.js')?>
