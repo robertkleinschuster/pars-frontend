@@ -23,7 +23,7 @@
     <?php endif; ?>
     <meta property="og:description" content="<?= $this->e(strip_tags($description ?? '')) ?>" />
     <link rel="shortcut icon" href="<?= $favicon ?? ''?>">
-    <?= $this->cssflush()?>
+    <?= $this->cssflush(isset($session) ? $session : null)?>
 </head>
 <body>
 <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
@@ -49,9 +49,5 @@
     </footer>
 </div>
 <?= $this->jsflush() ?>
-
-<script src="/script-insertion.js"></script>
-<script class="script-insertion" data-src="/frontend-minimal.js"></script>
-<?= $this->section('javascript') ?>
 </body>
 </html>

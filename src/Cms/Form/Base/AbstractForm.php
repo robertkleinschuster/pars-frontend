@@ -87,7 +87,11 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
      */
     protected function generateToken(): string
     {
-        return $this->getGuard()->generateToken(self::PARAMETER_TOKEN);
+        if (!$this->getSession()->get(self::PARAMETER_TOKEN, false)) {
+            return $this->getGuard()->generateToken(self::PARAMETER_TOKEN);
+        } else {
+            return $this->getSession()->get(self::PARAMETER_TOKEN);
+        }
     }
 
     /**
@@ -96,7 +100,9 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
      */
     protected function validateToken(array $data): bool
     {
-        return $this->getGuard()->validateToken($data[self::PARAMETER_TOKEN], self::PARAMETER_TOKEN);
+        $result = $this->getGuard()->validateToken($data[self::PARAMETER_TOKEN], self::PARAMETER_TOKEN);
+        $this->generateToken();
+        return $result;
     }
 
     /**

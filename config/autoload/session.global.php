@@ -5,7 +5,7 @@ return [
         // cache item pool than the global one.
         'cache_item_pool_service' => 'SessionCache',
 
-        'filesystem_folder' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'data', 'session']),
+        'filesystem_folder' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'data']),
 
         'memcached_host' => 'localhost',
         'memcached_port' => 11211,

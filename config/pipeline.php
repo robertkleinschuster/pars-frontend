@@ -64,6 +64,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     // Seed the UrlHelper with the routing results:
     $app->pipe(UrlHelperMiddleware::class);
+    $app->pipe(\Mezzio\Helper\Template\TemplateVariableContainerMiddleware::class);
 
     // Add more middleware here that needs to introspect the routing results; this
     // might include:
@@ -77,8 +78,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(\Pars\Core\Database\DatabaseMiddleware::class);
     $app->pipe(\Pars\Core\Localization\LocalizationMiddleware::class);
     $app->pipe(\Pars\Core\Translation\TranslatorMiddleware::class);
-    $app->pipe(\Mezzio\Session\SessionMiddleware::class);
-    $app->pipe(\Mezzio\Helper\Template\TemplateVariableContainerMiddleware::class);
     $app->pipe(\Pars\Frontend\Cms\Form\CmsFormMiddelware::class);
 
     // Register the dispatch middleware in the middleware pipeline
