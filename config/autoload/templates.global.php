@@ -22,6 +22,7 @@ return [
             'cmsmenu' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'cmsmenu']),
             'cmspost' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'cmspost']),
             'file' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'file']),
+            'meta' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'meta']),
         ],
     ],
 ];

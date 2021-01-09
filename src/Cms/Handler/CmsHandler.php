@@ -55,7 +55,6 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $logger = $request->getAttribute(LoggingMiddleware::LOGGER_ATTRIBUTE);
         $code = $request->getAttribute('code', '/');
         $config = new Config($adapter);
-
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'hash', $this->config['bundles']['hash'] ?? '');
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'session', $session);
@@ -66,7 +65,12 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'domain', $config->get('frontend.domain'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'charset', $config->get('frontend.charset'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'favicon', $config->get('frontend.favicon'));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'color', $config->get('frontend.color'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'import', new ImportLoader(new ImportBeanFinder($adapter)));
+
+        if ($code == 'browserconfig') {
+            return new HtmlResponse($this->renderer->render('meta::browserconfig'));
+        }
 
         $localeModel = new LocaleModel($adapter, $translator, $session, $locale, $code, $logger, $config);
         $this->renderer->addDefaultParam(

@@ -1,18 +1,18 @@
 <picture>
-    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'webp') ?> 1x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'webp') ?> 2x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'webp') ?> 3x"
+    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'webp', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'webp', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'webp', $fit ?? null) ?> 3x"
             type="image/webp">
 
-    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'pjpg') ?> 1x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'pjpg') ?> 2x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'pjpg') ?> 3x"
+    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'pjpg', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'pjpg', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'pjpg', $fit ?? null) ?> 3x"
             type="image/jpeg">
 
     <img
             loading='lazy'
             class="img-fluid <?= $class ?? '' ?>"
-            src="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null) ?>"
+            src="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, null, 'pjpg', $fit ?? null) ?>"
             width="<?= $width ?? null ?>"
             height="<?= $height ?? null ?>"
             alt="<?= $alt ?? '' ?>"

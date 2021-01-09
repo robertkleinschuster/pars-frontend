@@ -2,13 +2,15 @@
 <h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
 <?php if (isset($page) && $page->isset('File_BeanList')): ?>
     <?php foreach ($page->get('File_BeanList') as $file): ?>
-        <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1108, 'height' => 622]) ?>
+        <div class="text-center">
+            <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1106, 'height' => 300, 'fit' => 'crop']) ?>
+        </div>
     <?php endforeach; ?>
 <?php endif; ?>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
 <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
     <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
-        <?= $this->paragraph($paragraph, ['img_width' => 1066, 'img_height' => 599]) ?>
+        <?= $this->paragraph($paragraph, ['img_width' => 1106, 'img_height' => 600]) ?>
     <?php endforeach; ?>
 <?php endif; ?>

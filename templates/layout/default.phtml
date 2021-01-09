@@ -1,30 +1,13 @@
 <!DOCTYPE html>
 <html lang="<?= $this->e($language ?? 'en') ?>">
-<head>
-    <meta charset="<?= !empty($charset) ? $charset : 'utf-8'?>"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content="<?= $this->e(strip_tags($description ?? '')) ?>">
-    <meta name="keywords" content="<?= $this->e($keywords ?? '') ?>">
-    <meta name="author" content="<?= $this->e($author ?? '') ?>">
-    <title><?= $this->e($title ?? '') ?></title>
-    <meta property="og:title" content="<?= $this->e($title ?? '') ?>" />
-    <meta property="og:site_name" content="<?= $brand ?? '' ?>" />
-    <meta property="og:url" content="<?= $this->cmspaths() ?>" />
-    <meta property="og:locale" content="<?= $locale ?? '' ?>" />
-    <?= $this->ogflush() ?>
-    <?php if (isset($localelist)): ?>
-    <?php foreach ($localelist as $localeBean): ?>
-        <?php if ($localeBean->get('Locale_Code') !== ($locale ?? '')): ?>
-            <link rel="alternate" hreflang="<?= $localeBean->get('Locale_UrlCode') ?>" href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>" />
-            <meta property="og:locale:alternate" content="<?= $localeBean->get('Locale_Code') ?>" />
-        <?php endif;?>
-    <?php endforeach; ?>
-    <?php endif; ?>
-    <meta property="og:description" content="<?= $this->e(strip_tags($description ?? '')) ?>" />
-    <link rel="shortcut icon" href="<?= $favicon ?? ''?>">
-    <?= $this->cssflush(isset($session) ? $session : null)?>
-</head>
+<?php $this->insert('layout::includes/head', [
+    'language' => $language ?? '',
+    'locale' => $locale ?? '',
+    'title' => $title ?? '',
+    'description' => $description ?? '',
+    'keywords' => $keywords ?? '',
+    'footer' => $footer ?? ''
+])?>
 <body>
 <div class="d-flex w-100 h-100 p-3 mx-auto flex-column container">
     <header class="masthead">
@@ -44,7 +27,7 @@
     <footer class="mastfoot mt-auto">
         <?= isset($menu) ? $this->menu($menu, 'footer') : '' ?>
         <div class="footer-text">
-            <?= $footer ?? ''?>
+            <?= $footer ?? '' ?>
         </div>
     </footer>
 </div>
