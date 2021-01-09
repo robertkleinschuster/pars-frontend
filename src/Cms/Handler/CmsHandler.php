@@ -32,14 +32,17 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
 
     private $urlHelper;
 
+    protected array $config;
+
     /**
      * CmsHandler constructor.
      * @param TemplateRendererInterface $renderer
      */
-    public function __construct(TemplateRendererInterface $renderer, UrlHelper $urlHelper)
+    public function __construct(TemplateRendererInterface $renderer, UrlHelper $urlHelper, array $config)
     {
         $this->renderer = $renderer;
         $this->urlHelper = $urlHelper;
+        $this->config = $config;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -54,6 +57,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $config = new Config($adapter);
 
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'hash', $this->config['bundles']['hash'] ?? '');
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'session', $session);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'brand', $config->get('frontend.brand'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'keywords', $config->get('frontend.keywords'));

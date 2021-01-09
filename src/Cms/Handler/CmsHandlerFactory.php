@@ -10,6 +10,8 @@ class CmsHandlerFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        return new CmsHandler($container->get(TemplateRendererInterface::class), $container->get(UrlHelper::class));
+        return new CmsHandler($container->get(TemplateRendererInterface::class), $container->get(UrlHelper::class)
+        , $container->get('config')
+        );
     }
 }

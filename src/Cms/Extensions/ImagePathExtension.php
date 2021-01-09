@@ -36,7 +36,7 @@ class ImagePathExtension implements ExtensionInterface
                 $url = UrlBuilderFactory::create($static, 'pars-sign');
                 return $url->getUrl('', $params);
             } else {
-                return $static . '/upload/' . $img;
+                return $static . $img;
             }
         });
     }

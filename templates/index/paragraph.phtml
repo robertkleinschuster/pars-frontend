@@ -7,7 +7,7 @@
     'footer' => $this->p($paragraph->get('ArticleTranslation_Footer'))
 ]) ?>
 <?= $this->paragraph($paragraph) ?>
-<?= $this->css('/frontend-critical.css', true)?>
-<?= $this->css('/frontend-bundle.css')?>
-<?= $this->js('/script-insertion.js', true)?>
-<?= $this->js('/frontend-minimal.js')?>
+<?= $this->css("/frontend-critical_$hash.css", true)?>
+<?= $this->css("/frontend-bundle_$hash.css")?>
+<?= $this->js("/script-insertion_$hash.js", true)?>
+<?= $this->js("/frontend-minimal_$hash.js")?>

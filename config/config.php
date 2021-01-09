@@ -9,7 +9,7 @@ use Laminas\ConfigAggregator\PhpFileProvider;
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
 $cacheConfig = [
-    'config_cache_path' => 'data/cache/frontend-config-cache.php',
+    'config_cache_path' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data' , 'cache', 'config', 'config.php']),
 ];
 
 $aggregator = new ConfigAggregator([

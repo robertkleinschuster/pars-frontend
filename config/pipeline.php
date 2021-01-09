@@ -21,9 +21,11 @@ use Psr\Container\ContainerInterface;
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     // The error handler should be the first (most outer) middleware to catch
     // all Exceptions.
-    $app->pipe(\Pars\Core\Logging\LoggingMiddleware::class);
     $app->pipe(ErrorHandler::class);
     $app->pipe(ServerUrlMiddleware::class);
+    $app->pipe(\Pars\Core\Logging\LoggingMiddleware::class);
+    $app->pipe(\Pars\Core\Deployment\DeploymentMiddleware::class);
+    $app->pipe(\Pars\Core\Image\ImageMiddleware::class);
 
     // Pipe more middleware here that you want to execute on every request:
     // - bootstrapping
@@ -72,13 +74,13 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based authentication
     // - route-based validation
     // - etc.
-    $app->pipe(\Pars\Core\Deployment\DeploymentMiddleware::class);
     $app->pipe(\Pars\Core\Bundles\BundlesMiddleware::class);
     $app->pipe(\Pars\Core\Assets\AssetsMiddleware::class);
     $app->pipe(\Pars\Core\Database\DatabaseMiddleware::class);
     $app->pipe(\Pars\Core\Localization\LocalizationMiddleware::class);
     $app->pipe(\Pars\Core\Translation\TranslatorMiddleware::class);
     $app->pipe(\Pars\Frontend\Cms\Form\CmsFormMiddelware::class);
+    $app->pipe(\Pars\Core\Deployment\DeploymentMiddleware::class);
 
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);
