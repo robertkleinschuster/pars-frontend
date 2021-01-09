@@ -42,10 +42,8 @@ $aggregator = new ConfigAggregator([
     \Laminas\Diactoros\ConfigProvider::class,
 
     // Default App module config
-    \Pars\Mvc\ConfigProvider::class,
     \Pars\Model\ConfigProvider::class,
     \Pars\Core\ConfigProvider::class,
-    \Pars\Helper\ConfigProvider::class,
     \Pars\Frontend\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
