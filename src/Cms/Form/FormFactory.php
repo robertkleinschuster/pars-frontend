@@ -38,6 +38,8 @@ class FormFactory
             case 'contact':
                 $id = ContactForm::id();
                 break;
+            case 'poll':
+                $id = PollForm::id();
         }
         if ($id !== null) {
             return $this->createForm($id, [], $adapter, $session, $guard, $translator);

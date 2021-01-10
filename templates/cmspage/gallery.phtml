@@ -3,7 +3,17 @@
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
 <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
-    <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
+    <?php foreach ($page->get('CmsParagraph_BeanList')->filter(function($bean){return $bean->get('CmsParagraphType_Code') == 'banner';}) as $paragraph): ?>
         <?= $this->paragraph($paragraph) ?>
     <?php endforeach; ?>
 <?php endif; ?>
+<?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
+        <?php foreach ($page->get('CmsParagraph_BeanList')->filter(function($bean){return $bean->get('CmsParagraphType_Code') != 'banner';}) as $paragraph): ?>
+            <div class="col mb-3">
+                <?= $this->paragraph($paragraph) ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+

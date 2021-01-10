@@ -18,6 +18,8 @@ return [
                 'critical' => true,
                 'sources' => [
                     __DIR__ . '/../../bundles/js/01-jquery.min.js',
+                    __DIR__ . '/../../bundles/js/02-bootstrap.min.js',
+                    __DIR__ . '/../../bundles/js/04-popper.min.js',
                     __DIR__ . '/../../bundles/js/loading-attribute-polyfill.min.js',
                 ]
             ],
@@ -26,9 +28,6 @@ return [
                 'output' => "frontend-bundle_$hash.js",
                 'critical' => false,
                 'sources' => [
-                    __DIR__ . '/../../bundles/js/01-jquery.min.js',
-                    __DIR__ . '/../../bundles/js/02-bootstrap.min.js',
-                    __DIR__ . '/../../bundles/js/04-popper.min.js',
                 ]
             ],
             [

@@ -1,142 +1,69 @@
-<h1 class="cover-heading mb-4"><?= $page->get('ArticleTranslation_Heading') ?></h1>
-<h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
-<p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
-<p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
-
-<style>
-    .custom-control {
-        padding-left: 0;
-    }
-
-    .custom-control-input:checked ~ .custom-control-label {
-        border-color: #6a6a6a !important;
-        background: #e3e3e3;
-    }
-
-    .custom-control-label {
-        width: 100%;
-    }
-
-    .custom-control-label:hover {
-        border-color: #b4b4b4 !important;
-        background: #f5f5f5;
-    }
-
-    .custom-control-label::before {
-        display: none;
-    }
-
-    .custom-control-label::after {
-        display: none;
-    }
-</style>
-
-<?php $voted = false ?>
-
-<div class="card mb-4 text-body text-left">
-    <div class="card-body" id="result">
-        <?php if ($page->isset('CmsParagraph_BeanList')): ?>
-            <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
-                <?php if ($paragraph->getArticle_Data()->exists('poll_value') && !$paragraph->getArticle_Data()->empty('poll_value')): ?>
-                    <?php $voted = true ?>
-                    <div class="mb-2 row text-center">
-                        <div class="col-sm">
-                            <?php if ($paragraph->isset('ArticleTranslation_Title') && !($paragraph->empty('ArticleTranslation_Title'))): ?>
-                                <div class="" style="font-size: 1.5rem">
-                                    <?= $paragraph->isset('ArticleTranslation_Title') ? $this->p($paragraph->get('ArticleTranslation_Title')) : '' ?>
-                                </div>
-                            <?php endif; ?>
-                            <?php if ($paragraph->isset('ArticleTranslation_Heading') && !($paragraph->empty('ArticleTranslation_Heading'))): ?>
-                                <div class="" style="font-size: 1.5rem">
-                                    <?= $paragraph->isset('ArticleTranslation_Heading') ? $this->p($paragraph->get('ArticleTranslation_Heading')) : '' ?>
-                                </div>
-                            <?php endif; ?>
-                            <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
-                                <?php
-                                /**
-                                 * @var $file \Pars\Model\File\FileBean
-                                 */
-                                $file = $paragraph->get('File_BeanList')->first();
-                                ?>
-
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-sm">
-                            <div class="progress">
-                                <div role="progressbar"
-                                     aria-valuenow=" <?= $paragraph->getArticle_Data()->get('poll_value') ?>"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100"
-                                     style=" width: <?= $paragraph->getArticle_Data()->get('poll_value') ?>%;"
-                                     class="progress-bar progress-bar-striped bg-success"></div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
+<div class="row mb-4">
+    <!-- Section Titile -->
+    <div class="col-md-12">
+        <h1 class="section-title cover-heading"><?= $this->p($page->get('ArticleTranslation_Heading')) ?></h1>
+        <?php if (isset($page) && $page->isset('File_BeanList')): ?>
+            <?php foreach ($page->get('File_BeanList') as $file): ?>
+                <div class="text-center">
+                    <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1106, 'height' => 300, 'fit' => 'crop',
+                        'alt' => $page->get('ArticleTranslation_Heading')
+                    ]) ?>
+                </div>
             <?php endforeach; ?>
         <?php endif; ?>
-        <?= $voted ? '' : $page->get('ArticleTranslation_SubHeading') ?>
     </div>
 </div>
-
-
-<div class="card mb-4 text-body">
-    <form method="post">
-        <div class="form-group card-header text-left">
-            <label for="name">Name</label>
-            <input class="form-control" type="text" name="name" id="name" value="<?= $name ?>">
-        </div>
+<?php if (isset($success)): ?>
+    <div class="card text-dark">
+        <h3 class="card-header"><?= $page->get('ArticleTranslation_SubHeading') ?></h3>
         <div class="card-body">
-            <?php if ($page->isset('CmsParagraph_BeanList')): ?>
-                <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
-                    <div class="form-group">
-                        <div class="custom-control custom-radio">
-                            <input class="custom-control-input js-radio " type="radio" name='poll'
-                                   value="<?= $paragraph->get('Article_Code') ?>"
-                                   id="<?= $paragraph->get('Article_Code') ?>">
+            <div class="alert alert-success" role="alert">
+                <?= $this->t('poll.form.success') ?>
+            </div>
+        </div>
 
-                            <label class="custom-control-label border border-light rounded px-1 py-1"
-                                   for="<?= $paragraph->get('Article_Code') ?>">
-                                <?php if ($paragraph->isset('ArticleTranslation_Title') && !empty($paragraph->get('ArticleTranslation_Title'))): ?>
-                                    <div class="" style="font-size: 1.5rem">
-                                        <?= $paragraph->isset('ArticleTranslation_Title') ? $this->p($paragraph->get('ArticleTranslation_Title')) : '' ?>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($paragraph->isset('ArticleTranslation_Heading') && !empty($paragraph->get('ArticleTranslation_Heading'))): ?>
-                                    <div class="" style="font-size: 1.5rem">
-                                        <?= $paragraph->isset('ArticleTranslation_Heading') ? $this->p($paragraph->get('ArticleTranslation_Heading')) : '' ?>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($paragraph->isset('ArticleTranslation_SubHeading') && !empty($paragraph->get('ArticleTranslation_SubHeading'))): ?>
-                                    <p class="card-text">
-                                        <?= $paragraph->isset('ArticleTranslation_SubHeading') ? $this->p($paragraph->get('ArticleTranslation_SubHeading')) : '' ?>
-                                    </p>
-                                <?php endif; ?>
-                                <?php if ($paragraph->isset('ArticleTranslation_Teaser') && !empty($paragraph->get('ArticleTranslation_Teaser'))): ?>
-                                    <p class="card-text">
-                                        <?= $paragraph->isset('ArticleTranslation_Teaser') ? $this->p($paragraph->get('ArticleTranslation_Teaser')) : '' ?>
-                                    </p>
-                                <?php endif; ?>
-                                <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
-                                    <?php
-                                    /**
-                                     * @var $file \Pars\Model\File\FileBean
-                                     */
-                                    $file = $paragraph->get('File_BeanList')->first();
-                                    ?>
-                                    <img class="img-fluid"
-                                         src="<?= $static ?>/upload/<?= $file->FileDirectory_Code . '/' . $file->File_Code . '.' . $file->FileType_Code ?>">
-                                <?php endif; ?>
-                                <?= $paragraph->isset('ArticleTranslation_Text') && !empty($paragraph->get('ArticleTranslation_Text')) ? $this->p($paragraph->get('ArticleTranslation_Text')) : '' ?>
+    </div>
+<?php else: ?>
+<?php if (isset($form) && $form instanceof \Pars\Frontend\Cms\Form\Poll\PollForm): ?>
+    <?= $this->form($form, 'card text-dark') ?>
+    <h3 class="card-header"><?= $page->get('ArticleTranslation_SubHeading') ?></h3>
+    <div class="card-body">
+        <ul class="list-group  <?= empty($errors['option']) ?: 'is-invalid' ?>">
+            <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
+                <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
+                    <label class="list-group-item list-group-item-action mb-0" for="<?= $paragraph->get('Article_Code') ?>">
+                        <label class="form-check mb-0">
+                            <input class="form-check-input <?= empty($errors['option']) ?: 'is-invalid' ?>" type="radio" name='option' id="<?= $paragraph->get('Article_Code') ?>" value="<?= $paragraph->get('Article_Code') ?>">
+                            <label class="form-check-label" for="<?= $paragraph->get('Article_Code') ?>">
+                                <?= $paragraph->get('ArticleTranslation_Name') ?>
                             </label>
-                        </div>
-                    </div>
+                            <a class="float-right btn-link small" href="<?= $this->cmspath($paragraph)?>"><?= $this->t('poll.form.option.more_info')?></a>
+                        </label>
+                    </label>
                 <?php endforeach; ?>
             <?php endif; ?>
-            <input class="btn btn-success w-100" type="submit">
-    </form>
-</div>
+        </ul>
+        <?php if (!empty($errors['option'])): ?>
+            <?php foreach ($errors['option'] as $error): ?>
+                <div id="email-error" class="invalid-feedback">
+                    <?= $error ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <hr>
+        <div class="form-group">
+            <label for="name"><?= $this->t('poll.form.name') ?></label>
+            <input class="form-control" type="text" name="name" id="name" value="<?= $attributes['name'] ?? '' ?>">
+            <small class="text-muted"><?= $this->t('poll.form.name.hint')?></small>
+        </div>
+    </div>
+    <div class="card-footer text-center">
+        <button type="submit" class="btn btn-block btn-success">
+            <?= $this->t('poll.form.submit') ?>
+        </button>
+    </div>
+    <?= $this->form($form) ?>
+<?php endif; ?>
 
+<?php endif; ?>
 

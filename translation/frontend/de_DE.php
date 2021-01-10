@@ -1,6 +1,6 @@
 <?php
 return [
-    'contact.form.name' => 'Was ist Ihr Name?',
+    'contact.form.name' => 'Wie lautet Ihr Name?',
     'contact.form.email' => 'Wie lautet Ihre E-Mail Adresse?',
     'contact.form.email.hint' => 'Die Antwort wird an diese E-Mail Adresse gesendet.',
     'contact.form.email.empty' => 'Bitte geben Sie eine E-Mail Adresse ein.',
@@ -10,4 +10,11 @@ return [
     'contact.form.message.empty' => 'Bitte geben Sie eine Nachricht ein.',
     'contact.form.success' => 'Vielen Dank für Ihre Nachricht.',
     'contact.form.submit' => 'Nachricht senden',
+    'poll.form.option.more_info' => 'mehr',
+    'poll.form.submit' => 'Abstimmen',
+    'poll.form.name' => 'Wie lautet Ihr Name?',
+    'poll.form.success' => 'Vielen Dank für Ihre Teilnahme.',
+    'poll.form.name.hint' => 'Die Eingabe eines Namen ist Optional.',
+    'poll.form.option.empty' => 'Bitte wählen Sie eine Option.',
+    'poll.form.error.vote_once' => 'Sie haben bereits eine Stimme abgegeben.',
 ];

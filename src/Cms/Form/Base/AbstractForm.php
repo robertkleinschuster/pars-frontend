@@ -10,10 +10,13 @@ use Laminas\I18n\Translator\TranslatorAwareTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Mezzio\Csrf\CsrfGuardInterface;
 use Mezzio\Session\SessionInterface;
+use Niceshops\Bean\Processor\TimestampMetaFieldHandler;
 use Niceshops\Bean\Type\Base\BeanAwareInterface;
 use Niceshops\Bean\Type\Base\BeanAwareTrait;
 use Pars\Helper\Validation\ValidationHelperAwareInterface;
 use Pars\Helper\Validation\ValidationHelperAwareTrait;
+use Pars\Model\Article\Data\ArticleDataBeanFinder;
+use Pars\Model\Article\Data\ArticleDataBeanProcessor;
 
 abstract class AbstractForm implements ValidationHelperAwareInterface, TranslatorAwareInterface, BeanAwareInterface
 {
@@ -57,7 +60,8 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
         $this->initialize();
     }
 
-    protected function initialize() {
+    protected function initialize()
+    {
 
     }
 
@@ -134,7 +138,8 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
         }
     }
 
-    protected function translate(string $message) {
+    protected function translate(string $message)
+    {
         return $this->getTranslator()->translate($message, 'frontend');
     }
 
@@ -155,18 +160,18 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
     }
 
     /**
-    * @return ?string
-    */
+     * @return ?string
+     */
     public function getAction(): ?string
     {
         return $this->action;
     }
 
     /**
-    * @param ?string $action
-    *
-    * @return $this
-    */
+     * @param ?string $action
+     *
+     * @return $this
+     */
     public function setAction(?string $action): self
     {
         $this->action = $action;
@@ -174,8 +179,8 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
     }
 
     /**
-    * @return bool
-    */
+     * @return bool
+     */
     public function hasAction(): bool
     {
         return isset($this->action);
@@ -204,7 +209,6 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
     }
 
 
-
     /**
      * @return string
      */
@@ -227,5 +231,24 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
      * @param array $data
      * @return bool
      */
-    protected abstract function save(array $data): bool;
+
+    protected function save(array $data): bool
+    {
+        if ($this->hasBean()) {
+            $processor = new ArticleDataBeanProcessor($this->getAdapter());
+            $processor->addMetaFieldHandler(new TimestampMetaFieldHandler('Timestamp_Edit', 'Timestamp_Create'));
+            $finder = new ArticleDataBeanFinder($this->getAdapter());
+            $bean = $finder->getBeanFactory()->getEmptyBean($data);
+            $beanList = $finder->getBeanFactory()->getEmptyBeanList();
+            $bean->set('Article_ID', $this->getBean()->get('Article_ID'));
+            $bean->fromArray($data);
+            $beanList->push($bean);
+            $processor->setBeanList($beanList);
+            $processor->save();
+            $this->getValidationHelper()->merge($processor->getValidationHelper());
+        } else {
+            $this->getValidationHelper()->addError('general', $this->translate('form.save.error'));
+        }
+        return !$this->getValidationHelper()->hasError();
+    }
 }
