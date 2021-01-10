@@ -24,6 +24,7 @@ class Config implements AdapterAwareInterface
      */
     protected array $codes = [
         'asset.domain',
+        'asset.key',
         'frontend.brand',
         'frontend.keywords',
         'frontend.author',

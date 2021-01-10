@@ -22,18 +22,18 @@
     <?php endif; ?>
     <meta property="og:description" content="<?= $this->e(strip_tags($description ?? '')) ?>"/>
     <?php if (isset($favicon)): ?>
-        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, 32, 32, 1, 'png', 'crop') ?>" sizes="32x32">
-        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, 57, 57, 1, 'png', 'crop') ?>" sizes="57x57">
-        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, 76, 76, 1, 'png', 'crop') ?>" sizes="76x76">
-        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, 96, 96, 1, 'png', 'crop') ?>" sizes="96x96">
-        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, 128, 128, 1, 'png', 'crop') ?>" sizes="128x128">
-        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, 192, 192, 1, 'png', 'crop') ?>" sizes="192x192">
-        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, 228, 228, 1, 'png', 'crop') ?>" sizes="228x228">
-        <link rel="shortcut icon" sizes="196x196" href=“<?= $this->cmsimg($favicon, $static ?? null, 196, 196, 1, 'png', 'crop') ?>">
-        <link rel="apple-touch-icon" href="<?= $this->cmsimg($favicon, $static ?? null, 120, 120, 1, 'png', 'crop') ?>" sizes="120x120">
-        <link rel="apple-touch-icon" href="<?= $this->cmsimg($favicon, $static ?? null, 152, 152, 1, 'png', 'crop') ?>" sizes="152x152">
-        <link rel="apple-touch-icon" href="<?= $this->cmsimg($favicon, $static ?? null, 180, 180, 1, 'png', 'crop') ?>" sizes="180x180">
-        <meta name="msapplication-TileImage" content="<?= $this->cmsimg($favicon, $static ?? null, 144, 144, 1, 'png', 'crop') ?>">
+        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 32, 32, 1, 'png', 'crop') ?>" sizes="32x32">
+        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 57, 57, 1, 'png', 'crop') ?>" sizes="57x57">
+        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 76, 76, 1, 'png', 'crop') ?>" sizes="76x76">
+        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 96, 96, 1, 'png', 'crop') ?>" sizes="96x96">
+        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 128, 128, 1, 'png', 'crop') ?>" sizes="128x128">
+        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 192, 192, 1, 'png', 'crop') ?>" sizes="192x192">
+        <link rel="icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 228, 228, 1, 'png', 'crop') ?>" sizes="228x228">
+        <link rel="shortcut icon" sizes="196x196" href=“<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 196, 196, 1, 'png', 'crop') ?>">
+        <link rel="apple-touch-icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 120, 120, 1, 'png', 'crop') ?>" sizes="120x120">
+        <link rel="apple-touch-icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 152, 152, 1, 'png', 'crop') ?>" sizes="152x152">
+        <link rel="apple-touch-icon" href="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 180, 180, 1, 'png', 'crop') ?>" sizes="180x180">
+        <meta name="msapplication-TileImage" content="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, 144, 144, 1, 'png', 'crop') ?>">
     <?php endif; ?>
     <meta name="msapplication-TileColor" content="<?= $color ?? '#FFFFFF' ?>">
     <meta name="msapplication-config" content="/browserconfig" />

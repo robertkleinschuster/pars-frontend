@@ -1,22 +1,22 @@
 <picture>
-    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'webp', $fit ?? null) ?> 1x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'webp', $fit ?? null) ?> 2x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'webp', $fit ?? null) ?> 3x"
+    <source srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 1, 'webp', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 2, 'webp', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 3, 'webp', $fit ?? null) ?> 3x"
             type="image/webp">
 
-    <source srcset="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 1, 'pjpg', $fit ?? null) ?> 1x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 2, 'pjpg', $fit ?? null) ?> 2x,
-        <?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, 3, 'pjpg', $fit ?? null) ?> 3x"
+    <source srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 1, 'pjpg', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 2, 'pjpg', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 3, 'pjpg', $fit ?? null) ?> 3x"
             type="image/jpeg">
 
     <img
             loading='lazy'
             class="img-fluid <?= $class ?? '' ?>"
-            src="<?= $this->cmsimg($file, $static ?? null, $width ?? null, $height ?? null, null, 'pjpg', $fit ?? null) ?>"
+            src="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, null, 'pjpg', $fit ?? null) ?>"
             width="<?= $width ?? null ?>"
             height="<?= $height ?? null ?>"
             alt="<?= $alt ?? '' ?>"
     >
 </picture>
 
-<?php $this->og('og:image', $this->cmsimg($file, $static ?? null)) ?>
+<?php $this->og('og:image', $this->cmsimg($file, $static ?? null, $key ?? null)) ?>
