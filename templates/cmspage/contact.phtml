@@ -1,16 +1,25 @@
-<div class="row">
+<div class="row mb-4">
     <!-- Section Titile -->
-    <div class="col-md-12 wow animated fadeInLeft" data-wow-delay=".2s">
-        <h1 class="section-title cover-heading mb-4"><?= $this->p($page->get('ArticleTranslation_Heading')) ?></h1>
+    <div class="col-md-12">
+        <h1 class="section-title cover-heading"><?= $this->p($page->get('ArticleTranslation_Heading')) ?></h1>
+        <?php if (isset($page) && $page->isset('File_BeanList')): ?>
+            <?php foreach ($page->get('File_BeanList') as $file): ?>
+                <div class="text-center">
+                    <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1106, 'height' => 300, 'fit' => 'crop',
+                        'alt' => $page->get('ArticleTranslation_Heading')
+                    ]) ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </div>
-<div class="row">
+<div class="row mb-4">
     <!-- Section Titile -->
-    <div class="col-md-6 p-3">
+    <div class="col-md-6 p-3 order-2 order-md-1">
         <?= $this->p($page->get('ArticleTranslation_Text')) ?>
     </div>
     <!-- contact form -->
-    <div class="col-md-6">
+    <div class="col-md-6 oder-1 order-md-2">
         <?php if (isset($success)): ?>
             <div class="bg-light text-dark p-3 rounded-lg">
                 <h2 class="mb-3"><?= $this->p($page->get('ArticleTranslation_SubHeading')) ?></h2>

@@ -36,7 +36,11 @@ class ImagePathExtension implements ExtensionInterface
                     $params['fit'] = $fit;
                 }
                 $params['file'] = $img;
-                $url = UrlBuilderFactory::create($static, 'pars-sign');
+                $key = '';
+                if (file_exists('data/image_signature')) {
+                    $key = file_get_contents('data/image_signature');
+                }
+                $url = UrlBuilderFactory::create($static, $key);
                 return $url->getUrl('', $params);
             } else {
                 return $static . $img;
