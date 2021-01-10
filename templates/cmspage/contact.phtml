@@ -14,8 +14,17 @@
     </div>
 </div>
 <div class="row mb-4">
-    <div class="col-md-6 p-3">
-        <?= $this->p($page->get('ArticleTranslation_Text')) ?>
+    <div class="col-md-6 px-3">
+        <div class="no-p-margin">
+            <?= $this->p($page->get('ArticleTranslation_Text')) ?>
+        </div>
+        <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
+            <?php foreach ($page->get('CmsParagraph_BeanList')->filter(function($bean){return $bean->get('CmsParagraphType_Code') == 'picture';}) as $paragraph): ?>
+                <div class="text-center">
+                    <?= $this->paragraph($paragraph) ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
     <div class="col-md-6">
         <?php if (isset($success)): ?>
@@ -27,16 +36,16 @@
             </div>
         <?php else: ?>
             <?php if (isset($form) && $form instanceof \Pars\Frontend\Cms\Form\Contact\ContactForm): ?>
-                <?= $this->form($form, 'bg-light text-dark p-3 rounded-lg') ?>
+                <?= $this->form($form, 'bg-light card text-dark p-3 rounded-lg') ?>
                 <h2 class="mb-3"><?= $this->p($page->get('ArticleTranslation_SubHeading')) ?></h2>
                 <div class="form-group">
                     <label class="control-label" for="name"><?= $this->t('contact.form.name') ?></label>
-                    <input class="form-control rounded-0 <?= empty($errors['name']) ?: 'is-invalid' ?>" id="name"
+                    <input class="form-control rounded-0 <?= empty($errors['name']) ?: ' is-invalid' ?>" id="name"
                            type="text" name="name" value="<?= $attributes['name'] ?? '' ?>" autocomplete="name">
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="email"><?= $this->t('contact.form.email') ?></label>
-                    <input class="form-control rounded-0 <?= empty($errors['email']) ?: 'is-invalid' ?>"
+                    <label class="control-label" for="email"><?= $this->t('contact.form.email') ?> *</label>
+                    <input class="form-control rounded-0 <?= empty($errors['email']) ?: ' is-invalid' ?>"
                            id="email" type="email" value="<?= $attributes['email'] ?? '' ?>"
                            name="email" <?= empty($errors['email']) ? 'aria-describedby="email-hint"' : ' aria-describedby="email-error"' ?>
                     autocomplete="email">
@@ -53,12 +62,12 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="subject"><?= $this->t('contact.form.subject') ?></label>
-                    <input class="form-control rounded-0 <?= empty($errors['subject']) ?: 'is-invalid' ?>" id="subject"
+                    <input class="form-control rounded-0 <?= empty($errors['subject']) ?: ' is-invalid' ?>" id="subject"
                            type="text" name="subject" value="<?= $attributes['subject'] ?? '' ?>">
                 </div>
                 <div class="form-group">
-                    <label for="message" class="control-label"><?= $this->t('contact.form.message') ?></label>
-                    <textarea class="form-control rounded-0 <?= empty($errors['message']) ?: 'is-invalid' ?>" rows="3"
+                    <label for="message" class="control-label"><?= $this->t('contact.form.message') ?> *</label>
+                    <textarea class="form-control rounded-0 <?= empty($errors['message']) ?: ' is-invalid' ?>" rows="3"
                               id="message" name="message"
                  <?= empty($errors['message']) ?: ' aria-describedby="message-error"' ?>><?= $attributes['message'] ?? '' ?></textarea>
                     <?php if (!empty($errors['message'])): ?>
@@ -69,10 +78,25 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input <?= empty($errors['privacy']) ?: ' is-invalid' ?>" id="privacy"
+                    name="privacy" value="true">
+                    <label class="custom-control-label" for="privacy">
+                        <a class="<?= empty($errors['privacy']) ? 'text-primary': '' ?>" target="_blank" href="<?= $page->get('ArticleTranslation_Path') ?>"><?= $this->t('contact.form.privacy') ?> *</a>
+                    </label>
+                    <?php if (!empty($errors['privacy'])): ?>
+                        <?php foreach ($errors['privacy'] as $error): ?>
+                            <div id="privacy-error" class="invalid-feedback">
+                                <?= $error ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
                 <div class="form-submit">
                     <button class="btn btn-dark btn-block rounded-0" type="submit">
                         <?= $this->t('contact.form.submit') ?>
                     </button>
+                    <small class="text-muted"><?= $this->t('contact.form.submit.hint') ?></small>
                 </div>
                 <?= $this->form($form) ?>
             <?php endif; ?>
@@ -81,7 +105,7 @@
 </div>
 
 <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
-    <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
+    <?php foreach ($page->get('CmsParagraph_BeanList')->filter(function($bean){return $bean->get('CmsParagraphType_Code') != 'picture';}) as $paragraph): ?>
         <?= $this->paragraph($paragraph) ?>
     <?php endforeach; ?>
 <?php endif; ?>

@@ -2,3 +2,16 @@
     box-shadow: none;
     border: none;
 }
+
+.no-p-margin p:empty {
+    margin: 0;
+}
+
+.no-p-margin p > br:only-child {
+    display: none;
+}
+
+.no-p-margin p {
+    margin: 0;
+}
+

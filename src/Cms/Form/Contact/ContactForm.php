@@ -33,6 +33,9 @@ class ContactForm extends AbstractForm
         if (empty($data['message'])) {
             $this->getValidationHelper()->addError('message', $this->translate('contact.form.message.empty'));
         }
+        if (empty($data['privacy'])) {
+            $this->getValidationHelper()->addError('privacy', $this->translate('contact.form.privacy.empty'));
+        }
         return !$this->getValidationHelper()->hasError();
     }
 }
