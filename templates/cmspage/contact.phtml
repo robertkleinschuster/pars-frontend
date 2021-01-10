@@ -14,12 +14,10 @@
     </div>
 </div>
 <div class="row mb-4">
-    <!-- Section Titile -->
-    <div class="col-md-6 p-3 order-2 order-md-1">
+    <div class="col-md-6 p-3">
         <?= $this->p($page->get('ArticleTranslation_Text')) ?>
     </div>
-    <!-- contact form -->
-    <div class="col-md-6 oder-1 order-md-2">
+    <div class="col-md-6">
         <?php if (isset($success)): ?>
             <div class="bg-light text-dark p-3 rounded-lg">
                 <h2 class="mb-3"><?= $this->p($page->get('ArticleTranslation_SubHeading')) ?></h2>
@@ -31,18 +29,17 @@
             <?php if (isset($form) && $form instanceof \Pars\Frontend\Cms\Form\Contact\ContactForm): ?>
                 <?= $this->form($form, 'bg-light text-dark p-3 rounded-lg') ?>
                 <h2 class="mb-3"><?= $this->p($page->get('ArticleTranslation_SubHeading')) ?></h2>
-                <!-- Name -->
                 <div class="form-group">
                     <label class="control-label" for="name"><?= $this->t('contact.form.name') ?></label>
                     <input class="form-control rounded-0 <?= empty($errors['name']) ?: 'is-invalid' ?>" id="name"
-                           type="text" name="name" value="<?= $attributes['name'] ?? '' ?>">
+                           type="text" name="name" value="<?= $attributes['name'] ?? '' ?>" autocomplete="name">
                 </div>
-                <!-- email -->
                 <div class="form-group">
                     <label class="control-label" for="email"><?= $this->t('contact.form.email') ?></label>
                     <input class="form-control rounded-0 <?= empty($errors['email']) ?: 'is-invalid' ?>"
                            id="email" type="email" value="<?= $attributes['email'] ?? '' ?>"
-                           name="email" <?= empty($errors['email']) ? 'aria-describedby="email-hint"' : ' aria-describedby="email-error"' ?>>
+                           name="email" <?= empty($errors['email']) ? 'aria-describedby="email-hint"' : ' aria-describedby="email-error"' ?>
+                    autocomplete="email">
                     <small id="email-hint" class="text-muted">
                         <?= $this->t('contact.form.email.hint') ?>
                     </small>
@@ -54,13 +51,11 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-                <!-- Subject -->
                 <div class="form-group">
                     <label class="control-label" for="subject"><?= $this->t('contact.form.subject') ?></label>
                     <input class="form-control rounded-0 <?= empty($errors['subject']) ?: 'is-invalid' ?>" id="subject"
                            type="text" name="subject" value="<?= $attributes['subject'] ?? '' ?>">
                 </div>
-                <!-- Message -->
                 <div class="form-group">
                     <label for="message" class="control-label"><?= $this->t('contact.form.message') ?></label>
                     <textarea class="form-control rounded-0 <?= empty($errors['message']) ?: 'is-invalid' ?>" rows="3"
@@ -74,7 +69,6 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-                <!-- Form Submit -->
                 <div class="form-submit">
                     <button class="btn btn-dark btn-block rounded-0" type="submit">
                         <?= $this->t('contact.form.submit') ?>
