@@ -3,6 +3,12 @@ return [
     'translator' => [
         'locale' => ['de_AT'],
         'translation_file_patterns' => [
+            [
+                'type' => Laminas\I18n\Translator\Loader\PhpArray::class,
+                'base_dir' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'translation', 'frontend']),
+                'pattern' => '%s.php',
+                'text_domain' => 'frontend'
+            ],
         ],
         'translation_files' => [
         ],

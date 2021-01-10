@@ -11,8 +11,10 @@ use Mezzio\Flash\FlashMessagesInterface;
 use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Session\SessionMiddleware;
 use Pars\Core\Database\DatabaseMiddleware;
+use Pars\Core\Localization\LocaleInterface;
 use Pars\Core\Logging\LoggingMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
+use Pars\Model\Article\Translation\ArticleTranslationBeanFinder;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -52,26 +54,39 @@ class CmsFormMiddelware implements MiddlewareInterface
             $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
             $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
             $log = $request->getAttribute(LoggingMiddleware::LOGGER_ATTRIBUTE);
+            $locale = $request->getAttribute(LocaleInterface::class);
+            $code = $request->getAttribute('code', '/');
             try {
+                $finder = new ArticleTranslationBeanFinder($adapter);
+                $finder->setArticleTranslation_Code($code);
                 $form = (new FormFactory())($request->getParsedBody(), $adapter, $session, $guard, $translator);
+                if ($finder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT')  == 1) {
+                    $form->setBean($finder->getBean());
+                }
                 $form->submit();
                 if ($form->getValidationHelper()->hasError()) {
                     $flash->flash('validationErrorMap', $form->getValidationHelper()->getErrorFieldMap());
                     $flash->flash('previousAttributes', $request->getParsedBody());
+                } else {
+                    $flash->flash('formSuccess', true);
                 }
             } catch (\Exception $exception) {
                 $log->error('Form submit error.', ['exception' => $exception]);
-                $flash->flash('error', $translator->translate('form.error.exception'));
+                $flash->flash('error', $translator->translate('form.error.exception', 'frontend'));
             }
             return new RedirectResponse($request->getUri());
         } else {
             $validationErrorMap = $flash->getFlash('validationErrorMap');
             if ($validationErrorMap) {
-                $vars['validationErrorMap'] = $validationErrorMap;
+                $vars['errors'] = $validationErrorMap;
             }
             $previousAttributes = $flash->getFlash('previousAttributes');
             if ($previousAttributes) {
-                $vars['previousAttributes'] = $previousAttributes;
+                $vars['attributes'] = $previousAttributes;
+            }
+            $formSuccess = $flash->getFlash('formSuccess');
+            if ($formSuccess) {
+                $vars['success'] = $formSuccess;
             }
         }
         return $handler->handle($request->withAttribute(TemplateVariableContainer::class, $container->merge($vars)));

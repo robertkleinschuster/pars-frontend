@@ -7,6 +7,7 @@ namespace Pars\Frontend\Cms\Handler;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Csrf\CsrfMiddleware;
+use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Helper\UrlHelper;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
@@ -72,21 +73,21 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
             return new HtmlResponse($this->renderer->render('meta::browserconfig'));
         }
 
-        $localeModel = new LocaleModel($adapter, $translator, $session, $locale, $code, $logger, $config);
+        $localeModel = new LocaleModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $this->renderer->addDefaultParam(
             TemplateRendererInterface::TEMPLATE_ALL,
             'localelist',
             $localeModel->getLocaleList()
         );
 
-        $menuModel = new MenuModel($adapter, $translator, $session, $locale, $code, $logger, $config);
+        $menuModel = new MenuModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $this->renderer->addDefaultParam(
             TemplateRendererInterface::TEMPLATE_ALL,
             'menu',
             $menuModel->getMenuList()
         );
 
-        $pageModel = new PageModel($adapter, $translator, $session, $locale, $code, $logger, $config);
+        $pageModel = new PageModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $page = $pageModel->getPage();
         if ($page != null) {
             if (!$page->empty('CmsPage_ID_Redirect')) {
@@ -98,9 +99,14 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
                 return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
             }
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'page', $page);
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
+            $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
+            foreach ($container->mergeForTemplate([]) as $key => $value) {
+                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, $key, $value);
+            }
             return new HtmlResponse($this->renderer->render('index::index'));
         }
-        $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config);
+        $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $paragraph = $paragraphModel->getPage();
         if ($paragraph != null) {
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'paragraph', $paragraph);

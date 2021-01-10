@@ -16,7 +16,9 @@
         <div class="card-body">
             <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
                 <div class="text-center">
-                    <?= $this->file($paragraph->get('File_BeanList')->first(), ['width' => $img_width ?? 1106, 'height' => $img_height ?? 600, 'fit' => 'crop']) ?>
+                    <?= $this->file($paragraph->get('File_BeanList')->first(), ['width' => $img_width ?? 1106, 'height' => $img_height ?? 600, 'fit' => 'crop',
+                        'alt' => $this->p($paragraph->get('ArticleTranslation_Title'))
+                        ]) ?>
                 </div>
             <?php endif; ?>
             <?php if (!$paragraph->empty('ArticleTranslation_Heading')): ?>

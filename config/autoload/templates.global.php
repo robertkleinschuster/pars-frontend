@@ -10,6 +10,7 @@ return [
             \Pars\Frontend\Cms\Extensions\ImagePathExtension::class,
             \Pars\Frontend\Cms\Extensions\StylesheetsExtension::class,
             \Pars\Frontend\Cms\Extensions\JavascriptExtension::class,
+            \Pars\Frontend\Cms\Extensions\FormExtension::class
         ]
     ],
     'templates' => [

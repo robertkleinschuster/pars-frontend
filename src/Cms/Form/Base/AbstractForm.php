@@ -10,18 +10,25 @@ use Laminas\I18n\Translator\TranslatorAwareTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Mezzio\Csrf\CsrfGuardInterface;
 use Mezzio\Session\SessionInterface;
+use Niceshops\Bean\Type\Base\BeanAwareInterface;
+use Niceshops\Bean\Type\Base\BeanAwareTrait;
 use Pars\Helper\Validation\ValidationHelperAwareInterface;
 use Pars\Helper\Validation\ValidationHelperAwareTrait;
 
-abstract class AbstractForm implements ValidationHelperAwareInterface, TranslatorAwareInterface
+abstract class AbstractForm implements ValidationHelperAwareInterface, TranslatorAwareInterface, BeanAwareInterface
 {
     use ValidationHelperAwareTrait;
     use TranslatorAwareTrait;
+    use BeanAwareTrait;
 
     protected array $data;
     protected AdapterInterface $adapter;
     protected SessionInterface $session;
     protected CsrfGuardInterface $guard;
+    protected string $method = 'post';
+    protected ?string $action = null;
+    protected ?Validate $validate = null;
+    protected ?Sanitize $sanitize = null;
 
     public const PARAMETER_TOKEN = 'form_token';
     public const PARAMETER_ID = 'form_id';
@@ -47,6 +54,11 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
         $this->session = $session;
         $this->guard = $guard;
         $this->setTranslator($translator);
+        $this->initialize();
+    }
+
+    protected function initialize() {
+
     }
 
     /**
@@ -85,7 +97,7 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
     /**
      * @return string
      */
-    protected function generateToken(): string
+    public function generateToken(): string
     {
         if (!$this->getSession()->get(self::PARAMETER_TOKEN, false)) {
             return $this->getGuard()->generateToken(self::PARAMETER_TOKEN);
@@ -121,6 +133,76 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
             );
         }
     }
+
+    protected function translate(string $message) {
+        return $this->getTranslator()->translate($message, 'frontend');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param string $method
+     */
+    public function setMethod(string $method): void
+    {
+        $this->method = $method;
+    }
+
+    /**
+    * @return ?string
+    */
+    public function getAction(): ?string
+    {
+        return $this->action;
+    }
+
+    /**
+    * @param ?string $action
+    *
+    * @return $this
+    */
+    public function setAction(?string $action): self
+    {
+        $this->action = $action;
+        return $this;
+    }
+
+    /**
+    * @return bool
+    */
+    public function hasAction(): bool
+    {
+        return isset($this->action);
+    }
+
+    /**
+     * @return Validate|null
+     */
+    public function getValidate(): ?Validate
+    {
+        if ($this->validate == null) {
+            $this->validate = new Validate();
+        }
+        return $this->validate;
+    }
+
+    /**
+     * @return Sanitize|null
+     */
+    public function getSanitize(): ?Sanitize
+    {
+        if ($this->sanitize == null) {
+            $this->sanitize = new Sanitize();
+        }
+        return $this->sanitize;
+    }
+
 
 
     /**

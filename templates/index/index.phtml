@@ -4,7 +4,6 @@
     'title' => $this->p($brand . ' - ' . $page->get('ArticleTranslation_Title')),
     'description' => $this->p($page->get('ArticleTranslation_Teaser')),
     'keywords' => $this->p($page->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
-    'footer' => $this->p($page->get('ArticleTranslation_Footer'))
 ]) ?>
 <?= $this->page($page) ?>
 <?= $this->css("/frontend-critical_$hash.css", true)?>

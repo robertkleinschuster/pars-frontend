@@ -10,6 +10,7 @@ use Laminas\Db\Adapter\AdapterAwareTrait;
 use Laminas\I18n\Translator\Translator;
 use Laminas\I18n\Translator\TranslatorAwareInterface;
 use Laminas\I18n\Translator\TranslatorAwareTrait;
+use Mezzio\Csrf\CsrfGuardInterface;
 use Mezzio\Session\SessionInterface;
 use Pars\Core\Localization\LocaleInterface;
 use Pars\Frontend\Cms\Helper\Config;
@@ -25,6 +26,7 @@ class BaseModel implements AdapterAwareInterface, TranslatorAwareInterface, Logg
 
     protected SessionInterface $session;
     protected LocaleInterface $locale;
+    protected CsrfGuardInterface $guard;
     protected Config $config;
     protected string $code;
 
@@ -35,12 +37,22 @@ class BaseModel implements AdapterAwareInterface, TranslatorAwareInterface, Logg
      * @param Config $config
      * @param string $code
      */
-    public function __construct(Adapter $adapter, Translator $translator, SessionInterface $session, LocaleInterface $locale, string $code, LoggerInterface $logger, Config $config)
+    public function __construct(
+        Adapter $adapter,
+        Translator $translator,
+        SessionInterface $session,
+        LocaleInterface $locale,
+        string $code,
+        LoggerInterface $logger,
+        Config $config,
+    CsrfGuardInterface $guard
+    )
     {
         $this->session = $session;
         $this->locale = $locale;
         $this->code = $code;
         $this->config = $config;
+        $this->guard = $guard;
         $this->setLogger($logger);
         $this->setDbAdapter($adapter);
         $this->setTranslator($translator);
@@ -52,6 +64,14 @@ class BaseModel implements AdapterAwareInterface, TranslatorAwareInterface, Logg
     public function getLogger(): LoggerInterface
     {
         return $this->logger;
+    }
+
+    /**
+     * @return CsrfGuardInterface
+     */
+    public function getGuard(): CsrfGuardInterface
+    {
+        return $this->guard;
     }
 
 
