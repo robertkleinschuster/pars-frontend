@@ -13,7 +13,7 @@ class ParagraphModel extends BaseModel
      * @param string|null $code
      * @return \Niceshops\Bean\Type\Base\BeanInterface|null
      */
-    public function getPage(?string $code = null, int $id = null)
+    public function getParagraph(?string $code = null, int $id = null)
     {
         try {
             if ($code == null) {
@@ -21,6 +21,7 @@ class ParagraphModel extends BaseModel
             }
             $paragraphFinder = new CmsParagraphBeanFinder($this->getAdapter());
             $paragraphFinder->setCmsParagraphState_Code('active');
+            $paragraphFinder->setArticleTranslation_Active(true);
             if ($id === null) {
                 $paragraphFinder->setArticleTranslation_Code($code);
             } else {

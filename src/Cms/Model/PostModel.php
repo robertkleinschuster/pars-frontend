@@ -7,35 +7,37 @@ namespace Pars\Frontend\Cms\Model;
 use Pars\Frontend\Cms\Form\FormFactory;
 use Pars\Model\Cms\Page\CmsPageBean;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
+use Pars\Model\Cms\Post\CmsPostBean;
+use Pars\Model\Cms\Post\CmsPostBeanFinder;
 
-class PageModel extends BaseModel
+class PostModel extends BaseModel
 {
-    protected ?CmsPageBean $page = null;
+    protected ?CmsPostBean $page = null;
 
     /**
      * @param string|null $code
      * @param int|null $id
      * @return \Niceshops\Bean\Type\Base\BeanInterface|null
      */
-    public function getPage(?string $code = null, int $id = null)
+    public function getPost(?string $code = null, int $id = null)
     {
         try {
             if (null === $this->page) {
                 if ($code == null) {
                     $code = $this->getCode();
                 }
-                $pageFinder = new CmsPageBeanFinder($this->getAdapter());
+                $pageFinder = new CmsPostBeanFinder($this->getAdapter());
                 $pageFinder->initPublished($this->getConfig()->get('frontend.timezone'));
-                $pageFinder->setCmsPageState_Code('active');
+                $pageFinder->setCmsPostState_Code('active');
                 $pageFinder->setArticleTranslation_Active(true);
                 if ($id === null) {
                     $pageFinder->setArticleTranslation_Code($code);
                 } else {
-                    $pageFinder->setCmsPage_ID($id);
+                    $pageFinder->setCmsPost_ID($id);
                 }
                 if ($pageFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT') === 1) {
                     $bean = $pageFinder->getBean();
-                    if ($bean instanceof CmsPageBean) {
+                    if ($bean instanceof CmsPostBean) {
                         $this->page = $bean;
                     }
                 }

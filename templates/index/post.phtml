@@ -1,0 +1,13 @@
+<?php $this->layout('layout::default', [
+    'language' => Locale::getPrimaryLanguage($post->get('Locale_Code')),
+    'locale' => $post->get('Locale_Code'),
+    'title' => $this->p($brand . ' - ' . $post->get('ArticleTranslation_Title')),
+    'description' => $this->p($post->get('ArticleTranslation_Teaser')),
+    'keywords' => $this->p($post->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
+    'footer' => $this->p($post->get('ArticleTranslation_Footer'))
+]) ?>
+<?= $this->post($post) ?>
+<?= $this->css("/frontend-critical_$hash.css", true)?>
+<?= $this->css("/frontend-bundle_$hash.css")?>
+<?= $this->js("/script-insertion_$hash.js", true)?>
+<?= $this->js("/frontend-minimal_$hash.js")?>

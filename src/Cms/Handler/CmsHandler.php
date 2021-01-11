@@ -21,6 +21,7 @@ use Pars\Frontend\Cms\Model\LocaleModel;
 use Pars\Frontend\Cms\Model\MenuModel;
 use Pars\Frontend\Cms\Model\PageModel;
 use Pars\Frontend\Cms\Model\ParagraphModel;
+use Pars\Frontend\Cms\Model\PostModel;
 use Pars\Model\Import\ImportBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -109,10 +110,16 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
             return new HtmlResponse($this->renderer->render('index::index'));
         }
         $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
-        $paragraph = $paragraphModel->getPage();
+        $paragraph = $paragraphModel->getParagraph();
         if ($paragraph != null) {
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'paragraph', $paragraph);
             return new HtmlResponse($this->renderer->render('index::paragraph'));
+        }
+        $postModel = new PostModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
+        $post = $postModel->getPost();
+        if ($post != null) {
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'post', $post);
+            return new HtmlResponse($this->renderer->render('index::post'));
         }
 
         return new HtmlResponse($this->renderer->render('error::404'), 404);
