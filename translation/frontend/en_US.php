@@ -1,4 +1,23 @@
 <?php
 return [
-
+    'contact.form.name' => 'What is your name?',
+    'contact.form.email' => 'What is your E-Mail address?',
+    'contact.form.email.hint' => 'The response will be sent to this E-Mail address.',
+    'contact.form.email.empty' => 'Please enter your E-Mail address.',
+    'contact.form.email.invalid' => 'Please enter a valid E-Mail address.',
+    'contact.form.subject' => 'What is the subject of your message?',
+    'contact.form.message' => 'What is your message?',
+    'contact.form.message.empty' => 'Please enter your message.',
+    'contact.form.success' => 'Thank you for your message.',
+    'contact.form.submit' => 'Send message',
+    'contact.form.submit.hint' => 'Hint: Fields with * have to be filled in.',
+    'contact.form.privacy' => 'I accept the data privacy policy.',
+    'contact.form.privacy.empty' => 'Please accept the data privacy policy.',
+    'poll.form.option.more_info' => 'more',
+    'poll.form.submit' => 'Vote',
+    'poll.form.name' => 'What is your name?',
+    'poll.form.success' => 'Thank you for your participation.',
+    'poll.form.name.hint' => 'Entering your name is optional.',
+    'poll.form.option.empty' => 'Please choose an option.',
+    'poll.form.error.vote_once' => 'Your have already voted.',
 ];
