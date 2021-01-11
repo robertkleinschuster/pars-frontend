@@ -16,9 +16,9 @@ class CmsContentExtension implements ExtensionInterface
         $engine->registerFunction('page', function (BeanInterface $bean) use ($engine) {
             return $engine->render($bean->get('CmsPageType_Template'), ['page' => $bean]);
         });
-        $engine->registerFunction('menu', function (BeanListInterface $menu, string $type) use ($engine) {
-            $menu = $menu->filter(function ($bean) use ($type) {
-                return $bean->get('CmsMenuType_Code') == $type;
+        $engine->registerFunction('menu', function (BeanListInterface $menu, string $type, ?string $host = null) use ($engine) {
+            $menu = $menu->filter(function ($bean) use ($type, $host) {
+                return $bean->get('CmsMenuType_Code') == $type && ($bean->empty('ArticleTranslation_Host') || empty($host) || $bean->get('ArticleTranslation_Host') == $host);
             });
             if ($menu->count()) {
                 return $engine->render($menu->first()->get('CmsMenuType_Template'), ['menu' => $menu]);

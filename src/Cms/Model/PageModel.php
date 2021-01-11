@@ -26,6 +26,7 @@ class PageModel extends BaseModel
                 }
                 $pageFinder = new CmsPageBeanFinder($this->getAdapter());
                 $pageFinder->setCmsPageState_Code('active');
+                $pageFinder->setArticleTranslation_Active(true);
                 if ($id === null) {
                     $pageFinder->setArticleTranslation_Code($code);
                 } else {

@@ -69,6 +69,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'favicon', $config->get('frontend.favicon'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'color', $config->get('frontend.color'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'import', new ImportLoader(new ImportBeanFinder($adapter)));
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'host', $request->getUri()->getHost());
 
         if ($code == 'browserconfig') {
             return new HtmlResponse($this->renderer->render('meta::browserconfig'));
@@ -90,7 +91,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
 
         $pageModel = new PageModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $page = $pageModel->getPage();
-        if ($page != null) {
+        if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host')) == $request->getUri()->getHost())) {
             if (!$page->empty('CmsPage_ID_Redirect')) {
                 $redirect = $pageModel->getPage(null, $page->empty('CmsPage_ID'));
                 $redirectCode = $redirect->get('ArticleTranslation_Code');

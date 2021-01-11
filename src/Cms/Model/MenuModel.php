@@ -14,6 +14,7 @@ class MenuModel extends BaseModel
         $menuFinder->setCmsMenuState_Code('active');
         $menuFinder->order(['CmsMenuType_Code']);
         $menuFinder->setCmsMenu_ID_Parent(null);
+        $menuFinder->setArticleTranslation_Active(true);
         $menuFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT');
         $menuFinder->addLinkedFinder(
             new CmsMenuBeanFinder($this->getAdapter()),
