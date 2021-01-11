@@ -9,9 +9,9 @@
     'footer' => $footer ?? ''
 ])?>
 <body>
-<div class="d-flex w-100 h-100 p-3 mx-auto flex-column container">
-    <header class="masthead">
-        <a href="<?= $this->cmspath('/') ?>">
+<div class="p-3 container">
+    <header class="masthead row">
+        <a class="col" href="<?= $this->cmspath('/') ?>">
             <h3 class="masthead-brand"><?= $brand ?? '' ?></h3>
         </a>
         <?= isset($menu) ? $this->menu($menu, 'header') : '' ?>
@@ -24,7 +24,7 @@
         <?= isset($menu) ? $this->menu($menu, 'aside_right') : '' ?>
     </div>
 
-    <footer class="mastfoot mt-auto">
+    <footer class="mastfoot py-3">
         <?= isset($menu) ? $this->menu($menu, 'footer') : '' ?>
         <div class="footer-text">
             <?= $footer ?? '' ?>

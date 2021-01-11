@@ -14,7 +14,6 @@
                     <?= $this->p($paragraph->get('ArticleTranslation_Title')) ?>
                 </h4>
             <?php endif; ?>
-            <div >
                 <?php if (!$paragraph->empty('ArticleTranslation_Heading')): ?>
                     <h5 >
                         <?= $this->p($paragraph->get('ArticleTranslation_Heading')) ?>
@@ -34,7 +33,6 @@
                 <?php if (!$paragraph->empty('ArticleTranslation_Text')): ?>
                     <?= $this->p($paragraph->get('ArticleTranslation_Text')) ?>
                 <?php endif; ?>
-            </div>
         </div>
     <?php if (!$paragraph->empty('ArticleTranslation_Path')): ?>
 </a>

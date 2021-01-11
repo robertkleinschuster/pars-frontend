@@ -1,4 +1,4 @@
-<nav class="nav nav-footer mb-4">
+<nav class="nav-footer">
     <?php foreach ($menu as $item): ?>
         <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
            href="<?= $this->cmspath($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
