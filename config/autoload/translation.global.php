@@ -1,7 +1,7 @@
 <?php
 return [
     'translator' => [
-        'locale' => ['de_AT'],
+        'locale' => ['de_AT', 'en_US'],
         'translation_file_patterns' => [
             [
                 'type' => Laminas\I18n\Translator\Loader\PhpArray::class,
