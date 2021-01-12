@@ -7,6 +7,7 @@ return [
             [
                 'type' => 'js',
                 'output' => "script-insertion_$hash.js",
+                'unlink' => "script-insertion_*",
                 'critical' => true,
                 'sources' => [
                     __DIR__ . '/../../bundles/js/script-insertion.js',
@@ -15,6 +16,7 @@ return [
             [
                 'type' => 'js',
                 'output' => "frontend-minimal_$hash.js",
+                'unlink' => "frontend-minimal_*.js",
                 'critical' => true,
                 'sources' => [
                     __DIR__ . '/../../bundles/js/01-jquery.min.js',
@@ -26,6 +28,7 @@ return [
             [
                 'type' => 'js',
                 'output' => "frontend-bundle_$hash.js",
+                'unlink' => "frontend-bundle_*.js",
                 'critical' => false,
                 'sources' => [
                 ]
@@ -33,6 +36,7 @@ return [
             [
                 'type' => 'css',
                 'output' => "frontend-critical_$hash.css",
+                'unlink' => "frontend-critical_*.css",
                 'critical' => true,
                 'sources' => [
                     __DIR__ . '/../../bundles/css/bootstrap-grid.min.css',
@@ -43,6 +47,7 @@ return [
             [
                 'type' => 'css',
                 'output' => "frontend-bundle_$hash.css",
+                'unlink' => "frontend-bundle_*.css",
                 'critical' => false,
                 'sources' => [
                     __DIR__ . '/../../bundles/css/bootstrap.min.css',
