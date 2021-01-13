@@ -16,3 +16,8 @@
         <?= $this->paragraph($paragraph, ['img_width' => 1106, 'img_height' => 600]) ?>
     <?php endforeach; ?>
 <?php endif; ?>
+<?php if (isset($page) && $page->isset('CmsPost_BeanList')): ?>
+    <?php foreach ($page->get('CmsPost_BeanList') as $post): ?>
+        <?= $this->post($post) ?>
+    <?php endforeach; ?>
+<?php endif; ?>

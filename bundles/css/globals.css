@@ -58,12 +58,15 @@ h1, h2 {
     margin-bottom: 0;
 }
 
+.nav-link {
+    transition: border-bottom-color .2s ease-in-out, color .2s ease-in-out;
+}
+
 .nav-masthead .nav-link {
     font-weight: 700;
     color: rgba(255, 255, 255, .5);
     background-color: transparent;
     border-bottom: .25rem solid transparent;
-    transition: border-bottom-color .2s ease-in-out, color .2s ease-in-out;
 }
 
 .nav-masthead .nav-link:hover,
