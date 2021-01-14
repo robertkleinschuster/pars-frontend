@@ -57,6 +57,11 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $logger = $request->getAttribute(LoggingMiddleware::LOGGER_ATTRIBUTE);
         $code = $request->getAttribute('code', '/');
         $config = new Config($adapter);
+        if ($config->get('frontend.update') == 'true') {
+            exec('git pull');
+            exec('composer update');
+            return new RedirectResponse($this->urlHelper->generate(null, [], ['clearcache' => 'pars']));
+        }
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'hash', $this->config['bundles']['hash'] ?? '');
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'session', $session);

@@ -33,6 +33,7 @@ class Config implements AdapterAwareInterface
         'frontend.favicon',
         'frontend.color',
         'frontend.timezone',
+        'frontend.update',
     ];
 
     /**
