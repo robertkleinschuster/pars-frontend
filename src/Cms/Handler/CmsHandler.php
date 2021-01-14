@@ -22,6 +22,8 @@ use Pars\Frontend\Cms\Model\MenuModel;
 use Pars\Frontend\Cms\Model\PageModel;
 use Pars\Frontend\Cms\Model\ParagraphModel;
 use Pars\Frontend\Cms\Model\PostModel;
+use Pars\Model\Config\ConfigBeanFinder;
+use Pars\Model\Config\ConfigBeanProcessor;
 use Pars\Model\Import\ImportBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -60,6 +62,16 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         if ($config->get('frontend.update') == 'true') {
             exec('git pull');
             exec('composer update');
+            $processor = new ConfigBeanProcessor($adapter);
+            $finder = new ConfigBeanFinder($adapter);
+            $list = $finder->getBeanFactory()->getEmptyBeanList();
+            $bean = $finder->getBeanFactory()->getEmptyBean([]);
+            $bean->set('Config_Code', 'frontend.update');
+            $bean->set('Config_Value', 'false');
+            $bean->set('Config_Locked', true);
+            $list->push($bean);
+            $processor->setBeanList($list);
+            $processor->save();
             return new RedirectResponse($this->urlHelper->generate(null, [], ['clearcache' => 'pars']));
         }
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
