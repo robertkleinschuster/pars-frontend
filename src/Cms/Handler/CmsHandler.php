@@ -59,22 +59,6 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $logger = $request->getAttribute(LoggingMiddleware::LOGGER_ATTRIBUTE);
         $code = $request->getAttribute('code', '/');
         $config = new Config($adapter);
-        if ($config->get('frontend.update') == 'true') {
-            $processor = new ConfigBeanProcessor($adapter);
-            $processor->force = true;
-            $finder = new ConfigBeanFinder($adapter);
-            $list = $finder->getBeanFactory()->getEmptyBeanList();
-            $bean = $finder->getBeanFactory()->getEmptyBean([]);
-            $bean->set('Config_Code', 'frontend.update');
-            $bean->set('Config_Value', 'false');
-            $bean->set('Config_Locked', true);
-            $list->push($bean);
-            $processor->setBeanList($list);
-            $processor->save();
-            exec('git pull');
-            exec('composer update');
-            return new RedirectResponse($this->urlHelper->generate(null, [], ['clearcache' => 'pars']));
-        }
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'hash', $this->config['bundles']['hash'] ?? '');
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'session', $session);

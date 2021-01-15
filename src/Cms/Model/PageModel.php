@@ -4,6 +4,7 @@
 namespace Pars\Frontend\Cms\Model;
 
 
+use Pars\Core\Cache\ParsCache;
 use Pars\Frontend\Cms\Form\FormFactory;
 use Pars\Model\Cms\Page\CmsPageBean;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
@@ -24,6 +25,14 @@ class PageModel extends BaseModel
                 if ($code == null) {
                     $code = $this->getCode();
                 }
+                $cache = 'page';
+                if ($code != '/') {
+                    $cache .= $code;
+                }
+                $cache = new ParsCache($cache);
+                if ($cache->has($this->getLocale()->getLocale_Code())) {
+                    return new CmsPageBean($cache->get($this->getLocale()->getLocale_Code()));
+                }
                 $pageFinder = new CmsPageBeanFinder($this->getAdapter());
                 $pageFinder->initPublished($this->getConfig()->get('frontend.timezone'));
                 $pageFinder->setCmsPageState_Code('active');
@@ -37,6 +46,7 @@ class PageModel extends BaseModel
                     $bean = $pageFinder->getBean();
                     if ($bean instanceof CmsPageBean) {
                         $this->page = $bean;
+                        $cache->set($this->getLocale()->getLocale_Code(), $bean->toArray(true), 3600);
                     }
                 }
             }
