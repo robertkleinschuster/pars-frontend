@@ -4,6 +4,7 @@
 namespace Pars\Frontend\Cms\Handler;
 
 
+use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Csrf\CsrfMiddleware;
@@ -11,6 +12,7 @@ use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Helper\UrlHelper;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
+use Pars\Core\Cache\ParsCache;
 use Pars\Core\Localization\LocaleInterface;
 use Pars\Core\Logging\LoggingMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
@@ -51,6 +53,11 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $cacheID =  md5($request->getUri());
+        $cache = new ParsCache('site');
+        if ($cache->has($cacheID) && $this->config[ConfigAggregator::ENABLE_CACHE]) {
+            return new HtmlResponse($cache->get($cacheID));
+        }
         $adapter = $request->getAttribute(\Pars\Core\Database\DatabaseMiddleware::ADAPTER_ATTRIBUTE);
         $locale = $request->getAttribute(LocaleInterface::class);
         $translator = $request->getAttribute(TranslatorMiddleware::TRANSLATOR_ATTRIBUTE);
@@ -109,7 +116,11 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
             foreach ($container->mergeForTemplate([]) as $key => $value) {
                 $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, $key, $value);
             }
-            return new HtmlResponse($this->renderer->render('index::index'));
+            $out = $this->renderer->render('index::index');
+            if (in_array($page->get('CmsPageType_Code'), ['home', 'gallery', 'about', 'faq', 'tiles', 'blog', 'columns'])) {
+                $cache->set($cacheID, $out, 300);
+            }
+            return new HtmlResponse($out);
         }
         $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $paragraph = $paragraphModel->getParagraph();

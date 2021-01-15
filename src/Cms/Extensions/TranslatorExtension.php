@@ -26,7 +26,6 @@ class TranslatorExtension implements ExtensionInterface, TranslatorAwareInterfac
     public function register(Engine $engine)
     {
         $engine->registerFunction('t', function ($message) {
-
             return $this->getTranslator()->translate($message, 'frontend');
         });
     }

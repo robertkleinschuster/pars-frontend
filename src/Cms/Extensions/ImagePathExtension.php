@@ -9,6 +9,7 @@ use League\Glide\Urls\UrlBuilderFactory;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Core\Cache\ParsCache;
 
 class ImagePathExtension implements ExtensionInterface
 {
@@ -17,6 +18,11 @@ class ImagePathExtension implements ExtensionInterface
         $engine->registerFunction('cmsimg', function ($img, $static = null, $key = null, $width = null, $height = null, $density = null, $format = null, $fit = null) {
             if ($img instanceof BeanInterface) {
                 $img = $img->FileDirectory_Code . '/' . $img->File_Code . '.' . $img->FileType_Code;
+            }
+            $cacheID = md5($img . $static . $key . $width . $height . $density . $format . $fit);
+            $cache = new ParsCache('cmsimg');
+            if ($cache->has($cacheID)) {
+                return $cache->get($cacheID);
             }
             if (strpos($static, '/img') !== false) {
                 $params = [];
@@ -40,10 +46,12 @@ class ImagePathExtension implements ExtensionInterface
                     $key = file_get_contents('data/image_signature');
                 }
                 $url = UrlBuilderFactory::create($static, $key);
-                return $url->getUrl('', $params);
+                $ret = $url->getUrl('', $params);
             } else {
-                return $static . $img;
+                $ret = $static . $img;
             }
+            $cache->set($cacheID, $ret, 60);
+            return $ret;
         });
     }
 
