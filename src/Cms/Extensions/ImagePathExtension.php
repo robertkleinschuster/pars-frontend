@@ -39,22 +39,24 @@ class ImagePathExtension implements ExtensionInterface
                     $params['fit'] = $fit;
                 }
                 $params['file'] = $img;
+                $p = $params;
                 $cache = new ParsCache('image');
-                $cacheID = md5(implode(';', $params));
-                if ($cache->has($cacheID)) {
-                    $ret = $cache->get($cacheID);
+                unset($p['s'], $p['p']);
+                ksort($p);
+                $ext = (isset($p['fm']) ? $p['fm'] : pathinfo($img)['extension']);
+                $ext = ($ext === 'pjpg') ? 'jpg' : $ext;
+                $md5 = md5($img.'?'.http_build_query($p));
+                if ($cache->has($md5)) {
+                    $ret = $cache->get($md5);
                 } else {
                     if (file_exists('data/image_signature')) {
                         $key = file_get_contents('data/image_signature');
                     }
                     $url = UrlBuilderFactory::create($static, $key);
                     $ret = $url->getUrl('', $params);
-                    unset($params['s'], $params['p']);
-                    ksort($params);
-                    $ext = (isset($params['fm']) ? $params['fm'] : pathinfo($img)['extension']);
-                    $ext = ($ext === 'pjpg') ? 'jpg' : $ext;
-                    $md5 = md5($img.'?'.http_build_query($params));
-                    $cache->set($cacheID, $static . '/c/' . $img . '/' . $md5 . '.' .$ext);
+                    $cache->set($md5, str_replace('/img', '', $static) . '/c/' . $img . '/' . $md5 . '.' .$ext, 3600);
+                    $siteCache = new ParsCache('site');
+                    $siteCache->clear();
                 }
             } else {
                 $ret = $static . $img;
