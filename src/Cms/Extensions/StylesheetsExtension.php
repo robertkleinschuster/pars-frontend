@@ -7,6 +7,7 @@ namespace Pars\Frontend\Cms\Extensions;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Mezzio\Session\SessionInterface;
+use Pars\Core\Cache\ParsCache;
 
 class StylesheetsExtension implements ExtensionInterface
 {
@@ -19,17 +20,17 @@ class StylesheetsExtension implements ExtensionInterface
             $this->data[$file] = $critical;
         });
         $engine->registerFunction('cssflush', function ($session = null) {
-            $allcritical = false;
-            if ($session instanceof SessionInterface) {
-                $allcritical = $session->has('cssflush');
-                if (!$allcritical && in_array(true, $this->data)) {
-                    $session->set('cssflush', 'true');
-                }
-            }
             $ret = "";
+            $cache = new ParsCache('cssflush');
             foreach ($this->data as $file => $critical) {
-                if ($critical || $allcritical) {
-                    $ret .= "<link rel=\"stylesheet\" href=\"$file\">";
+                $cacheID = md5($file);
+                if ($critical) {
+                    if ($cache->has($cacheID)) {
+                        $ret = $cache->get($cacheID);
+                    } else {
+                        $ret .= "<style>" . file_get_contents($_SERVER['DOCUMENT_ROOT'] . $file) . "</style>";
+                        $cache->set($cacheID, $ret);
+                    }
                 } else {
                     $ret .= " 
     <link rel=\"preload\" href=\"$file\" as=\"style\" class='style-insertion' onload=\"this.onload=null;this.rel='stylesheet'\">

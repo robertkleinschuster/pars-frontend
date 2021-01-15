@@ -5,6 +5,7 @@ namespace Pars\Frontend\Cms\Handler;
 
 
 use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\Diactoros\CallbackStream;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Csrf\CsrfMiddleware;
@@ -16,7 +17,6 @@ use Pars\Core\Cache\ParsCache;
 use Pars\Core\Localization\LocaleInterface;
 use Pars\Core\Logging\LoggingMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
-use Pars\Frontend\Cms\Form\Base\AbstractForm;
 use Pars\Frontend\Cms\Helper\Config;
 use Pars\Frontend\Cms\Helper\ImportLoader;
 use Pars\Frontend\Cms\Model\LocaleModel;
@@ -24,16 +24,12 @@ use Pars\Frontend\Cms\Model\MenuModel;
 use Pars\Frontend\Cms\Model\PageModel;
 use Pars\Frontend\Cms\Model\ParagraphModel;
 use Pars\Frontend\Cms\Model\PostModel;
-use Pars\Model\Config\ConfigBeanFinder;
-use Pars\Model\Config\ConfigBeanProcessor;
 use Pars\Model\Import\ImportBeanFinder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
 {
-
-
     private TemplateRendererInterface $renderer;
 
     private $urlHelper;
@@ -56,7 +52,9 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $cacheID =  md5($request->getUri());
         $cache = new ParsCache('site');
         if ($cache->has($cacheID) && $this->config[ConfigAggregator::ENABLE_CACHE]) {
-            return new HtmlResponse($cache->get($cacheID));
+            return new HtmlResponse(new CallbackStream(function () use ($cache, $cacheID){
+                return $cache->get($cacheID);
+            }));
         }
         $adapter = $request->getAttribute(\Pars\Core\Database\DatabaseMiddleware::ADAPTER_ATTRIBUTE);
         $locale = $request->getAttribute(LocaleInterface::class);
@@ -110,17 +108,23 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
                 }
                 return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
             }
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'page', $page);
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
-            $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
-            foreach ($container->mergeForTemplate([]) as $key => $value) {
-                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, $key, $value);
-            }
-            $out = $this->renderer->render('index::index');
-            if (in_array($page->get('CmsPageType_Code'), ['home', 'gallery', 'about', 'faq', 'tiles', 'blog', 'columns'])) {
-                $cache->set($cacheID, $out, 300);
-            }
-            return new HtmlResponse($out);
+
+            return new HtmlResponse(new CallbackStream(function () use ($request, $pageModel, $page, $cache, $cacheID, $adapter, $translator, $session, $locale, $code, $logger, $config, $guard) {
+                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'page', $page);
+                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
+                $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
+                foreach ($container->mergeForTemplate([]) as $key => $value) {
+                    $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, $key, $value);
+                }
+                $out = $this->renderer->render('index::index');
+                if (in_array(
+                    $page->get('CmsPageType_Code'),
+                    ['home', 'gallery', 'about', 'faq', 'tiles', 'blog', 'columns']
+                )) {
+                    $cache->set($cacheID, $out, 300);
+                }
+                return $out;
+            }));
         }
         $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $paragraph = $paragraphModel->getParagraph();

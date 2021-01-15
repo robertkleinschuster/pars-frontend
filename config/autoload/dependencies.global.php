@@ -31,6 +31,11 @@ return [
             \Pars\Frontend\Cms\Extensions\TranslatorExtension::class => \Pars\Frontend\Cms\Extensions\TranslatorExtensionFactory::class,
             \Pars\Frontend\Cms\Extensions\PlaceholderExtension::class => \Pars\Frontend\Cms\Extensions\PlaceholderExtensionFactory::class,
             \Pars\Frontend\Cms\Extensions\PathExtension::class => \Pars\Frontend\Cms\Extensions\PathExtensionFactory::class,
+            \Laminas\HttpHandlerRunner\Emitter\EmitterInterface::class => function(\Psr\Container\ContainerInterface $container) {
+                $stack = new \Laminas\HttpHandlerRunner\Emitter\EmitterStack();
+                $stack->push(new \Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter());
+                return $stack;
+            },
         ],
     ],
 ];
