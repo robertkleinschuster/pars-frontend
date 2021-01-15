@@ -54,9 +54,7 @@ class ImagePathExtension implements ExtensionInterface
                     }
                     $url = UrlBuilderFactory::create($static, $key);
                     $ret = $url->getUrl('', $params);
-                    $cache->set($md5, str_replace('/img', '', $static) . '/c/' . $img . '/' . $md5 . '.' .$ext, 3600);
-                    $siteCache = new ParsCache('site');
-                    $siteCache->clear();
+               #     $cache->set($md5, str_replace('/img', '', $static) . '/c/' . $img . '/' . $md5 . '.' .$ext, 3600);
                 }
             } else {
                 $ret = $static . $img;
