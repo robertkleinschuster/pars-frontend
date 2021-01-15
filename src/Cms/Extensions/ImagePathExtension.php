@@ -9,7 +9,9 @@ use League\Glide\Urls\UrlBuilderFactory;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Niceshops\Bean\Type\Base\BeanInterface;
+use Pars\Component\Base\Grid\Container;
 use Pars\Core\Cache\ParsCache;
+use Psr\Container\ContainerInterface;
 
 class ImagePathExtension implements ExtensionInterface
 {
@@ -18,11 +20,6 @@ class ImagePathExtension implements ExtensionInterface
         $engine->registerFunction('cmsimg', function ($img, $static = null, $key = null, $width = null, $height = null, $density = null, $format = null, $fit = null) {
             if ($img instanceof BeanInterface) {
                 $img = $img->FileDirectory_Code . '/' . $img->File_Code . '.' . $img->FileType_Code;
-            }
-            $cacheID = md5($img . $static . $key . $width . $height . $density . $format . $fit);
-            $cache = new ParsCache('cmsimg');
-            if ($cache->has($cacheID)) {
-                return $cache->get($cacheID);
             }
             if (strpos($static, '/img') !== false) {
                 $params = [];
@@ -42,15 +39,26 @@ class ImagePathExtension implements ExtensionInterface
                     $params['fit'] = $fit;
                 }
                 $params['file'] = $img;
-                if (file_exists('data/image_signature')) {
-                    $key = file_get_contents('data/image_signature');
+                $cache = new ParsCache('image');
+                $cacheID = md5(implode(';', $params));
+                if ($cache->has($cacheID)) {
+                    $ret = $cache->get($cacheID);
+                } else {
+                    if (file_exists('data/image_signature')) {
+                        $key = file_get_contents('data/image_signature');
+                    }
+                    $url = UrlBuilderFactory::create($static, $key);
+                    $ret = $url->getUrl('', $params);
+                    unset($params['s'], $params['p']);
+                    ksort($params);
+                    $ext = (isset($params['fm']) ? $params['fm'] : pathinfo($img)['extension']);
+                    $ext = ($ext === 'pjpg') ? 'jpg' : $ext;
+                    $md5 = md5($img.'?'.http_build_query($params));
+                    $cache->set($cacheID, '/c/' . $img . '/' . $md5 . '.' .$ext);
                 }
-                $url = UrlBuilderFactory::create($static, $key);
-                $ret = $url->getUrl('', $params);
             } else {
                 $ret = $static . $img;
             }
-            $cache->set($cacheID, $ret, 60);
             return $ret;
         });
     }
