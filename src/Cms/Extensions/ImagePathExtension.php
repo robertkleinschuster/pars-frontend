@@ -54,7 +54,7 @@ class ImagePathExtension implements ExtensionInterface
                     $ext = (isset($params['fm']) ? $params['fm'] : pathinfo($img)['extension']);
                     $ext = ($ext === 'pjpg') ? 'jpg' : $ext;
                     $md5 = md5($img.'?'.http_build_query($params));
-                    $cache->set($cacheID, '/c/' . $img . '/' . $md5 . '.' .$ext);
+                    $cache->set($cacheID, $static . '/c/' . $img . '/' . $md5 . '.' .$ext);
                 }
             } else {
                 $ret = $static . $img;
