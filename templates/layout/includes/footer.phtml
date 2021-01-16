@@ -1,0 +1,31 @@
+<footer class="mastfoot py-3">
+    <div class="row">
+        <div class="col">
+            <?= isset($menu) ? $this->menu($menu, 'footer', $host ?? null) : '' ?>
+        </div>
+        <div class="col">
+            <li class="nav-item dropdown list-unstyled float-right">
+                <?php if (isset($localelist)): ?>
+                    <?php foreach ($localelist as $localeBean): ?>
+                        <?php if ($localeBean->get('Locale_Code') == ($locale ?? '')): ?>
+                            <a class="nav-link dropdown-toggle" href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>" id="dropdown-locale" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$localeBean->get('Locale_Name')?></a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <div class="dropdown-menu" aria-labelledby="dropdown-locale">
+                    <?php if (isset($localelist)): ?>
+                        <?php foreach ($localelist as $localeBean): ?>
+                            <?php if ($localeBean->get('Locale_Code') !== ($locale ?? '')): ?>
+                                <a class="dropdown-item text-dark" href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>"><?=$localeBean->get('Locale_Name')?></a>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </li>
+        </div>
+    </div>
+
+    <div class="footer-text">
+        <?= $footer ?? '' ?>
+    </div>
+</footer>

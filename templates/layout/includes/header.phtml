@@ -1,0 +1,6 @@
+<header class="masthead row">
+    <a class="col" href="<?= $this->cmspath('/') ?>">
+        <h3 class="masthead-brand"><?= $brand ?? '' ?></h3>
+    </a>
+    <?= isset($menu) ? $this->menu($menu, 'header', $host ?? null) : '' ?>
+</header>

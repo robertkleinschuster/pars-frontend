@@ -65,6 +65,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $code = $request->getAttribute('code', '/');
         $config = new Config($adapter);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
+        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'locale', $locale->getLocale_Code());
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'hash', $this->config['bundles']['hash'] ?? '');
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'session', $session);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'brand', $config->get('frontend.brand'));

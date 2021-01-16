@@ -1,6 +1,5 @@
 <nav class="nav nav-masthead justify-content-center">
     <?php foreach ($menu as $item): ?>
-
         <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
            href="<?= $this->cmspath($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
         <?php if (!$item->empty('Menu_BeanList')): ?>

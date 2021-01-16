@@ -7,15 +7,10 @@
     'description' => $description ?? '',
     'keywords' => $keywords ?? '',
     'footer' => $footer ?? ''
-])?>
+]) ?>
 <body>
 <div class="p-3 container-lg">
-    <header class="masthead row">
-        <a class="col" href="<?= $this->cmspath('/') ?>">
-            <h3 class="masthead-brand"><?= $brand ?? '' ?></h3>
-        </a>
-        <?= isset($menu) ? $this->menu($menu, 'header', $host ?? null) : '' ?>
-    </header>
+    <?= $this->insert('layout::includes/header') ?>
     <div class="row">
         <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>
         <main role="main" class="col order-1 order-md-2">
@@ -23,13 +18,7 @@
         </main>
         <?= isset($menu) ? $this->menu($menu, 'aside_right', $host ?? null) : '' ?>
     </div>
-
-    <footer class="mastfoot py-3">
-        <?= isset($menu) ? $this->menu($menu, 'footer', $host ?? null) : '' ?>
-        <div class="footer-text">
-            <?= $footer ?? '' ?>
-        </div>
-    </footer>
+    <?= $this->insert('layout::includes/footer') ?>
 </div>
 <?= $this->jsflush() ?>
 </body>
