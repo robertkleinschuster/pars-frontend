@@ -1,6 +1,6 @@
 <?php if ($preview ?? false): ?>
     <?= $this->insert('cmspost::default/preview', ['post' => $post]) ?>
 <?php else: ?>
-    <?= $this->insert('cmspost::default/detail', ['post' => $post, 'similarList' => $similarList]) ?>
+    <?= $this->insert('cmspost::default/detail', ['post' => $post]) ?>
 <?php endif; ?>
 
