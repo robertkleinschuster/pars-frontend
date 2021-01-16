@@ -4,7 +4,7 @@
             <?= isset($menu) ? $this->menu($menu, 'footer', $host ?? null) : '' ?>
         </div>
         <div class="col">
-            <li class="nav-item dropdown list-unstyled float-right">
+            <div class="nav-item dropdown list-unstyled float-right">
                 <?php if (isset($localelist)): ?>
                     <?php foreach ($localelist as $localeBean): ?>
                         <?php if ($localeBean->get('Locale_Code') == ($locale ?? '')): ?>
@@ -21,7 +21,7 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-            </li>
+            </div>
         </div>
     </div>
 
