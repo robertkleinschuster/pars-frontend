@@ -6,7 +6,4 @@
     'keywords' => $this->p($page->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
 ]) ?>
 <?= $this->page($page) ?>
-<?= $this->css("/frontend-critical_$hash.css", true)?>
-<?= $this->css("/frontend-bundle_$hash.css")?>
-<?= $this->js("/insertion_$hash.js", true)?>
-<?= $this->js("/frontend-minimal_$hash.js")?>
+

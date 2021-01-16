@@ -31,8 +31,8 @@ return [
                 'unlink' => "frontend-critical_*.css",
                 'critical' => true,
                 'sources' => [
-                    __DIR__ . '/../../bundles/css/bootstrap-grid.min.css',
                     __DIR__ . '/../../bundles/css/bootstrap-reboot.min.css',
+                    __DIR__ . '/../../bundles/css/bootstrap-grid.min.css',
                     __DIR__ . '/../../bundles/css/globals.css',
                 ]
             ],

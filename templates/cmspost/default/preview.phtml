@@ -1,0 +1,76 @@
+<?php if (!$post->empty('ArticleTranslation_Path')): ?>
+<a href="<?= $post->get('ArticleTranslation_Path') ?>">
+    <?php endif; ?>
+    <div class="card border-0 rounded-0 text-body <?= $class ?? '' ?>">
+        <?php if ($post->isset('File_BeanList')): ?>
+            <?php if ($post->empty('ArticleTranslation_Path')): ?>
+                <a href="<?= $this->cmspath($post) ?>">
+            <?php endif; ?>
+            <?= $this->file($post->get('File_BeanList'),
+            [
+                'width' => $img_width ?? null,
+                'height' => $img_height ?? null,
+                'alt' => $this->p($post->get('ArticleTranslation_Title')),
+                'class' => 'card-img-top rounded-0'
+            ]) ?>
+            <?php if ($post->empty('ArticleTranslation_Path')): ?>
+                </a>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php if (!$post->empty('ArticleTranslation_Title')): ?>
+            <?php if ($post->empty('ArticleTranslation_Path')): ?>
+                <a href="<?= $this->cmspath($post) ?>">
+            <?php endif; ?>
+            <h4 class="card-header">
+                <?= $this->p($post->get('ArticleTranslation_Title')) ?>
+            </h4>
+            <?php if ($post->empty('ArticleTranslation_Path')): ?>
+                </a>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php if (!$post->empty('ArticleTranslation_Heading')
+            || !$post->empty('ArticleTranslation_SubHeading')
+            || !$post->empty('ArticleTranslation_Teaser')
+            || !$post->empty('ArticleTranslation_Footer')): ?>
+            <div class="card-body">
+                <?php if (!$post->empty('ArticleTranslation_Heading')): ?>
+                    <h5 class="card-title">
+                        <?= $this->p($post->get('ArticleTranslation_Heading')) ?>
+                    </h5>
+                <?php endif; ?>
+                <?php if (!$post->empty('ArticleTranslation_SubHeading')): ?>
+                    <p class="card-text">
+                        <?= $this->p($post->get('ArticleTranslation_SubHeading')) ?>
+                    </p>
+                <?php endif; ?>
+                <?php if (!$post->empty('ArticleTranslation_Teaser')): ?>
+                    <p class="card-text">
+                        <?= $this->p($post->get('ArticleTranslation_Teaser')) ?>
+                    </p>
+                <?php endif; ?>
+                <?php if (!$post->empty('ArticleTranslation_Footer')): ?>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <?= $this->p($post->get('ArticleTranslation_Footer')) ?>
+                        </small>
+                    </p>
+                <?php endif; ?>
+                <a href="<?= $this->cmspath($post) ?>" class="card-link">
+                    <?= $this->t('cmspost.default.more.link') ?>
+                </a>
+            </div>
+        <?php endif; ?>
+        <?php if (!$post->empty('CmsPost_PublishTimestamp')): ?>
+            <div class="card-footer">
+                <small class="text-muted">
+                    <?= $this->p($this->t('cmspost.default.publish'), [
+                        'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                        'time' => $this->time($post->get('CmsPost_PublishTimestamp'))
+                    ]) ?>
+                </small>
+            </div>
+        <?php endif; ?>
+    </div>
+    <?php if (!$post->empty('ArticleTranslation_Path')): ?>
+</a>
+<?php endif; ?>
