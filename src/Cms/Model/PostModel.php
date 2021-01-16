@@ -52,6 +52,7 @@ class PostModel extends BaseModel
     {
         $finder = new CmsPostBeanFinder($this->getAdapter());
         $finder->initPublished($this->getConfig()->get('frontend.timezone'));
+        $finder->setArticle_ID($bean->Article_ID, true);
         $finder->setCmsPostState_Code('active');
         $finder->setArticleTranslation_Active(true);
         $finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT');
