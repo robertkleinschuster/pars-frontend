@@ -19,18 +19,10 @@ return [
                 'unlink' => "frontend-minimal_*.js",
                 'critical' => true,
                 'sources' => [
-                    __DIR__ . '/../../bundles/js/01-jquery.min.js',
+                    __DIR__ . '/../../bundles/js/jquery-3.5.1.slim.min.js',
+                    __DIR__ . '/../../bundles/js/bootstrap.bundle.min.js',
                     __DIR__ . '/../../bundles/js/loading-attribute-polyfill.min.js',
                     __DIR__ . '/../../bundles/js/submit.js',
-                ]
-            ],
-            [
-                'type' => 'js',
-                'output' => "frontend-bundle_$hash.js",
-                'unlink' => "frontend-bundle_*.js",
-                'critical' => false,
-                'sources' => [
-                    __DIR__ . '/../../bundles/js/bootstrap.bundle.min.js',
                 ]
             ],
             [
