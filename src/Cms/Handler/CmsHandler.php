@@ -136,6 +136,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $post = $postModel->getPost();
         if ($post != null) {
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'post', $post);
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'similarList', $postModel->getSimilarPosts($post));
             return new HtmlResponse($this->renderer->render('index::post'));
         }
 

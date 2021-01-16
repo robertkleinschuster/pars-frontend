@@ -41,5 +41,8 @@ return [
     ],
     'bundles' => [
         'development' => true,
-    ]
+    ],
+    'db' => [
+        'profiler' => true
+    ],
 ];

@@ -20,4 +20,7 @@ return [
     'poll.form.name.hint' => 'Die Eingabe eines Namen ist Optional.',
     'poll.form.option.empty' => 'Bitte wählen Sie eine Option.',
     'poll.form.error.vote_once' => 'Sie haben bereits eine Stimme abgegeben.',
+    'cmspost.default.publish' => 'Am {date} um {time} Uhr veröffentlicht',
+    'cmspost.default.more.link' => 'mehr...',
+    'cmspost.default.similar.heading' => 'Ähnliche Beiträge',
 ];

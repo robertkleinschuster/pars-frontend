@@ -25,11 +25,11 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
 
     public function register(Engine $engine)
     {
-        $engine->registerFunction('p', function ($message) {
+        $engine->registerFunction('p', function (?string $message, array $data = []) {
             $matches = [];
             preg_match_all('/\{.*?\}|%7B.*?%7D|%257B.*?%257D/', $message, $matches);
             $replace = [];
-            $this->generateReplace($replace, $matches);
+            $this->generateReplace($replace, $matches, $data);
             return str_replace(array_keys($replace), array_values($replace), $message);
         });
     }
@@ -37,15 +37,20 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
     /**
      * @param array $replace
      * @param array $matches
+     * @param array $data
      */
-    protected function generateReplace(array &$replace, array $matches)
+    protected function generateReplace(array &$replace, array $matches, array $data)
     {
         foreach ($matches as $match) {
             if (is_array($match)) {
-                $this->generateReplace($replace, $match);
+                $this->generateReplace($replace, $match, $data);
             } else {
                 $key = str_replace('}', '', str_replace('{', '', $match));
-                $replace[$match] = $this->getTranslator()->translate($key, 'frontend');
+                if (isset($data[$key])) {
+                    $replace[$match] = $data[$key];
+                } else {
+                    $replace[$match] = $this->getTranslator()->translate($key, 'frontend');
+                }
             }
         }
     }

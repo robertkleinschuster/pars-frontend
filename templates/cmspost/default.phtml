@@ -1,10 +1,20 @@
-<?php if (!$post->empty('ArticleTranslation_Path')): ?>
-<a href="<?= $post->get('ArticleTranslation_Path') ?>">
+<?php if ($preview ?? false): ?>
+    <?php if (!$post->empty('ArticleTranslation_Path')): ?>
+        <a href="<?= $post->get('ArticleTranslation_Path') ?>">
     <?php endif; ?>
-    <div class="card mb-4 text-body">
+    <div class="card border-0 rounded-0 text-body">
+        <?php if ($post->isset('File_BeanList')): ?>
+            <?= $this->file($post->get('File_BeanList'),
+                [
+                    'width' => $img_width ?? null,
+                    'height' => $img_height ?? null,
+                    'alt' => $this->p($post->get('ArticleTranslation_Title')),
+                    'class' => 'card-img-top rounded-0'
+                ]) ?>
+        <?php endif; ?>
         <?php if (!$post->empty('ArticleTranslation_Title')): ?>
             <?php if ($post->empty('ArticleTranslation_Path')): ?>
-                <a class="small" href="<?= $this->cmspath($post) ?>">
+                <a href="<?= $this->cmspath($post) ?>">
             <?php endif; ?>
             <h4 class="card-header">
                 <?= $this->p($post->get('ArticleTranslation_Title')) ?>
@@ -29,16 +39,123 @@
                     <?= $this->p($post->get('ArticleTranslation_Teaser')) ?>
                 </p>
             <?php endif; ?>
-            <?php if ($post->isset('File_BeanList') && !$post->get('File_BeanList')->isEmpty()): ?>
-                <div class="text-center">
-                    <?= $this->file($post->get('File_BeanList')->first(), ['width' => $img_width ?? null, 'height' => $img_height ?? null,
-                        'alt' => $this->p($post->get('ArticleTranslation_Title'))]) ?>
-                </div>            <?php endif; ?>
-            <?php if (!$post->empty('ArticleTranslation_Text')): ?>
-                <?= $this->p($post->get('ArticleTranslation_Text')) ?>
+            <?php if (!$post->empty('ArticleTranslation_Footer')): ?>
+                <p class="card-text">
+                    <small class="text-muted">
+                        <?= $this->p($post->get('ArticleTranslation_Footer')) ?>
+                    </small>
+                </p>
             <?php endif; ?>
+            <a href="<?= $this->cmspath($post) ?>" class="card-link">
+                <?= $this->t('cmspost.default.more.link') ?>
+            </a>
         </div>
+        <?php if (!$post->empty('CmsPost_PublishTimestamp')): ?>
+            <div class="card-footer">
+                <small class="text-muted">
+                    <?= $this->p($this->t('cmspost.default.publish'), [
+                        'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                        'time' => $this->time($post->get('CmsPost_PublishTimestamp'))
+                    ]) ?>
+                </small>
+            </div>
+        <?php endif; ?>
     </div>
     <?php if (!$post->empty('ArticleTranslation_Path')): ?>
-</a>
+        </a>
+    <?php endif; ?>
+<?php else: ?>
+    <?php if (!$post->empty('ArticleTranslation_Heading')): ?>
+        <h1>
+            <?= $this->p($post->get('ArticleTranslation_Heading')) ?>
+        </h1>
+    <?php endif; ?>
+    <?php if (!$post->empty('ArticleTranslation_SubHeading')): ?>
+        <h2>
+            <?= $this->p($post->get('ArticleTranslation_SubHeading')) ?>
+        </h2>
+    <?php endif; ?>
+    <div class="row">
+        <div class="col-lg-8">
+            <?php if ($post->isset('File_BeanList')): ?>
+                <?= $this->file($post->get('File_BeanList'),
+                    [
+                        'width' => $img_width ?? null,
+                        'height' => $img_height ?? null,
+                        'alt' => $this->p($post->get('ArticleTranslation_Title')),
+                    ]) ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-lg-4 d-none d-lg-block">
+            <h4><?= $this->t('cmspost.default.similar.heading') ?></h4>
+            <div class="list-group">
+                <?php if (isset($similarList) && $similarList instanceof \Niceshops\Bean\Type\Base\BeanListInterface): ?>
+                <?php foreach ($similarList as $similar): ?>
+                    <a href="<?= $this->cmspath($similar) ?>" class="
+                    list-group-item list-group-item-action
+bg-transparent text-light similar-post rounded-0 border-top-0 border-left-0 border-right-0 border-bottom border-light
+">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1"><?= $this->p($similar->get('ArticleTranslation_Title')) ?></h5>
+                            <small>
+
+                            </small>
+                        </div>
+                        <?php if (!$similar->empty('ArticleTranslation_Teaser')): ?>
+                            <p class="mb-1"><?= $this->p($similar->get('ArticleTranslation_Teaser')) ?></p>
+                        <?php endif; ?>
+                        <small>
+                            <?= $this->p($this->t('cmspost.default.publish'), [
+                                'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                                'time' => $this->time($similar->get('CmsPost_PublishTimestamp'))
+                            ]) ?>
+                        </small>
+                    </a>
+                <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <?php if (!$post->empty('CmsPost_PublishTimestamp')): ?>
+        <small class="text-muted">
+            <?= $this->p($this->t('cmspost.default.publish'), [
+                'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                'time' => $this->time($post->get('CmsPost_PublishTimestamp'))
+            ]) ?>
+        </small>
+    <?php endif; ?>
+    <div class="my-3">
+        <?php if (!$post->empty('ArticleTranslation_Text')): ?>
+            <?= $this->p($post->get('ArticleTranslation_Text')) ?>
+        <?php endif; ?>
+    </div>
+
+    <div class="list-group d-lg-none d-block">
+        <h4><?= $this->t('cmspost.default.similar.heading') ?></h4>
+        <?php if (isset($similarList) && $similarList instanceof \Niceshops\Bean\Type\Base\BeanListInterface): ?>
+        <?php foreach ($similarList as $similar): ?>
+            <a href="<?= $this->cmspath($similar) ?>" class="
+                    list-group-item list-group-item-action
+ similar-post
+">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><?= $this->p($similar->get('ArticleTranslation_Title')) ?></h5>
+                    <small>
+
+                    </small>
+                </div>
+                <?php if (!$similar->empty('ArticleTranslation_Teaser')): ?>
+                    <p class="mb-1"><?= $this->p($similar->get('ArticleTranslation_Teaser')) ?></p>
+                <?php endif; ?>
+                <small>
+                    <?= $this->p($this->t('cmspost.default.publish'), [
+                        'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                        'time' => $this->time($similar->get('CmsPost_PublishTimestamp'))
+                    ]) ?>
+                </small>
+            </a>
+        <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
 <?php endif; ?>
+

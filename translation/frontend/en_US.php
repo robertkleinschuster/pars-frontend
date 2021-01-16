@@ -20,4 +20,7 @@ return [
     'poll.form.name.hint' => 'Entering your name is optional.',
     'poll.form.option.empty' => 'Please choose an option.',
     'poll.form.error.vote_once' => 'Your have already voted.',
+    'cmspost.default.publish' => 'Published on {date} at {time}',
+    'cmspost.default.more.link' => 'more...',
+    'cmspost.default.similar.heading' => 'Similar posts',
 ];

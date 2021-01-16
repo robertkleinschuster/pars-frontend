@@ -4,6 +4,7 @@
 
 /* Links */
 a.nav-link,
+.masthead a,
 a.nav-link:focus,
 a.nav-link:hover {
     color: #fff;
@@ -16,7 +17,6 @@ a {
 
 a:focus,
 a:hover {
-    color: inherit;
     text-decoration: underline;
 }
 

@@ -20,12 +20,9 @@
     </div>
 <?php endif; ?>
 <?php if (isset($page) && $page->isset('CmsPost_BeanList')): ?>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
+    <div class="card-columns">
         <?php foreach ($page->get('CmsPost_BeanList') as $post): ?>
-            <div class="col">
-
-                <?= $this->post($post) ?>
-            </div>
+            <?= $this->post($post, ['preview' => true, 'img_width' => 372, 'img_height' => 160]) ?>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>

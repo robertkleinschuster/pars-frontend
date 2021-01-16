@@ -26,17 +26,17 @@ class PostModel extends BaseModel
                 if ($code == null) {
                     $code = $this->getCode();
                 }
-                $pageFinder = new CmsPostBeanFinder($this->getAdapter());
-                $pageFinder->initPublished($this->getConfig()->get('frontend.timezone'));
-                $pageFinder->setCmsPostState_Code('active');
-                $pageFinder->setArticleTranslation_Active(true);
+                $finder = new CmsPostBeanFinder($this->getAdapter());
+                $finder->initPublished($this->getConfig()->get('frontend.timezone'));
+                $finder->setCmsPostState_Code('active');
+                $finder->setArticleTranslation_Active(true);
                 if ($id === null) {
-                    $pageFinder->setArticleTranslation_Code($code);
+                    $finder->setArticleTranslation_Code($code);
                 } else {
-                    $pageFinder->setCmsPost_ID($id);
+                    $finder->setCmsPost_ID($id);
                 }
-                if ($pageFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT') === 1) {
-                    $bean = $pageFinder->getBean();
+                if ($finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT') === 1) {
+                    $bean = $finder->getBean();
                     if ($bean instanceof CmsPostBean) {
                         $this->page = $bean;
                     }
@@ -48,17 +48,20 @@ class PostModel extends BaseModel
         return $this->page;
     }
 
-
-    public function getForm()
+    public function getSimilarPosts(CmsPostBean $bean)
     {
-        $page = $this->getPage();
-        $factory = new FormFactory();
-        return $factory->createFormForPage(
-            $page,
-            $this->getAdapter(),
-            $this->getSession(),
-            $this->getGuard(),
-            $this->getTranslator()
-        );
+        $finder = new CmsPostBeanFinder($this->getAdapter());
+        $finder->initPublished($this->getConfig()->get('frontend.timezone'));
+        $finder->setCmsPostState_Code('active');
+        $finder->setArticleTranslation_Active(true);
+        $finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT');
+        $finder->limit(4, 0);
+        $keywords = explode(',', $bean->ArticleTranslation_Keywords);
+        foreach ($keywords as $keyword) {
+            $finder->search(trim($keyword), ['ArticleTranslation_Keywords']);
+
+        }
+        return $finder->getBeanListDecorator();
     }
+
 }
