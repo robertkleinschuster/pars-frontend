@@ -1,7 +1,7 @@
 <div class="row mb-4">
     <!-- Section Titile -->
     <div class="col-md-12">
-        <h1 class="section-title cover-heading"><?= $this->p($page->get('ArticleTranslation_Heading')) ?></h1>
+        <h1 class="section-title cover-heading mb-4"><?= $this->p($page->get('ArticleTranslation_Heading')) ?></h1>
         <?php if (isset($page) && $page->isset('File_BeanList')): ?>
             <?php foreach ($page->get('File_BeanList') as $file): ?>
                 <div class="text-center">
