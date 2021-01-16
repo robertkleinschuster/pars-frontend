@@ -48,7 +48,9 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "classmap-authoritative": true
   },
   "scripts": {
     "serve": "php -S 0.0.0.0:8080 -t public/",
