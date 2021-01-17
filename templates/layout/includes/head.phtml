@@ -11,6 +11,9 @@
     <meta property="og:url" content="<?= $this->cmspaths() ?>"/>
     <meta property="og:locale" content="<?= $locale ?? '' ?>"/>
     <?= $this->ogflush() ?>
+    <?php if (isset($static)): ?>
+        <link rel="preconnect" href="<?= str_replace(['https:', 'http:', '/img'], '', $static) ?> " crossorigin>
+    <?php endif; ?>
     <?php if (isset($localelist)): ?>
         <?php foreach ($localelist as $localeBean): ?>
             <link rel="alternate" hreflang="<?= $localeBean->get('Locale_UrlCode') ?>"
