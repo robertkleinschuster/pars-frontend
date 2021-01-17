@@ -54,10 +54,10 @@
   },
   "scripts": {
     "post-update-cmd": [
-      "@clear-config-cache",
+      "@clear-config-cache"
     ],
     "post-install-cmd": [
-      "@clear-config-cache",
+      "@clear-config-cache"
     ],
     "serve": "php -S 0.0.0.0:8080 -t public/",
     "post-create-project-cmd": [
