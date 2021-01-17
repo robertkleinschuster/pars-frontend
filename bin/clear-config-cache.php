@@ -7,12 +7,12 @@
  */
 
 declare(strict_types=1);
+chdir(dirname(__DIR__));
 
-chdir(__DIR__ . '/mezzio/');
 
 require 'vendor/autoload.php';
 
-$config = include 'config/config.php';
+$config = require __DIR__ . '/../config/config.php';
 
 if (!isset($config['config_cache_path'])) {
     echo "No configuration cache path found" . PHP_EOL;
