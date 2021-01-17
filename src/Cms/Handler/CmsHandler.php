@@ -18,6 +18,7 @@ use Pars\Core\Cache\ParsCache;
 use Pars\Core\Localization\LocaleInterface;
 use Pars\Core\Logging\LoggingMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
+use Pars\Frontend\Base\Handler\FrontendHandler;
 use Pars\Frontend\Cms\Helper\Config;
 use Pars\Frontend\Cms\Helper\ImportLoader;
 use Pars\Frontend\Cms\Model\LocaleModel;
@@ -31,123 +32,66 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
+class CmsHandler extends FrontendHandler
 {
-    private TemplateRendererInterface $renderer;
-
-    private $urlHelper;
-
-    protected array $config;
-
-    /**
-     * CmsHandler constructor.
-     * @param TemplateRendererInterface $renderer
-     */
-    public function __construct(TemplateRendererInterface $renderer, UrlHelper $urlHelper, array $config)
-    {
-        $this->renderer = $renderer;
-        $this->urlHelper = $urlHelper;
-        $this->config = $config;
-    }
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $cacheID =  md5($request->getUri());
-        $cache = new ParsCache('site');
-        if ($cache->has($cacheID) && $this->config[ConfigAggregator::ENABLE_CACHE]) {
-            return new HtmlResponse(new CallbackStream(function () use ($cache, $cacheID){
-                return $cache->get($cacheID);
+        $pageCache = new ParsCache('page');
+        if ($pageCache->has($cacheID) && $this->config[ConfigAggregator::ENABLE_CACHE]) {
+            return new HtmlResponse(new CallbackStream(function () use ($pageCache, $cacheID){
+                return $pageCache->get($cacheID);
             }));
         }
-        $adapter = $request->getAttribute(\Pars\Core\Database\DatabaseMiddleware::ADAPTER_ATTRIBUTE);
-        $locale = $request->getAttribute(LocaleInterface::class);
-        $translator = $request->getAttribute(TranslatorMiddleware::TRANSLATOR_ATTRIBUTE);
-        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-        $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
-        $logger = $request->getAttribute(LoggingMiddleware::LOGGER_ATTRIBUTE);
-        $config = $request->getAttribute(Config::class);
+
         $code = $request->getAttribute('code', '/');
-
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'locale', $locale->getLocale_Code());
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'session', $session);
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'import', new ImportLoader(new ImportBeanFinder($adapter)));
-
-        $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
-        foreach ($container->mergeForTemplate([]) as $key => $value) {
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, $key, $value);
-        }
-
-        if ($code == 'browserconfig' || $code == 'browserconfig.xml') {
-            return new HtmlResponse($this->renderer->render('meta::browserconfig'));
-        }
-
-        if ($code == 'sitemap' || $code == 'sitemap.xml') {
-            return new HtmlResponse($this->renderer->render('meta::sitemap'));
-        }
-
-        if ($code == 'robots' || $code == 'robots.txt') {
-            return new TextResponse($this->renderer->render('meta::robots'));
-        }
 
         $pageModel = (new ModelFactory())($request, PageModel::class);
         $page = $pageModel->getPage();
-        if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host')) == $request->getUri()->getHost())) {
+        if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host') == $request->getUri()->getHost()))) {
             if (!$page->empty('CmsPage_ID_Redirect')) {
                 $redirect = $pageModel->getPage(null, $page->empty('CmsPage_ID'));
                 $redirectCode = $redirect->get('ArticleTranslation_Code');
-                if ($redirectCode == '/') {
-                    $redirectCode = null;
-                }
+                $redirectCode = $redirectCode == '/' ? null : $redirectCode;
                 return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
             }
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
-            return new HtmlResponse(new CallbackStream(function () use ($request, $pageModel, $page, $cache, $cacheID, $adapter, $translator, $session, $locale, $code, $logger, $config, $guard) {
-                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'page', $page);
-                $this->initTemplateVars($request);
+            return new HtmlResponse(new CallbackStream(function () use ($request, $page, $pageCache, $cacheID) {
+                $this->initDefaultVars($request);
+                $this->assign('page', $page);
                 $out = $this->renderer->render('index::index');
                 if (in_array(
                     $page->get('CmsPageType_Code'),
                     ['home', 'gallery', 'about', 'faq', 'tiles', 'blog', 'columns']
                 )) {
-                    $cache->set($cacheID, $out, 300);
+                    $pageCache->set($cacheID, $out, 300);
                 }
                 return $out;
             }));
         }
-        $this->initTemplateVars($request);
-        $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
+
+        $paragraphModel = (new ModelFactory())($request, ParagraphModel::class);
         $paragraph = $paragraphModel->getParagraph();
         if ($paragraph != null) {
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'paragraph', $paragraph);
-            return new HtmlResponse($this->renderer->render('index::paragraph'));
+            return new HtmlResponse(new CallbackStream(function () use ($request, $paragraph) {
+                $this->initDefaultVars($request);
+                $this->assign('paragraph', $paragraph);
+                return $this->renderer->render('index::paragraph');
+            }));
         }
-        $postModel = new PostModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
+
+
+        $postModel = (new ModelFactory())($request, PostModel::class);
         $post = $postModel->getPost();
         if ($post != null) {
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'post', $post);
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'similarList', $postModel->getSimilarPosts($post));
-            return new HtmlResponse($this->renderer->render('index::post'));
+            return new HtmlResponse(new CallbackStream(function () use ($request, $post, $postModel) {
+                $this->initDefaultVars($request);
+                $this->assign('post', $paragraph);
+                $this->assign('similarList', $postModel->getSimilarPosts($post));
+                return $this->renderer->render('index::post');
+            }));
         }
-
+        $this->initDefaultVars($request);
         return new HtmlResponse($this->renderer->render('error::404'), 404);
     }
-
-    protected function initTemplateVars(RequestInterface $request)
-    {
-        $localeModel = (new ModelFactory())($request, LocaleModel::class);
-        $this->renderer->addDefaultParam(
-            TemplateRendererInterface::TEMPLATE_ALL,
-            'localelist',
-            $localeModel->getLocaleList()
-        );
-
-        $menuModel = (new ModelFactory())($request, MenuModel::class);
-        $this->renderer->addDefaultParam(
-            TemplateRendererInterface::TEMPLATE_ALL,
-            'menu',
-            $menuModel->getMenuList()
-        );
-    }
-
 }

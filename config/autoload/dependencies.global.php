@@ -29,7 +29,10 @@ return [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
             Pars\Frontend\Application::class => Pars\Frontend\ApplicationFactory::class,
             Pars\Frontend\ApplicationContainer::class => Pars\Frontend\ApplicationContainerFactory::class,
-            \Pars\Frontend\Cms\Handler\CmsHandler::class => \Pars\Frontend\Cms\Handler\CmsHandlerFactory::class,
+            \Pars\Frontend\Cms\Handler\CmsHandler::class => \Pars\Frontend\Base\Handler\FrontendHandlerFactory::class,
+            \Pars\Frontend\Cms\Handler\BrowserconfigHandler::class => \Pars\Frontend\Base\Handler\FrontendHandlerFactory::class,
+            \Pars\Frontend\Cms\Handler\RobotsHandler::class => \Pars\Frontend\Base\Handler\FrontendHandlerFactory::class,
+            \Pars\Frontend\Cms\Handler\SitemapHandler::class => \Pars\Frontend\Base\Handler\FrontendHandlerFactory::class,
             \Pars\Frontend\Cms\Form\CmsFormMiddelware::class => \Pars\Frontend\Cms\Form\CmsFormMiddelware::class,
             \Mezzio\Middleware\ErrorResponseGenerator::class => \Pars\Frontend\Cms\Error\ErrorResponseGeneratorFactory::class,
             \Mezzio\Response\ServerRequestErrorResponseGenerator::class => \Pars\Frontend\Cms\Error\ServerRequestErrorResponseGeneratorFactory::class,
@@ -39,11 +42,7 @@ return [
             \Pars\Frontend\Cms\Extensions\TranslatorExtension::class => \Pars\Frontend\Cms\Extensions\TranslatorExtensionFactory::class,
             \Pars\Frontend\Cms\Extensions\PlaceholderExtension::class => \Pars\Frontend\Cms\Extensions\PlaceholderExtensionFactory::class,
             \Pars\Frontend\Cms\Extensions\PathExtension::class => \Pars\Frontend\Cms\Extensions\PathExtensionFactory::class,
-            \Laminas\HttpHandlerRunner\Emitter\EmitterInterface::class => function(\Psr\Container\ContainerInterface $container) {
-                $stack = new \Laminas\HttpHandlerRunner\Emitter\EmitterStack();
-                $stack->push(new \Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter());
-                return $stack;
-            },
+            \Laminas\HttpHandlerRunner\Emitter\EmitterInterface::class => \Pars\Core\Emitter\EmitterFactory::class,
         ],
     ],
 ];

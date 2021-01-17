@@ -37,5 +37,8 @@ use Psr\Container\ContainerInterface;
  * );
  */
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
+    $app->get('/{locale}/sitemap[.xml]', \Pars\Frontend\Cms\Handler\SitemapHandler::class, 'sitemap');
+    $app->get('/{locale}/browserconfig[.xml]', \Pars\Frontend\Cms\Handler\BrowserconfigHandler::class, 'browserconfig');
+    $app->get('/{locale}/robots[.txt]', \Pars\Frontend\Cms\Handler\RobotsHandler::class, 'robots');
     $app->any('[/[{locale}[/[{code}[/]]]]]', \Pars\Frontend\Cms\Handler\CmsHandler::class, 'cms');
 };
