@@ -4,6 +4,7 @@
 namespace Pars\Frontend\Cms\Form\Poll;
 
 
+use Niceshops\Bean\Type\Base\BeanInterface;
 use Pars\Frontend\Cms\Form\Base\AbstractForm;
 
 class PollForm extends AbstractForm
@@ -34,5 +35,11 @@ class PollForm extends AbstractForm
         }
         return !$this->getValidationHelper()->hasError();
     }
+
+    protected function success(BeanInterface $bean)
+    {
+
+    }
+
 
 }

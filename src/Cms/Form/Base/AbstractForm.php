@@ -13,6 +13,7 @@ use Mezzio\Session\SessionInterface;
 use Niceshops\Bean\Processor\TimestampMetaFieldHandler;
 use Niceshops\Bean\Type\Base\BeanAwareInterface;
 use Niceshops\Bean\Type\Base\BeanAwareTrait;
+use Niceshops\Bean\Type\Base\BeanInterface;
 use Pars\Helper\Validation\ValidationHelperAwareInterface;
 use Pars\Helper\Validation\ValidationHelperAwareTrait;
 use Pars\Model\Article\Data\ArticleDataBeanFinder;
@@ -246,9 +247,15 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
             $processor->setBeanList($beanList);
             $processor->save();
             $this->getValidationHelper()->merge($processor->getValidationHelper());
+            if (!$this->getValidationHelper()->hasError()) {
+                $this->success($bean);
+            }
         } else {
             $this->getValidationHelper()->addError('general', $this->translate('form.save.error'));
         }
         return !$this->getValidationHelper()->hasError();
     }
+
+
+    protected abstract function success(BeanInterface $bean);
 }
