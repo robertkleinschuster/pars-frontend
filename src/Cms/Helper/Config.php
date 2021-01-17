@@ -35,6 +35,7 @@ class Config implements AdapterAwareInterface
         'frontend.color',
         'frontend.timezone',
         'frontend.update',
+        'frontend.google-key',
     ];
 
     /**

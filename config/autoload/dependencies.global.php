@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 
+use Mezzio\Csrf\CsrfGuardFactoryInterface;
+use Mezzio\Csrf\SessionCsrfGuardFactory;
+
 return [
     // Provides application-wide services.
     // We recommend using fully-qualified class names whenever possible as
@@ -28,6 +31,11 @@ return [
             Pars\Frontend\ApplicationContainer::class => Pars\Frontend\ApplicationContainerFactory::class,
             \Pars\Frontend\Cms\Handler\CmsHandler::class => \Pars\Frontend\Cms\Handler\CmsHandlerFactory::class,
             \Pars\Frontend\Cms\Form\CmsFormMiddelware::class => \Pars\Frontend\Cms\Form\CmsFormMiddelware::class,
+            \Mezzio\Middleware\ErrorResponseGenerator::class => \Pars\Frontend\Cms\Error\ErrorResponseGeneratorFactory::class,
+            \Mezzio\Response\ServerRequestErrorResponseGenerator::class => \Pars\Frontend\Cms\Error\ServerRequestErrorResponseGeneratorFactory::class,
+            \Mezzio\Handler\NotFoundHandler::class => \Pars\Frontend\Cms\Error\NotFoundHandlerFactory::class,
+            \Pars\Frontend\Cms\Error\NotFoundHandler::class => \Pars\Frontend\Cms\Error\NotFoundHandlerFactory::class,
+            \Pars\Frontend\Cms\Middleware\FrontendConfigMiddleware::class => \Pars\Frontend\Cms\Middleware\FrontendConfigMiddlewareFactory::class,
             \Pars\Frontend\Cms\Extensions\TranslatorExtension::class => \Pars\Frontend\Cms\Extensions\TranslatorExtensionFactory::class,
             \Pars\Frontend\Cms\Extensions\PlaceholderExtension::class => \Pars\Frontend\Cms\Extensions\PlaceholderExtensionFactory::class,
             \Pars\Frontend\Cms\Extensions\PathExtension::class => \Pars\Frontend\Cms\Extensions\PathExtensionFactory::class,

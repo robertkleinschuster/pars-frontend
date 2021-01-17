@@ -76,7 +76,9 @@ class PathExtension implements ExtensionInterface
             $route['locale'] = $locale;
         }
         if ($this->urlHelper->getRouteResult()->isSuccess()) {
-            return $this->urlHelper->generate(null, $route, $params, $id);
+            return $this->urlHelper->generate('cms', $route, $params, $id);
+        } else {
+            return $this->urlHelper->generate('cms', $route, $params, $id);
         }
         return '';
     }

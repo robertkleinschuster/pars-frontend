@@ -23,4 +23,9 @@ return [
     'cmspost.default.publish' => 'Published on {date} at {time}',
     'cmspost.default.more.link' => 'more...',
     'cmspost.default.similar.heading' => 'Similar posts',
+    'error.404.title' => '404',
+    'error.404.heading' => 'Oops! :(',
+    'error.404.subheading' => '404 Page not found',
+    'error.404.text' => '',
+    'error.404.link.text' => 'Startpage',
 ];

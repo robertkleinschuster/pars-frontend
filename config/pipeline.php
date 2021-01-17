@@ -21,6 +21,7 @@ use Psr\Container\ContainerInterface;
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     // The error handler should be the first (most outer) middleware to catch
     // all Exceptions.
+    $app->pipe(\Pars\Frontend\Cms\Middleware\FrontendConfigMiddleware::class);
     $app->pipe(ErrorHandler::class);
     $app->pipe(ServerUrlMiddleware::class);
     $app->pipe(\Pars\Core\Logging\LoggingMiddleware::class);
@@ -88,5 +89,5 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // At this point, if no Response is returned by any middleware, the
     // NotFoundHandler kicks in; alternately, you can provide other fallback
     // middleware to execute.
-    $app->pipe(NotFoundHandler::class);
+    $app->pipe(\Pars\Frontend\Cms\Error\NotFoundHandler::class);
 };

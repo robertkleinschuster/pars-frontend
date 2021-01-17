@@ -23,4 +23,9 @@ return [
     'cmspost.default.publish' => 'Am {date} um {time} Uhr veröffentlicht',
     'cmspost.default.more.link' => 'mehr...',
     'cmspost.default.similar.heading' => 'Ähnliche Beiträge',
+    'error.404.title' => '404',
+    'error.404.heading' => 'Oh je! :(',
+    'error.404.subheading' => '404 Seite nicht gefunden',
+    'error.404.text' => 'Wir hoffen Sie finden trotzdem wonach Sie gesucht haben.',
+    'error.404.link.text' => 'Hier geht es zur Startseite.',
 ];

@@ -28,8 +28,10 @@ class StylesheetsExtension implements ExtensionInterface
                     if ($cache->has($cacheID)) {
                         $ret = $cache->get($cacheID);
                     } else {
-                        $ret .= "<style>" . file_get_contents($_SERVER['DOCUMENT_ROOT'] . $file) . "</style>";
-                        $cache->set($cacheID, $ret);
+                        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $file)) {
+                            $ret .= "<style>" . file_get_contents($_SERVER['DOCUMENT_ROOT'] . $file) . "</style>";
+                            $cache->set($cacheID, $ret);
+                        }
                     }
                 } else {
                     $ret .= " 

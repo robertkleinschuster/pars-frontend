@@ -8,6 +8,7 @@ use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Diactoros\CallbackStream;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Response\TextResponse;
 use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Helper\UrlHelper;
@@ -21,10 +22,12 @@ use Pars\Frontend\Cms\Helper\Config;
 use Pars\Frontend\Cms\Helper\ImportLoader;
 use Pars\Frontend\Cms\Model\LocaleModel;
 use Pars\Frontend\Cms\Model\MenuModel;
+use Pars\Frontend\Cms\Model\ModelFactory;
 use Pars\Frontend\Cms\Model\PageModel;
 use Pars\Frontend\Cms\Model\ParagraphModel;
 use Pars\Frontend\Cms\Model\PostModel;
 use Pars\Model\Import\ImportBeanFinder;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -62,43 +65,32 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
         $logger = $request->getAttribute(LoggingMiddleware::LOGGER_ATTRIBUTE);
+        $config = $request->getAttribute(Config::class);
         $code = $request->getAttribute('code', '/');
-        $config = new Config($adapter);
+
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'code', $code);
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'locale', $locale->getLocale_Code());
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'hash', $this->config['bundles']['hash'] ?? '');
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'session', $session);
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'brand', $config->get('frontend.brand'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'keywords', $config->get('frontend.keywords'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'author', $config->get('frontend.author'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'static', $config->get('asset.domain'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'key', $config->get('asset.key'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'domain', $config->get('frontend.domain'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'charset', $config->get('frontend.charset'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'favicon', $config->get('frontend.favicon'));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'color', $config->get('frontend.color'));
         $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'import', new ImportLoader(new ImportBeanFinder($adapter)));
-        $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'host', $request->getUri()->getHost());
 
-        if ($code == 'browserconfig') {
+        $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
+        foreach ($container->mergeForTemplate([]) as $key => $value) {
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, $key, $value);
+        }
+
+        if ($code == 'browserconfig' || $code == 'browserconfig.xml') {
             return new HtmlResponse($this->renderer->render('meta::browserconfig'));
         }
 
-        $localeModel = new LocaleModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
-        $this->renderer->addDefaultParam(
-            TemplateRendererInterface::TEMPLATE_ALL,
-            'localelist',
-            $localeModel->getLocaleList()
-        );
+        if ($code == 'sitemap' || $code == 'sitemap.xml') {
+            return new HtmlResponse($this->renderer->render('meta::sitemap'));
+        }
 
-        $menuModel = new MenuModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
-        $this->renderer->addDefaultParam(
-            TemplateRendererInterface::TEMPLATE_ALL,
-            'menu',
-            $menuModel->getMenuList()
-        );
+        if ($code == 'robots' || $code == 'robots.txt') {
+            return new TextResponse($this->renderer->render('meta::robots'));
+        }
 
-        $pageModel = new PageModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
+        $pageModel = (new ModelFactory())($request, PageModel::class);
         $page = $pageModel->getPage();
         if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host')) == $request->getUri()->getHost())) {
             if (!$page->empty('CmsPage_ID_Redirect')) {
@@ -109,14 +101,10 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
                 }
                 return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
             }
-
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
             return new HtmlResponse(new CallbackStream(function () use ($request, $pageModel, $page, $cache, $cacheID, $adapter, $translator, $session, $locale, $code, $logger, $config, $guard) {
                 $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'page', $page);
-                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
-                $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
-                foreach ($container->mergeForTemplate([]) as $key => $value) {
-                    $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, $key, $value);
-                }
+                $this->initTemplateVars($request);
                 $out = $this->renderer->render('index::index');
                 if (in_array(
                     $page->get('CmsPageType_Code'),
@@ -127,6 +115,7 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
                 return $out;
             }));
         }
+        $this->initTemplateVars($request);
         $paragraphModel = new ParagraphModel($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
         $paragraph = $paragraphModel->getParagraph();
         if ($paragraph != null) {
@@ -142,6 +131,23 @@ class CmsHandler implements \Psr\Http\Server\RequestHandlerInterface
         }
 
         return new HtmlResponse($this->renderer->render('error::404'), 404);
+    }
+
+    protected function initTemplateVars(RequestInterface $request)
+    {
+        $localeModel = (new ModelFactory())($request, LocaleModel::class);
+        $this->renderer->addDefaultParam(
+            TemplateRendererInterface::TEMPLATE_ALL,
+            'localelist',
+            $localeModel->getLocaleList()
+        );
+
+        $menuModel = (new ModelFactory())($request, MenuModel::class);
+        $this->renderer->addDefaultParam(
+            TemplateRendererInterface::TEMPLATE_ALL,
+            'menu',
+            $menuModel->getMenuList()
+        );
     }
 
 }

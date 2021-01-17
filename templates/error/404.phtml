@@ -1,13 +1,9 @@
-<?php $this->layout('layout::default', ['title' => '404 Not Found']) ?>
-<?= $this->css("/frontend-critical_$hash.css", true)?>
-<?= $this->css("/frontend-bundle_$hash.css")?>
-<?= $this->js("/insertion_$hash.js", true)?>
-<?= $this->js("/frontend-minimal_$hash.js")?>
+<?php $this->layout('layout::default', ['title' => $brand . ' - ' . $this->t('error.404.title'), 'hash' => $hash ?? '']) ?>
 
-<h1>Oops!</h1>
-<h2>This is awkward.</h2>
-<p>We encountered a 404 Not Found error.</p>
+
+<h1><?= $this->t('error.404.heading')?></h1>
+<h2><?= $this->t('error.404.subheading')?></h2>
+<p><?= $this->t('error.404.text')?></p>
 <p>
-    You are looking for something that doesn't exist or may have moved. Check out one of the links on this page
-    or head back to <a href="/">Home</a>.
+    <a href="/"><?= $this->t('error.404.link.text')?></a>
 </p>

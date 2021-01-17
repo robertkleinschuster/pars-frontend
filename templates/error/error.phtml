@@ -1,8 +1,4 @@
-<?php $this->layout('layout::default', ['title' => sprintf('%d %s', $status, $reason)]) ?>
-<?= $this->css("/frontend-critical_$hash.css", true)?>
-<?= $this->css("/frontend-bundle_$hash.css")?>
-<?= $this->js("/insertion_$hash.js", true)?>
-<?= $this->js("/frontend-minimal_$hash.js")?>
+<?php $this->layout('layout::default', ['title' => sprintf('%d %s', $status, $reason), 'hash'  => $hash ?? '']) ?>
 
 <h1>Oops!</h1>
 <h2>This is awkward.</h2>

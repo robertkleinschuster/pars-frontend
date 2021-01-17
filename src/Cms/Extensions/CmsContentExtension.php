@@ -44,21 +44,21 @@ class CmsContentExtension implements ExtensionInterface
             }
             return '';
         });
-        $engine->registerFunction('date', function ($date){
+        $engine->registerFunction('date', function ($date, $format = 'j.n.Y'){
             if ($date instanceof \DateTime) {
-                return $date->format('j.n.Y');
+                return $date->format($format);
             }
             return '';
         });
-        $engine->registerFunction('time', function ($date){
+        $engine->registerFunction('time', function ($date, $format = 'G:i'){
             if ($date instanceof \DateTime) {
-                return $date->format('G:i');
+                return $date->format($format);
             }
             return '';
         });
-        $engine->registerFunction('datetime', function ($date){
+        $engine->registerFunction('datetime', function ($date, $format = 'j.n.Y G:i'){
             if ($date instanceof \DateTime) {
-                return $date->format('j.n.Y G:i');
+                return $date->format($format);
             }
             return '';
         });

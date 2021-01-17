@@ -42,7 +42,9 @@ class FormFactory
                 $id = PollForm::id();
         }
         if ($id !== null) {
-            return $this->createForm($id, [], $adapter, $session, $guard, $translator);
+            $form = $this->createForm($id, [], $adapter, $session, $guard, $translator);
+            $form->generateToken();
+            return $form;
         }
         return null;
     }
