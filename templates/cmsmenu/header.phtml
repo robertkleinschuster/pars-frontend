@@ -2,10 +2,24 @@
     <?php foreach ($menu as $item): ?>
         <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
            href="<?= $this->cmspath($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
+    <script>
+        var hint = document.createElement("link");
+        hint.rel = "prerender";
+        hint.as = "document";
+        hint.href = "<?= $this->cmspath($item->get('ArticleTranslation_Code')) ?>";
+        document.head.appendChild(hint);
+    </script>
         <?php if (!$item->empty('Menu_BeanList')): ?>
             <?php foreach ($item->get('Menu_BeanList') as $subitem): ?>
                 <a class="nav-link <?= $subitem->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
                    href="<?= $this->cmspath($subitem->get('ArticleTranslation_Code')) ?>"><?= $subitem->get('ArticleTranslation_Name') ?></a>
+        <script>
+            var hint = document.createElement("link");
+            hint.rel = "prerender";
+            hint.as = "document";
+            hint.href = "<?= $this->cmspath($subitem->get('ArticleTranslation_Code')) ?>";
+            document.head.appendChild(hint);
+        </script>
             <?php endforeach; ?>
         <?php endif; ?>
     <?php endforeach; ?>
