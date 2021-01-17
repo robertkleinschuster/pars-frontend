@@ -4,9 +4,6 @@
 namespace Pars\Frontend\Cms\Model;
 
 
-use Pars\Frontend\Cms\Form\FormFactory;
-use Pars\Model\Cms\Page\CmsPageBean;
-use Pars\Model\Cms\Page\CmsPageBeanFinder;
 use Pars\Model\Cms\Post\CmsPostBean;
 use Pars\Model\Cms\Post\CmsPostBeanFinder;
 

@@ -14,10 +14,7 @@ use Pars\Frontend\Cms\Model\LocaleModel;
 use Pars\Frontend\Cms\Model\MenuModel;
 use Pars\Frontend\Cms\Model\ModelFactory;
 use Pars\Model\Import\ImportBeanFinder;
-use Pars\Model\Localization\Locale\LocaleBean;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 abstract class FrontendHandler implements RequestHandlerInterface

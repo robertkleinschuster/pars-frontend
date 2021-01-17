@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 
-use Mezzio\Csrf\CsrfGuardFactoryInterface;
-use Mezzio\Csrf\SessionCsrfGuardFactory;
-
 return [
     // Provides application-wide services.
     // We recommend using fully-qualified class names whenever possible as

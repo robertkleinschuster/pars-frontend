@@ -8,7 +8,6 @@ use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Mezzio\Csrf\CsrfGuardInterface;
 use Mezzio\Session\SessionInterface;
-use Niceshops\Core\Exception\CoreException;
 use Pars\Frontend\Cms\Form\Base\AbstractForm;
 use Pars\Frontend\Cms\Form\Contact\ContactForm;
 use Pars\Frontend\Cms\Form\Poll\PollForm;

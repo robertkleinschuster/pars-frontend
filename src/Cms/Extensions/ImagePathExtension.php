@@ -4,14 +4,11 @@
 namespace Pars\Frontend\Cms\Extensions;
 
 
-use League\Glide\Signatures\SignatureFactory;
 use League\Glide\Urls\UrlBuilderFactory;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Niceshops\Bean\Type\Base\BeanInterface;
-use Pars\Component\Base\Grid\Container;
 use Pars\Core\Cache\ParsCache;
-use Psr\Container\ContainerInterface;
 
 class ImagePathExtension implements ExtensionInterface
 {

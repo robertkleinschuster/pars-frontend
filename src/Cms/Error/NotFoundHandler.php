@@ -13,15 +13,12 @@ namespace Pars\Frontend\Cms\Error;
 use Fig\Http\Message\StatusCodeInterface;
 use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Template\TemplateRendererInterface;
-use Pars\Core\Localization\LocaleInterface;
-use Pars\Core\Localization\LocalizationMiddleware;
 use Pars\Frontend\Cms\Model\LocaleModel;
 use Pars\Frontend\Cms\Model\MenuModel;
 use Pars\Frontend\Cms\Model\ModelFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-
 use function sprintf;
 
 class NotFoundHandler implements RequestHandlerInterface

@@ -5,7 +5,6 @@ namespace Pars\Frontend\Cms\Middleware;
 
 
 use Mezzio\Helper\Template\TemplateVariableContainer;
-use Mezzio\Template\TemplateRendererInterface;
 use Pars\Frontend\Cms\Helper\Config;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

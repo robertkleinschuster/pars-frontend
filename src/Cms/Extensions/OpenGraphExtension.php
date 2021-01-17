@@ -6,7 +6,6 @@ namespace Pars\Frontend\Cms\Extensions;
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
-use Pars\Core\Cache\ParsCache;
 
 class OpenGraphExtension implements ExtensionInterface
 {

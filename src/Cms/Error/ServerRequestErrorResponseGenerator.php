@@ -5,7 +5,6 @@ namespace Pars\Frontend\Cms\Error;
 
 
 use Laminas\Stratigility\Utils;
-use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Response\ErrorResponseGeneratorTrait;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;

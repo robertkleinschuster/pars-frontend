@@ -4,7 +4,6 @@
 namespace Pars\Frontend\Cms\Model;
 
 
-use Pars\Model\Cms\Page\CmsPageBeanFinder;
 use Pars\Model\Cms\Paragraph\CmsParagraphBeanFinder;
 
 class ParagraphModel extends BaseModel

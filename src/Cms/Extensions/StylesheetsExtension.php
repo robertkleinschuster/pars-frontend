@@ -6,7 +6,6 @@ namespace Pars\Frontend\Cms\Extensions;
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
-use Mezzio\Session\SessionInterface;
 use Pars\Core\Cache\ParsCache;
 
 class StylesheetsExtension implements ExtensionInterface
