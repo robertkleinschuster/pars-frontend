@@ -1,23 +1,39 @@
 <?= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' ?>
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">' ?>
+<?php foreach ($localelist as $l):?>
+
 <?php foreach ($menu as $item): ?>
     <?php if ($item->empty('ArticleTranslation_Host') || empty($host) || $item->get('ArticleTranslation_Host') == $host): ?>
         <url>
-            <loc><?= $this->cmspaths($item->get('ArticleTranslation_Code')) ?></loc>
+            <loc><?= $this->cmspaths($item->get('ArticleTranslation_Code'), [], null, $l->getUrl_Code()) ?></loc>
             <lastmod><?= $this->datetime($item->get('Timestamp_Edit_Article'), DateTimeInterface::W3C) ?></lastmod>
             <priority>1</priority>
+            <?php foreach ($localelist as $locale):?>
+            <xhtml:link
+                    rel="alternate"
+                    hreflang="<?= $locale->getUrl_Code() ?>>"
+                    href="<?= $this->cmspaths($item->get('ArticleTranslation_Code'), [], null, $locale->getUrl_Code()) ?>"/>
+            <?php endforeach;?>
         </url>
     <?php endif; ?>
     <?php if (!$item->empty('Menu_BeanList')): ?>
         <?php foreach ($item->get('Menu_BeanList') as $subitem): ?>
             <?php if ($subitem->empty('ArticleTranslation_Host') || empty($host) || $subitem->get('ArticleTranslation_Host') == $host): ?>
                 <url>
-                    <loc><?= $this->cmspaths($subitem->get('ArticleTranslation_Code')) ?></loc>
+                    <loc><?= $this->cmspaths($subitem->get('ArticleTranslation_Code'), [], null, $l->getUrl_Code()) ?></loc>
                     <lastmod><?= $this->datetime($subitem->get('Timestamp_Edit_Article'), DateTimeInterface::W3C) ?></lastmod>
                     <priority>0.80</priority>
+                    <?php foreach ($localelist as $locale):?>
+                        <xhtml:link
+                                rel="alternate"
+                                hreflang="<?= $locale->getUrl_Code() ?>>"
+                                href="<?= $this->cmspaths($subitem->get('ArticleTranslation_Code'), [], null, $locale->getUrl_Code()) ?>"/>
+                    <?php endforeach;?>
                 </url>
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
 <?php endforeach; ?>
+<?php endforeach;?>
 <?= '</urlset>' ?>
