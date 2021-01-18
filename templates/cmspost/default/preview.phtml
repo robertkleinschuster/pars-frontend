@@ -63,10 +63,24 @@
         <?php if (!$post->empty('CmsPost_PublishTimestamp')): ?>
             <div class="card-footer">
                 <small class="text-muted">
-                    <?= $this->p($this->t('cmspost.default.publish'), [
-                        'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
-                        'time' => $this->time($post->get('CmsPost_PublishTimestamp'))
-                    ]) ?>
+                    <?php if (!$post->empty('Article_Data') && !$post->get('Article_Data')->empty('User_Displayname_Create')): ?>
+                        <?= $this->p($this->t('cmspost.default.publish'), [
+                            'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                            'time' => $this->time($post->get('CmsPost_PublishTimestamp')),
+                            'name' => $post->get('Article_Data')->get('User_Displayname_Create')
+                        ]) ?>
+                    <?php elseif (!$post->empty('Article_Data') && !$post->get('Article_Data')->empty('User_Displayname_Edit')): ?>
+                        <?= $this->p($this->t('cmspost.default.edit'), [
+                            'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                            'time' => $this->time($post->get('CmsPost_PublishTimestamp')),
+                            'name' => $post->get('Article_Data')->get('User_Displayname_Edit')
+                        ]) ?>
+                    <?php else: ?>
+                        <?= $this->p($this->t('cmspost.default.publish.anonymous'), [
+                            'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                            'time' => $this->time($post->get('CmsPost_PublishTimestamp'))
+                        ]) ?>
+                    <?php endif; ?>
                 </small>
             </div>
         <?php endif; ?>

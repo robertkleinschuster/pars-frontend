@@ -38,10 +38,24 @@ bg-transparent text-light similar-post rounded-0 border-top-0 border-left-0 bord
                             <p class="mb-1"><?= $this->p($similar->get('ArticleTranslation_Teaser')) ?></p>
                         <?php endif; ?>
                         <small>
-                            <?= $this->p($this->t('cmspost.default.publish'), [
-                                'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
-                                'time' => $this->time($similar->get('CmsPost_PublishTimestamp'))
-                            ]) ?>
+                            <?php if (!$similar->empty('Article_Data') && !$similar->get('Article_Data')->empty('User_Displayname_Create')): ?>
+                                <?= $this->p($this->t('cmspost.default.publish'), [
+                                    'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                                    'time' => $this->time($similar->get('CmsPost_PublishTimestamp')),
+                                    'name' => $similar->get('Article_Data')->get('User_Displayname_Create')
+                                ]) ?>
+                            <?php elseif (!$similar->empty('Article_Data') && !$similar->get('Article_Data')->empty('User_Displayname_Edit')): ?>
+                                <?= $this->p($this->t('cmspost.default.edit'), [
+                                    'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                                    'time' => $this->time($similar->get('CmsPost_PublishTimestamp')),
+                                    'name' => $similar->get('Article_Data')->get('User_Displayname_Edit')
+                                ]) ?>
+                            <?php else: ?>
+                                <?= $this->p($this->t('cmspost.default.publish.anonymous'), [
+                                    'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                                    'time' => $this->time($similar->get('CmsPost_PublishTimestamp'))
+                                ]) ?>
+                            <?php endif; ?>
                         </small>
                     </a>
                 <?php endforeach; ?>
@@ -53,10 +67,24 @@ bg-transparent text-light similar-post rounded-0 border-top-0 border-left-0 bord
 <hr>
 <?php if (!$post->empty('CmsPost_PublishTimestamp')): ?>
     <small class="text-light">
-        <?= $this->p($this->t('cmspost.default.publish'), [
-            'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
-            'time' => $this->time($post->get('CmsPost_PublishTimestamp'))
-        ]) ?>
+        <?php if (!$post->empty('Article_Data') && !$post->get('Article_Data')->empty('User_Displayname_Create')): ?>
+            <?= $this->p($this->t('cmspost.default.publish'), [
+                'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                'time' => $this->time($post->get('CmsPost_PublishTimestamp')),
+                'name' => $post->get('Article_Data')->get('User_Displayname_Create')
+            ]) ?>
+        <?php elseif (!$post->empty('Article_Data') && !$post->get('Article_Data')->empty('User_Displayname_Edit')): ?>
+            <?= $this->p($this->t('cmspost.default.edit'), [
+                'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                'time' => $this->time($post->get('CmsPost_PublishTimestamp')),
+                'name' => $post->get('Article_Data')->get('User_Displayname_Edit')
+            ]) ?>
+        <?php else: ?>
+            <?= $this->p($this->t('cmspost.default.publish.anonymous'), [
+                'date' => $this->date($post->get('CmsPost_PublishTimestamp')),
+                'time' => $this->time($post->get('CmsPost_PublishTimestamp'))
+            ]) ?>
+        <?php endif; ?>
     </small>
 <?php endif; ?>
 <div class="my-3">
@@ -76,10 +104,24 @@ bg-transparent text-light similar-post rounded-0 border-top-0 border-left-0 bord
                     <p class="mb-1"><?= $this->p($similar->get('ArticleTranslation_Teaser')) ?></p>
                 <?php endif; ?>
                 <small>
-                    <?= $this->p($this->t('cmspost.default.publish'), [
-                        'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
-                        'time' => $this->time($similar->get('CmsPost_PublishTimestamp'))
-                    ]) ?>
+                    <?php if (!$similar->empty('Article_Data') && !$similar->get('Article_Data')->empty('User_Displayname_Create')): ?>
+                        <?= $this->p($this->t('cmspost.default.publish'), [
+                            'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                            'time' => $this->time($similar->get('CmsPost_PublishTimestamp')),
+                            'name' => $similar->get('Article_Data')->get('User_Displayname_Create')
+                        ]) ?>
+                    <?php elseif (!$similar->empty('Article_Data') && !$similar->get('Article_Data')->empty('User_Displayname_Edit')): ?>
+                        <?= $this->p($this->t('cmspost.default.edit'), [
+                            'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                            'time' => $this->time($similar->get('CmsPost_PublishTimestamp')),
+                            'name' => $similar->get('Article_Data')->get('User_Displayname_Edit')
+                        ]) ?>
+                    <?php else: ?>
+                        <?= $this->p($this->t('cmspost.default.publish.anonymous'), [
+                            'date' => $this->date($similar->get('CmsPost_PublishTimestamp')),
+                            'time' => $this->time($similar->get('CmsPost_PublishTimestamp'))
+                        ]) ?>
+                    <?php endif; ?>
                 </small>
             </a>
         <?php endforeach; ?>
