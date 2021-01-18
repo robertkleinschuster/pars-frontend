@@ -72,7 +72,7 @@ class CmsHandler extends FrontendHandler
         if ($post != null) {
             return new HtmlResponse(new CallbackStream(function () use ($request, $post, $postModel) {
                 $this->initDefaultVars($request);
-                $this->assign('post', $paragraph);
+                $this->assign('post', $post);
                 $this->assign('similarList', $postModel->getSimilarPosts($post));
                 return $this->renderer->render('index::post');
             }));
