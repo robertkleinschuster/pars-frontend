@@ -4,3 +4,8 @@
     <?= $this->insert('cmspost::default/detail', ['post' => $post]) ?>
 <?php endif; ?>
 
+<?php if (isset($post) && $post->isset('File_BeanList')): ?>
+    <?php foreach ($post->get('File_BeanList') as $file): ?>
+        <?php $this->bg($file); ?>
+    <?php endforeach; ?>
+<?php endif; ?>

@@ -1,13 +1,5 @@
 <h1 class="cover-heading mb-4"><?= $page->get('ArticleTranslation_Heading') ?></h1>
 <h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
-<?php if (isset($page) && $page->isset('File_BeanList')): ?>
-    <?php foreach ($page->get('File_BeanList') as $file): ?>
-        <div class="text-center">
-            <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1106, 'height' => 300, 'fit' => 'crop',
-                'alt' => $page->get('ArticleTranslation_Heading')]) ?>
-        </div>
-    <?php endforeach; ?>
-<?php endif; ?>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
 <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>

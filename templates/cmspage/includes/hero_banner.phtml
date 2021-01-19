@@ -1,0 +1,9 @@
+<?php $this->bg(null); if (isset($bean) && $bean->isset('File_BeanList')): ?>
+    <?php foreach ($bean->get('File_BeanList') as $file): ?>
+        <div class="text-center">
+            <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1106, 'height' => 300, 'fit' => 'crop',
+                'alt' => $bean->get('ArticleTranslation_Heading')
+            ]) ?>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>

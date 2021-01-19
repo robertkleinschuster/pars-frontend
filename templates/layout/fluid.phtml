@@ -13,7 +13,14 @@
     'footer' => $footer ?? ''
 ]) ?>
 <body>
-<div class="p-3 container-fluid">
+<?php $bgfile = $this->bgflush(); ?>
+<?php if (isset($bgfile)): ?>
+        <?= $this->file($bgfile,
+        ['class' => 'fluid-hero-img', 'width' => 2880, 'height' => null, 'fit' => 'crop',
+            'alt' => $title ?? ''
+        ]) ?>
+<?php endif; ?>
+<div class="p-3 container-fluid <?= isset($bgfile) ? 'fluid-content' :'' ?>">
     <?= $this->insert('layout::includes/header') ?>
     <div class="row">
         <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>

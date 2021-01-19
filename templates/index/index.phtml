@@ -5,4 +5,10 @@
     'description' => $this->p($page->get('ArticleTranslation_Teaser')),
     'keywords' => $this->p($page->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
 ]) ?>
+<?php if (isset($page) && $page->isset('File_BeanList')): ?>
+    <?php foreach ($page->get('File_BeanList') as $file): ?>
+        <?php $this->bg($file); ?>
+    <?php endforeach; ?>
+<?php endif; ?>
 <?= $this->page($page) ?>
+

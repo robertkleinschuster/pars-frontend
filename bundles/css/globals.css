@@ -24,9 +24,8 @@ a:hover {
  * Base structure
  */
 
-html,
-body {
-    height: 100%;
+html
+{
     background-color: #333;
 }
 
@@ -34,6 +33,8 @@ body {
     display: -ms-flexbox;
     display: flex;
     color: #fff;
+    height: 100%;
+    background-color: transparent;
     /*  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);*/
     /*  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);*/
 }
@@ -161,3 +162,37 @@ hr {
 .card {
     box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, .5);
 }
+
+.fluid-hero-img {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
+
+.default-hero-img {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    filter: blur(10px) brightness(50%);
+    -webkit-filter: blur(10px) brightness(50%);
+
+}
+
+.fluid-content {
+    margin-top: calc(100vh - 4rem);
+    background-color: #333;
+}
+
+.container-content {
+    background-color: #333;
+    box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, .6);
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+

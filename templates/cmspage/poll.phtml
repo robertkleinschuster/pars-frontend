@@ -2,15 +2,7 @@
     <!-- Section Titile -->
     <div class="col-md-12">
         <h1 class="section-title cover-heading"><?= $this->p($page->get('ArticleTranslation_Heading')) ?></h1>
-        <?php if (isset($page) && $page->isset('File_BeanList')): ?>
-            <?php foreach ($page->get('File_BeanList') as $file): ?>
-                <div class="text-center">
-                    <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1106, 'height' => 300, 'fit' => 'crop',
-                        'alt' => $page->get('ArticleTranslation_Heading')
-                    ]) ?>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <?= $this->insert('cmspage::includes/hero_banner', ['bean' => $page]);?>
     </div>
 </div>
 <?php if (isset($success)): ?>
@@ -21,7 +13,6 @@
                 <?= $this->t('poll.form.success') ?>
             </div>
         </div>
-
     </div>
 <?php else: ?>
 <?php if (isset($form) && $form instanceof \Pars\Frontend\Cms\Form\Poll\PollForm): ?>

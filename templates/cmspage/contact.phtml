@@ -2,15 +2,6 @@
     <!-- Section Titile -->
     <div class="col-md-12">
         <h1 class="section-title cover-heading mb-4"><?= $this->p($page->get('ArticleTranslation_Heading')) ?></h1>
-        <?php if (isset($page) && $page->isset('File_BeanList')): ?>
-            <?php foreach ($page->get('File_BeanList') as $file): ?>
-                <div class="text-center">
-                    <?= $this->file($file, ['class' => 'shadow-lg', 'width' => 1106, 'height' => 300, 'fit' => 'crop',
-                        'alt' => $page->get('ArticleTranslation_Heading')
-                    ]) ?>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
     </div>
 </div>
 <div class="row mb-4">
