@@ -1,5 +1,11 @@
 <?php if ($preview ?? false): ?>
-    <?= $this->insert('cmspost::default/preview', ['post' => $post]) ?>
+    <?= $this->insert('cmspost::default/preview', [
+        'post' => $post,
+        'img_height' => $img_height ?? null,
+        'img_width' => $img_width ?? null,
+        'img_fit' => $img_fit ?? null,
+        'hide_teaser' => $hide_teaser ?? null,
+    ]) ?>
 <?php else: ?>
     <?= $this->insert('cmspost::default/detail', ['post' => $post]) ?>
 <?php endif; ?>

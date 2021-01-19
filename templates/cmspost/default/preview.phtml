@@ -10,6 +10,7 @@
             [
                 'width' => $img_width ?? null,
                 'height' => $img_height ?? null,
+                'fit' => $img_fit ?? null,
                 'alt' => $this->p($post->get('ArticleTranslation_Title')),
                 'class' => 'card-img-top rounded-0'
             ]) ?>
@@ -28,10 +29,10 @@
                 </a>
             <?php endif; ?>
         <?php endif; ?>
-        <?php if (!$post->empty('ArticleTranslation_Heading')
+        <?php if ((!$post->empty('ArticleTranslation_Heading')
             || !$post->empty('ArticleTranslation_SubHeading')
             || !$post->empty('ArticleTranslation_Teaser')
-            || !$post->empty('ArticleTranslation_Footer')): ?>
+            || !$post->empty('ArticleTranslation_Footer')) && empty($hide_teaser)) : ?>
             <div class="card-body">
                 <?php if (!$post->empty('ArticleTranslation_Heading')): ?>
                     <h5 class="card-title">

@@ -9,6 +9,8 @@
 <?php endif; ?>
 <?php if (isset($page) && $page->isset('CmsPost_BeanList')): ?>
     <?php foreach ($page->get('CmsPost_BeanList') as $post): ?>
+    <div class="mb-5">
         <?= $this->post($post) ?>
+    </div>
     <?php endforeach; ?>
 <?php endif; ?>
