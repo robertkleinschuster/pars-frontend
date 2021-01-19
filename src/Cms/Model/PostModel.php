@@ -4,6 +4,7 @@
 namespace Pars\Frontend\Cms\Model;
 
 
+use Pars\Model\Authentication\User\UserBeanFinder;
 use Pars\Model\Cms\Post\CmsPostBean;
 use Pars\Model\Cms\Post\CmsPostBeanFinder;
 

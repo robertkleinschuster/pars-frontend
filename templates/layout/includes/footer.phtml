@@ -3,26 +3,29 @@
         <div class="col">
             <?= isset($menu) ? $this->menu($menu, 'footer', $host ?? null) : '' ?>
         </div>
-        <div class="col">
-            <div class="nav-item dropdown list-unstyled float-right">
-                <?php if (isset($localelist)): ?>
+        <?php if ($localelist instanceof \Niceshops\Bean\Type\Base\BeanListInterface && $localelist->count() > 1): ?>
+            <div class="col">
+                <div class="nav-item dropdown list-unstyled float-right">
                     <?php foreach ($localelist as $localeBean): ?>
                         <?php if ($localeBean->get('Locale_Code') == ($locale ?? '')): ?>
-                            <a class="nav-link dropdown-toggle" href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>" id="dropdown-locale" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$localeBean->get('Locale_Name')?></a>
+                            <a class="nav-link dropdown-toggle"
+                               href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>"
+                               id="dropdown-locale" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false"><?= $localeBean->get('Locale_Name') ?></a>
                         <?php endif; ?>
                     <?php endforeach; ?>
-                <?php endif; ?>
-                <div class="dropdown-menu" aria-labelledby="dropdown-locale">
-                    <?php if (isset($localelist)): ?>
+                    <div class="dropdown-menu" aria-labelledby="dropdown-locale">
                         <?php foreach ($localelist as $localeBean): ?>
                             <?php if ($localeBean->get('Locale_Code') !== ($locale ?? '')): ?>
-                                <a class="dropdown-item text-dark" href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>"><?=$localeBean->get('Locale_Name')?></a>
+                                <a class="dropdown-item text-dark"
+                                   href="<?= $this->cmspaths(null, [], null, $localeBean->get('Locale_UrlCode')) ?>"><?= $localeBean->get('Locale_Name') ?></a>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
+
     </div>
 
     <div class="footer-text">
