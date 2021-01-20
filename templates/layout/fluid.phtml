@@ -20,8 +20,17 @@
             'alt' => $title ?? ''
         ]) ?>
 <?php endif; ?>
+<a class="col masthead-brand-link masthead-brand-link-fluid" href="<?= $this->cmspath('/') ?>">
+    <h3 class="masthead-brand">
+        <?php if (isset($favicon)): ?>
+            <img class="img-fluid" src="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?>"
+                 srcset="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?> 1x,
+                    <?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 2, 'png', 'crop') ?> 2x"
+            >
+        <?php endif; ?><?= $brand ?? '' ?></h3>
+</a>
 <div class="p-3 container-fluid <?= isset($bgfile) ? 'fluid-content' :'' ?>">
-    <?= $this->insert('layout::includes/header') ?>
+    <?= $this->insert('layout::includes/header', ['showBrand' => false]) ?>
     <div class="row">
         <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>
         <main role="main" class="col order-1 order-md-2">

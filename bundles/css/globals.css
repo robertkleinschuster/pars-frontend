@@ -61,6 +61,23 @@ hr {
 
 .masthead-brand {
     margin-bottom: 0;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.masthead-brand-link {
+    transition: opacity .2s ease-in-out;
+}
+
+.masthead-brand-link:hover {
+    text-decoration: none;
+    opacity: 0.7;
+    color: #fff;
+}
+
+.masthead-brand-link-fluid {
+    position: absolute;
+    top: 1rem;
 }
 
 .nav-link {
@@ -184,7 +201,7 @@ hr {
 }
 
 .fluid-content {
-    margin-top: calc(100vh - 4rem);
+    margin-top: calc(100vh - 70px);
     background-color: #333;
 }
 

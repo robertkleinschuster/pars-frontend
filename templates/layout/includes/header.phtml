@@ -1,6 +1,14 @@
 <header class="masthead row">
-    <a class="col" href="<?= $this->cmspath('/') ?>">
-        <h3 class="masthead-brand"><?= $brand ?? '' ?></h3>
+    <?php if ($showBrand ?? true): ?>
+    <a class="col masthead-brand-link" href="<?= $this->cmspath('/') ?>">
+        <h3 class="masthead-brand">
+            <?php if (isset($favicon)): ?>
+                <img class="img-fluid" src="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?>"
+                     srcset="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?> 1x,
+                    <?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 2, 'png', 'crop') ?> 2x"
+                >
+            <?php endif; ?><?= $brand ?? '' ?></h3>
     </a>
+    <?php endif; ?>
     <?= isset($menu) ? $this->menu($menu, 'header', $host ?? null) : '' ?>
 </header>
