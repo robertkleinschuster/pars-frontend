@@ -25,11 +25,11 @@ const debounce = (fn) => {
 };
 const storeScroll = () => {
     document.documentElement.dataset.scroll = window.scrollY;
-    if ( window.scrollY > 300) {
-        document.documentElement.classList.add('scroll-300')
+    if ( window.scrollY > 200) {
+        document.documentElement.classList.add('scroll-200')
     }
-    if ( window.scrollY < 300) {
-        document.documentElement.classList.remove('scroll-300')
+    if ( window.scrollY < 200) {
+        document.documentElement.classList.remove('scroll-200')
     }
 }
 document.addEventListener('scroll', debounce(storeScroll), { passive: true });

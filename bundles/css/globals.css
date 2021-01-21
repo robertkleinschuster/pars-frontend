@@ -231,7 +231,7 @@ hr {
     box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, .6);
 }
 
-html.scroll-300 .scroll-down-arrow {
+html.scroll-200 .scroll-down-arrow {
     display: none;
 }
 
@@ -247,7 +247,7 @@ html:not(.ready) .masthead-brand-link-container {
     height: auto;
 }
 
-html:not(.scroll-300) .masthead-brand-link-container {
+html:not(.scroll-200) .masthead-brand-link-container {
     visibility: hidden;
     opacity: 0;
     height: 0;
