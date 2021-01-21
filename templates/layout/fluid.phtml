@@ -33,7 +33,6 @@
 </a>
 <div id="content" class="p-3 container-fluid <?= isset($bgfile) ? 'fluid-content' : '' ?>">
     <div class="container-lg">
-
         <?= $this->insert('layout::includes/header', ['showBrand' => false]) ?>
         <div class="row">
             <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>

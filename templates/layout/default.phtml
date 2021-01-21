@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="<?= $this->e($language ?? 'en') ?>">
-<?= $this->css("/frontend-critical_$hash.css", true)?>
-<?= $this->css("/frontend-bundle_$hash.css")?>
-<?= $this->js("/insertion_$hash.js", true)?>
-<?= $this->js("/frontend-minimal_$hash.js")?>
+<?= $this->css("/frontend-critical_$hash.css", true) ?>
+<?= $this->css("/frontend-bundle_$hash.css") ?>
+<?= $this->js("/insertion_$hash.js", true) ?>
+<?= $this->js("/frontend-minimal_$hash.js") ?>
 <?php $this->insert('layout::includes/head', [
     'language' => $language ?? '',
     'locale' => $locale ?? '',
@@ -20,16 +20,18 @@
             'alt' => $title ?? ''
         ]) ?>
 <?php endif; ?>
-<div class="p-3 container-lg  <?= isset($bgfile) ? 'container-content' :'' ?>">
-    <?= $this->insert('layout::includes/header') ?>
-    <div class="row">
-        <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>
-        <main role="main" class="col order-1 order-md-2">
-            <?= $this->section('content') ?>
-        </main>
-        <?= isset($menu) ? $this->menu($menu, 'aside_right', $host ?? null) : '' ?>
+<div class="p-3 container-fluid  <?= isset($bgfile) ? 'container-content' : '' ?>">
+    <div class="container-lg">
+        <?= $this->insert('layout::includes/header') ?>
+        <div class="row">
+            <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>
+            <main role="main" class="col order-1 order-md-2">
+                <?= $this->section('content') ?>
+            </main>
+            <?= isset($menu) ? $this->menu($menu, 'aside_right', $host ?? null) : '' ?>
+        </div>
+        <?= $this->insert('layout::includes/footer') ?>
     </div>
-    <?= $this->insert('layout::includes/footer') ?>
 </div>
 <?= $this->jsflush() ?>
 </body>
