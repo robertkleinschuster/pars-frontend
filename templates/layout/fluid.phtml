@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="<?= $this->e($language ?? 'en') ?>">
-<?= $this->css("/frontend-critical_$hash.css", true)?>
-<?= $this->css("/frontend-bundle_$hash.css")?>
-<?= $this->js("/insertion_$hash.js", true)?>
-<?= $this->js("/frontend-minimal_$hash.js")?>
+<?= $this->css("/frontend-critical_$hash.css", true) ?>
+<?= $this->css("/frontend-bundle_$hash.css") ?>
+<?= $this->js("/insertion_$hash.js", true) ?>
+<?= $this->js("/frontend-minimal_$hash.js") ?>
 <?php $this->insert('layout::includes/head', [
     'language' => $language ?? '',
     'locale' => $locale ?? '',
@@ -15,30 +15,35 @@
 <body>
 <?php $bgfile = $this->bgflush(); ?>
 <?php if (isset($bgfile)): ?>
-        <?= $this->file($bgfile,
+    <?= $this->file($bgfile,
         ['class' => 'fluid-hero-img', 'width' => 2880, 'height' => null, 'fit' => 'crop',
             'alt' => $title ?? ''
         ]) ?>
 <?php endif; ?>
+<a class="scroll-down-arrow scroll-down-link" href="#content"></a>
 <a class="col masthead-brand-link masthead-brand-link-fluid" href="<?= $this->cmspath('/') ?>">
     <h3 class="masthead-brand">
         <?php if (!empty($logo)): ?>
-            <img class="img-fluid" src="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?>"
+            <img class="img-fluid"
+                 src="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?>"
                  srcset="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?> 1x,
                     <?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 2, 'png', 'crop') ?> 2x"
             >
         <?php endif; ?><?= $this->p($brand ?? '') ?></h3>
 </a>
-<div class="p-3 container-fluid <?= isset($bgfile) ? 'fluid-content' :'' ?>">
-    <?= $this->insert('layout::includes/header', ['showBrand' => false]) ?>
-    <div class="row">
-        <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>
-        <main role="main" class="col order-1 order-md-2">
-            <?= $this->section('content') ?>
-        </main>
-        <?= isset($menu) ? $this->menu($menu, 'aside_right', $host ?? null) : '' ?>
+<div id="content" class="p-3 container-fluid <?= isset($bgfile) ? 'fluid-content' : '' ?>">
+    <div class="container-lg">
+
+        <?= $this->insert('layout::includes/header', ['showBrand' => false]) ?>
+        <div class="row">
+            <?= isset($menu) ? $this->menu($menu, 'aside_left', $host ?? null) : '' ?>
+            <main role="main" class="col order-1 order-md-2">
+                <?= $this->section('content') ?>
+            </main>
+            <?= isset($menu) ? $this->menu($menu, 'aside_right', $host ?? null) : '' ?>
+        </div>
+        <?= $this->insert('layout::includes/footer') ?>
     </div>
-    <?= $this->insert('layout::includes/footer') ?>
 </div>
 <?= $this->jsflush() ?>
 </body>

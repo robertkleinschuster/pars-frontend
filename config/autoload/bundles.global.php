@@ -22,7 +22,9 @@ return [
                     __DIR__ . '/../../bundles/js/jquery-3.5.1.slim.min.js',
                     __DIR__ . '/../../bundles/js/bootstrap.bundle.min.js',
                     __DIR__ . '/../../bundles/js/loading-attribute-polyfill.min.js',
+                    __DIR__ . '/../../bundles/js/smoothscroll.min.js',
                     __DIR__ . '/../../bundles/js/submit.js',
+                    __DIR__ . '/../../bundles/js/frontend.js',
                 ]
             ],
             [

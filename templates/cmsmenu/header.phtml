@@ -1,7 +1,7 @@
 <nav class="nav nav-masthead justify-content-center">
     <?php foreach ($menu as $item): ?>
         <a class="nav-link <?= $item->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
-           href="<?= $this->cmspath($item->get('ArticleTranslation_Code')) ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
+           href="<?= $this->cmspath($item->get('ArticleTranslation_Code'), [], 'content') ?>"><?= $item->get('ArticleTranslation_Name') ?></a>
     <?php if ($item->get('ArticleTranslation_Code') != $code): ?>
         <script>
             var hint = document.createElement("link");
@@ -14,7 +14,7 @@
     <?php if (!$item->empty('Menu_BeanList')): ?>
     <?php foreach ($item->get('Menu_BeanList') as $subitem): ?>
         <a class="nav-link <?= $subitem->get('ArticleTranslation_Code') == $code ? 'active' : '' ?>"
-           href="<?= $this->cmspath($subitem->get('ArticleTranslation_Code')) ?>"><?= $subitem->get('ArticleTranslation_Name') ?></a>
+           href="<?= $this->cmspath($subitem->get('ArticleTranslation_Code'), [], 'content') ?>"><?= $subitem->get('ArticleTranslation_Name') ?></a>
     <?php if ($subitem->get('ArticleTranslation_Code') != $code): ?>
         <script>
             var hint = document.createElement("link");
