@@ -223,12 +223,14 @@ hr {
 .fluid-content {
     margin-top: 70vh;
     background-color: #333;
+    min-height: 100vh;
 }
 
 
 .container-content {
     background-color: #333;
     box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, .6);
+    min-height: 100vh;
 }
 
 html.scroll-200 .scroll-down-arrow {
