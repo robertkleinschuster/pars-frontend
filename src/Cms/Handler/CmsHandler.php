@@ -30,8 +30,6 @@ class CmsHandler extends FrontendHandler
             }));
         }
 
-        $code = $request->getAttribute('code', '/');
-
         $pageModel = (new ModelFactory())($request, PageModel::class);
         $page = $pageModel->getPage();
         if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host') == $request->getUri()->getHost()))) {

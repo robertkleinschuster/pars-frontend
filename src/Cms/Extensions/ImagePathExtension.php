@@ -14,9 +14,17 @@ class ImagePathExtension implements ExtensionInterface
 {
     public function register(Engine $engine)
     {
-        $engine->registerFunction('cmsimg', function ($img, $static = null, $key = null, $width = null, $height = null, $density = null, $format = null, $fit = null) {
+        $data = $engine->getData();
+        $defaultStatic = null;
+        if (isset($data['static'])) {
+            $defaultStatic = $data['static'];
+        }
+        $engine->registerFunction('cmsimg', function ($img, $static = null, $key = null, $width = null, $height = null, $density = null, $format = null, $fit = null) use ($defaultStatic) {
             if ($img instanceof BeanInterface) {
                 $img = $img->FileDirectory_Code . '/' . $img->File_Code . '.' . $img->FileType_Code;
+            }
+            if (!isset($static) && isset($defaultStatic)) {
+                $static = $defaultStatic;
             }
             if (strpos($static, '/img') !== false) {
                 $params = [];
