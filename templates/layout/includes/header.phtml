@@ -7,7 +7,7 @@
                      srcset="<?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?> 1x,
                     <?= $this->cmsimg($favicon, $static ?? null, $key ?? null, null, 45, 2, 'png', 'crop') ?> 2x"
                 >
-            <?php endif; ?><?= $brand ?? '' ?></h3>
+            <?php endif; ?><?= $this->p($brand ?? '') ?></h3>
     </a>
     <?php endif; ?>
     <?= isset($menu) ? $this->menu($menu, 'header', $host ?? null) : '' ?>

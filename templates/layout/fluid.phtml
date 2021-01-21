@@ -27,7 +27,7 @@
                  srcset="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?> 1x,
                     <?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 2, 'png', 'crop') ?> 2x"
             >
-        <?php endif; ?><?= $brand ?? '' ?></h3>
+        <?php endif; ?><?= $this->p($brand ?? '') ?></h3>
 </a>
 <div class="p-3 container-fluid <?= isset($bgfile) ? 'fluid-content' :'' ?>">
     <?= $this->insert('layout::includes/header', ['showBrand' => false]) ?>
