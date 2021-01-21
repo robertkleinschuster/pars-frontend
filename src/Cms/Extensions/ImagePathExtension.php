@@ -43,7 +43,7 @@ class ImagePathExtension implements ExtensionInterface
                 if ($fit) {
                     $params['fit'] = $fit;
                 }
-                $params['q'] = 50;
+                $params['q'] = 70;
                 $params['file'] = $img;
                 $p = $params;
                 $cache = new ParsCache('image');
