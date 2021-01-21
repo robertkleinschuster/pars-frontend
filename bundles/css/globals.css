@@ -201,9 +201,10 @@ hr {
 }
 
 .fluid-content {
-    margin-top: calc(100vh - 70px);
+    margin-top: 70vh;
     background-color: #333;
 }
+
 
 .container-content {
     background-color: #333;
@@ -214,6 +215,9 @@ hr {
     .container-content {
         margin-bottom: 2rem;
         margin-top: 2rem;
+    }
+    .fluid-content {
+        margin-top: calc(100vh - 70px);
     }
 }
 
