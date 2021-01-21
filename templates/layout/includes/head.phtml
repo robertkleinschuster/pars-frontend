@@ -8,7 +8,7 @@
     <meta name="google-site-verification" content="<?= $this->e($googleKey ?? '') ?>">
     <title><?= $this->e($title ?? '') ?></title>
     <meta property="og:title" content="<?= $this->e($title ?? '') ?>"/>
-    <meta property="og:site_name" content="<?= $brand ?? '' ?>"/>
+    <meta property="og:site_name" content="<?= $this->p($brand ?? '') ?>"/>
     <meta property="og:url" content="<?= $this->cmspaths() ?>"/>
     <meta property="og:locale" content="<?= $locale ?? '' ?>"/>
     <?= $this->ogflush() ?>
