@@ -1,7 +1,7 @@
 <header class="masthead row">
     <a class="col masthead-brand-link <?= $showBrand ?? true ?: 'masthead-brand-link-container'?> text-md-right d-md-none d-block" href="<?= $this->cmspath('/') ?>">
         <h3 class="masthead-brand">
-            <?php if (isset($logo)): ?>
+            <?php if (!empty($logo)): ?>
                 <img class="img-fluid" src="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?>"
                      srcset="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?> 1x,
                     <?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 2, 'png', 'crop') ?> 2x"
@@ -11,7 +11,7 @@
     <?= isset($menu) ? $this->menu($menu, 'header', $host ?? null) : '' ?>
     <a class="col masthead-brand-link <?= $showBrand ?? true ?: 'masthead-brand-link-container'?> text-md-right d-none d-md-block" href="<?= $this->cmspath('/') ?>">
         <h3 class="masthead-brand">
-            <?php if (isset($logo)): ?>
+            <?php if (!empty($logo)): ?>
                 <img class="img-fluid" src="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?>"
                      srcset="<?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 1, 'png', 'crop') ?> 1x,
                     <?= $this->cmsimg($logo, $static ?? null, $key ?? null, null, 45, 2, 'png', 'crop') ?> 2x"
