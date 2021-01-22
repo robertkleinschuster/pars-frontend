@@ -1,4 +1,4 @@
-<?php $this->layout('layout::default', ['title' => $brand . ' - ' . $this->t('error.404.title'), 'hash' => $hash ?? '']) ?>
+<?php $this->layout('layout::default', ['title' => $this->p($brand ?? '') . ' - ' . $this->t('error.404.title'), 'hash' => $hash ?? '']) ?>
 
 
 <h1><?= $this->t('error.404.heading')?></h1>
