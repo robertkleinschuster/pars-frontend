@@ -25,9 +25,14 @@ class CmsHandler extends FrontendHandler
         $cacheID =  md5($request->getUri());
         $pageCache = new ParsCache('page');
         if ($pageCache->has($cacheID) && $this->config[ConfigAggregator::ENABLE_CACHE]) {
-            return new HtmlResponse(new CallbackStream(function () use ($pageCache, $cacheID){
-                return $pageCache->get($cacheID);
-            }));
+            $body = $pageCache->get($cacheID);
+            $contentLength = strlen($body);
+            $cacheControl = 'max-age=300, public';
+            $expires = date_create('+5 minutes')->format('D, d M Y H:i:s').' GMT';
+            return (new HtmlResponse($body))
+                ->withHeader('Content-Length', $contentLength)
+                ->withHeader('Cache-Control', $cacheControl)
+                ->withHeader('Expires', $expires);
         }
 
         $pageModel = (new ModelFactory())($request, PageModel::class);
