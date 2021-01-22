@@ -6,11 +6,12 @@ return [
         'list' => [
             [
                 'type' => 'js',
-                'output' => "insertion_$hash.js",
-                'unlink' => "insertion_*",
+                'output' => "critical_$hash.js",
+                'unlink' => "critical_*",
                 'critical' => true,
                 'sources' => [
                     __DIR__ . '/../../bundles/js/insertion.js',
+                    __DIR__ . '/../../bundles/js/scroll-state.js',
                 ]
             ],
             [

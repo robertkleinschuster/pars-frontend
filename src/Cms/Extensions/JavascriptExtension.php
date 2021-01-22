@@ -6,6 +6,7 @@ namespace Pars\Frontend\Cms\Extensions;
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
+use Pars\Core\Cache\ParsCache;
 
 class JavascriptExtension implements ExtensionInterface
 {
@@ -18,9 +19,18 @@ class JavascriptExtension implements ExtensionInterface
         });
         $engine->registerFunction('jsflush', function () {
             $ret = "";
+            $cache = new ParsCache('jsflush');
             foreach ($this->data as $file => $critical) {
+                $cacheID = md5($file);
                 if ($critical) {
-                    $ret .= "<script src=\"$file\"></script>";
+                    if ($cache->has($cacheID)) {
+                        $ret = $cache->get($cacheID);
+                    } else {
+                        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $file)) {
+                            $ret .= "<script>" . file_get_contents($_SERVER['DOCUMENT_ROOT'] . $file) . "</script>";
+                            $cache->set($cacheID, $ret);
+                        }
+                    }
                 } else {
                     $ret .= "<script class=\"script-insertion\" data-src=\"$file\"></script>";
                 }

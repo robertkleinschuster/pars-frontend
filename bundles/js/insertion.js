@@ -1,4 +1,4 @@
-function insert() {
+var i = function () {
     [].forEach.call(document.getElementsByClassName("script-insertion"), function (t) {
         let e = document.createElement("script");
         e.src = t.getAttribute("data-src"), document.body.appendChild(e)
@@ -8,6 +8,9 @@ function insert() {
     });
     [].forEach.call(document.getElementsByTagName("html"), function (t) {
         t.classList.add('ready');
+        setTimeout(function () {
+            t.classList.add('idle');
+        }, 200);
     });
 }
-window.addEventListener ? window.addEventListener("load", insert) : window.attachEvent ? window.attachEvent("onload", insert) : window.onload = insert;
+window.addEventListener ? window.addEventListener("load", i) : window.attachEvent ? window.attachEvent("onload", i) : window.onload = i;
