@@ -1,13 +1,28 @@
 <picture>
-    <source srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 1, 'webp', $fit ?? null) ?> 1x,
+    <source media="(max-width: <?= ($width ?? 992) - 1?>px)"
+            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 1, 'webp', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 2, 'webp', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 3, 'webp', $fit ?? null) ?> 3x"
+            type="image/webp">
+
+    <source media="(min-width: <?= $width ?? 992?>px)"
+            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 1, 'webp', $fit ?? null) ?> 1x,
         <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 2, 'webp', $fit ?? null) ?> 2x,
         <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 3, 'webp', $fit ?? null) ?> 3x"
             type="image/webp">
 
-    <source srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 1, 'pjpg', $fit ?? null) ?> 1x,
+    <source media="(max-width: <?= ($width ?? 992) -1 ?>px)"
+            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 1, 'pjpg', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 2, 'pjpg', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 3, 'pjpg', $fit ?? null) ?> 3x"
+            type="image/jpeg">
+
+    <source media="(min-width: <?= $width ?? 992?>px)"
+            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 1, 'pjpg', $fit ?? null) ?> 1x,
         <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 2, 'pjpg', $fit ?? null) ?> 2x,
         <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width ?? null, $height ?? null, 3, 'pjpg', $fit ?? null) ?> 3x"
             type="image/jpeg">
+
 
     <img
             loading='lazy'
