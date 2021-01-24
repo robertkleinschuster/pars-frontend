@@ -39,10 +39,13 @@ class CmsHandler extends FrontendHandler
         $page = $pageModel->getPage();
         if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host') == $request->getUri()->getHost()))) {
             if (!$page->empty('CmsPage_ID_Redirect')) {
-                $redirect = $pageModel->getPage(null, $page->empty('CmsPage_ID'));
+                $redirect = $pageModel->getPage(null, $page->get('CmsPage_ID_Redirect'));
                 $redirectCode = $redirect->get('ArticleTranslation_Code');
                 $redirectCode = $redirectCode == '/' ? null : $redirectCode;
                 return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
+            }
+            if ($page->get('CmsPageType_Code') == 'redirect' && !$page->empty('ArticleTranslation_Path')) {
+                return new RedirectResponse($page->get('ArticleTranslation_Path'));
             }
             $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
             return new HtmlResponse(new CallbackStream(function () use ($request, $page, $pageCache, $cacheID) {
