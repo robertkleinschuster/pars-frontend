@@ -1,24 +1,88 @@
-<div class="row">
-    <div class="col">
-<?= $this->p('{test1} {testest}')?>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="icon-group-list">
+            <div class="icon-group">
+                <svg focusable="false" data-prefix="fas" data-icon="route"
+                     role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                     class="icon">
+                    <path fill="currentColor"
+                          d="M416 320h-96c-17.6 0-32-14.4-32-32s14.4-32 32-32h96s96-107 96-160-43-96-96-96-96 43-96 96c0 25.5 22.2 63.4 45.3 96H320c-52.9 0-96 43.1-96 96s43.1 96 96 96h96c17.6 0 32 14.4 32 32s-14.4 32-32 32H185.5c-16 24.8-33.8 47.7-47.3 64H416c52.9 0 96-43.1 96-96s-43.1-96-96-96zm0-256c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM96 256c-53 0-96 43-96 96s96 160 96 160 96-107 96-160-43-96-96-96zm0 128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"
+                          class=""
+                    ></path>
+                </svg>
+                <p><?= number_format($data->vehicle_state->odometer * 1.60934, 0, ',', ' ') ?> km</p></div>
+            <div class="icon-group">
+                <svg focusable="false" data-prefix="fas"
+                     data-icon="tachometer-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+                     class="icon">
+                    <path fill="currentColor"
+                          d="M288 32C128.94 32 0 160.94 0 320c0 52.8 14.25 102.26 39.06 144.8 5.61 9.62 16.3 15.2 27.44 15.2h443c11.14 0 21.83-5.58 27.44-15.2C561.75 422.26 576 372.8 576 320c0-159.06-128.94-288-288-288zm0 64c14.71 0 26.58 10.13 30.32 23.65-1.11 2.26-2.64 4.23-3.45 6.67l-9.22 27.67c-5.13 3.49-10.97 6.01-17.64 6.01-17.67 0-32-14.33-32-32S270.33 96 288 96zM96 384c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm48-160c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32zm246.77-72.41l-61.33 184C343.13 347.33 352 364.54 352 384c0 11.72-3.38 22.55-8.88 32H232.88c-5.5-9.45-8.88-20.28-8.88-32 0-33.94 26.5-61.43 59.9-63.59l61.34-184.01c4.17-12.56 17.73-19.45 30.36-15.17 12.57 4.19 19.35 17.79 15.17 30.36zm14.66 57.2l15.52-46.55c3.47-1.29 7.13-2.23 11.05-2.23 17.67 0 32 14.33 32 32s-14.33 32-32 32c-11.38-.01-20.89-6.28-26.57-15.22zM480 384c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32z"
+                          class=""
+                    ></path>
+                </svg>
+                <p><?= number_format(($data->drive_state->speed ?? 0) * 1.60934, 0, ',', ' ') ?> km/h</p></div>
+            <div class="icon-group">
+                <svg focusable="false" data-prefix="fa" data-icon="bolt"
+                     role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
+                     class="icon svg-inline--fa fa-bolt fa-w-10">
+                    <path fill="currentColor"
+                          d="M296 160H180.6l42.6-129.8C227.2 15 215.7 0 200 0H56C44 0 33.8 8.9 32.2 20.8l-32 240C-1.7 275.2 9.5 288 24 288h118.7L96.6 482.5c-3.6 15.2 8 29.5 23.3 29.5 8.4 0 16.4-4.4 20.8-12l176-304c9.3-15.9-2.2-36-20.7-36z"
+                          class=""
+                    ></path>
+                </svg>
+                <p><?= $data->drive_state->power ?? 0 ?> kW</p></div>
+        </div>
+        <div class="battery mb-4">
+            <div class="battery-level"
+                 style="width: calc(<?= $data->charge_state->usable_battery_level ?? 0 ?>% - 2px);">
+                <div class="battery-label">
+                    <?= number_format(($data->charge_state->est_battery_range ?? 0) * 1.60934, 0, ',', ' ') ?> km
+                </div>
+            </div>
+        </div>
+        <table class="detail-table">
+            <tbody>
+            <tr>
+                <td class="pr-3"><?= $this->t('tesla.charge_state') ?></td>
+                <td><?= $data->charge_state->charging_state ?></td>
+            </tr>
+            <?php if ($data->charge_state->fast_charger_present): ?>
+                <tr>
+                    <td class="pr-3"><?= $this->t('tesla.fast_charger') ?></td>
+                    <td><?= $data->charge_state->fast_charger_brand ?> - <?= $data->charge_state->fast_charger_type ?></td>
+                </tr>
+            <?php endif; ?>
+            <tr>
+                <td class="pr-3"><?= $this->t('tesla.outside_temp') ?></td>
+                <td><?= number_format($data->climate_state->outside_temp, 1, ',', '.') ?> °C</td>
+            </tr>
+            <tr>
+                <td class="pr-3"><?= $this->t('tesla.inside_temp') ?></td>
+                <td><?= number_format($data->climate_state->inside_temp, 1, ',', '.') ?> °C</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="col">
+    <div class="col-md-6">
+        <div id="map"></div>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        <script
+                src="https://maps.googleapis.com/maps/api/js?key=<?= $googleMapsKey ?? '' ?>&callback=initMap&libraries=&v=weekly"
+                defer
+        ></script>
+        <script>
+            function initMap() {
+                const myLatLng = {lat:  <?= $data->drive_state->latitude ?>, lng: <?= $data->drive_state->longitude ?>};
 
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: myLatLng,
+                    zoom: 8
+                });
+                new google.maps.Marker({
+                    position: myLatLng,
+                    map,
+                });
+            }
+        </script>
     </div>
 </div>
-
-Display name: <?= $data->display_name ?>
-Vehicle state: <?= $data->state ?>
-Charge State: <?= $data->charge_state->charging_state ?>
-Battery Level: <?= $data->charge_state->usable_battery_level ?>
-Battery Range: <?= $data->charge_state->est_battery_range ?>
-<?php if ($data->charge_state->fast_charger_present): ?>
-    Fast Charge Brand: <?= $data->charge_state->fast_charger_brand ?>
-    Fast Charge Type: <?= $data->charge_state->fast_charger_type ?>
-<?php endif; ?>
-Minutes to Full charge: <?= $data->charge_state->minutes_to_full_charge ?>
-Outside Temp: <?= $data->climate_state->outside_temp ?>
-Inside Temp: <?= $data->climate_state->inside_temp ?>
-GPS Latitude: <?= $data->drive_state->latitude ?>
-GPS Longitude: <?= $data->drive_state->longitude ?>
-Speed: <?= $data->drive_state->speed ?>

@@ -1,38 +1,25 @@
 <?php if (!$paragraph->empty('ArticleTranslation_Path')): ?>
-<a href="<?= $paragraph->get('ArticleTranslation_Path') ?>">
+<a class="text-center link-paragraph" href="<?= $paragraph->get('ArticleTranslation_Path') ?>">
     <?php endif; ?>
-    <div class="card mb-4 text-body">
         <?php if (!$paragraph->empty('ArticleTranslation_Title')): ?>
-            <h4 class="card-header">
+            <h4>
                 <?= $this->p($paragraph->get('ArticleTranslation_Title')) ?>
             </h4>
         <?php endif; ?>
-        <div class="card-body">
             <?php if (!$paragraph->empty('ArticleTranslation_Heading')): ?>
-                <h5 class="card-title">
+                <h5>
                     <?= $this->p($paragraph->get('ArticleTranslation_Heading')) ?>
                 </h5>
             <?php endif; ?>
             <?php if (!$paragraph->empty('ArticleTranslation_SubHeading')): ?>
-                <p class="card-text">
-                    <?= $this->p($paragraph->get('ArticleTranslation_SubHeading')) ?>
-                </p>
-            <?php endif; ?>
-            <?php if (!$paragraph->empty('ArticleTranslation_Teaser')): ?>
-                <p class="card-text">
-                    <?= $this->p($paragraph->get('ArticleTranslation_Teaser')) ?>
-                </p>
+                <?= $this->p($paragraph->get('ArticleTranslation_SubHeading')) ?>
             <?php endif; ?>
             <?php if ($paragraph->isset('File_BeanList') && !$paragraph->get('File_BeanList')->isEmpty()): ?>
                 <div class="text-center">
                     <?= $this->file($paragraph->get('File_BeanList')->first(), ['width' => $img_width ?? null, 'height' => $img_height ?? null,
                         'alt' => $this->p($paragraph->get('ArticleTranslation_Title'))]) ?>
-                </div>            <?php endif; ?>
-            <?php if (!$paragraph->empty('ArticleTranslation_Text')): ?>
-                <?= $this->p($paragraph->get('ArticleTranslation_Text')) ?>
+                </div>
             <?php endif; ?>
-        </div>
-    </div>
     <?php if (!$paragraph->empty('ArticleTranslation_Path')): ?>
 </a>
 <?php endif; ?>

@@ -30,4 +30,8 @@ return [
     'error.404.subheading' => '404 Page not found',
     'error.404.text' => '',
     'error.404.link.text' => 'Startpage',
+    'tesla.charge_state' => 'Charge state: ',
+    'tesla.fast_charger' => 'Fast charger: ',
+    'tesla.outside_temp' => 'Inside temperature: ',
+    'tesla.inside_temp' => 'Outside temperature: ',
 ];

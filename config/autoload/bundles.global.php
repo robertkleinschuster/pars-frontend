@@ -49,6 +49,7 @@ return [
                     __DIR__ . '/../../bundles/css/globals.css',
                     __DIR__ . '/../../bundles/css/cms.css',
                     __DIR__ . '/../../bundles/css/frontend.css',
+                    __DIR__ . '/../../bundles/css/tesla.css',
                 ]
             ],
         ]

@@ -1,8 +1,8 @@
 <picture>
     <source media="(max-width: <?= ($width ?? 992) - 1?>px)"
-            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 1, 'webp', $fit ?? null) ?> 1x,
-        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 2, 'webp', $fit ?? null) ?> 2x,
-        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 3, 'webp', $fit ?? null) ?> 3x"
+            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 1, 'webp', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 2, 'webp', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 3, 'webp', $fit ?? null) ?> 3x"
             type="image/webp">
 
     <source media="(min-width: <?= $width ?? 992?>px)"
@@ -12,9 +12,9 @@
             type="image/webp">
 
     <source media="(max-width: <?= ($width ?? 992) -1 ?>px)"
-            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 1, 'pjpg', $fit ?? null) ?> 1x,
-        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 2, 'pjpg', $fit ?? null) ?> 2x,
-        <?= $this->cmsimg($file, $static ?? null, $key ?? null, $width/2 ?? null, $height/2 ?? null, 3, 'pjpg', $fit ?? null) ?> 3x"
+            srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 1, 'pjpg', $fit ?? null) ?> 1x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 2, 'pjpg', $fit ?? null) ?> 2x,
+        <?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 3, 'pjpg', $fit ?? null) ?> 3x"
             type="image/jpeg">
 
     <source media="(min-width: <?= $width ?? 992?>px)"

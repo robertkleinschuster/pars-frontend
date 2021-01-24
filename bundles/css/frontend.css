@@ -18,3 +18,41 @@
 a.similar-post:hover {
     text-decoration: underline;
 }
+
+
+.link-paragraph {
+    text-decoration: none;
+    position: relative;
+    padding: 0 4px;
+}
+
+.link-paragraph:hover,
+.link-paragraph:focus
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+.link-paragraph:after {
+    position: absolute;
+    content: '';
+    height: 3px;
+    bottom: -6px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 80%;
+    background: rgba(255,255, 255, .25);
+    -o-transition:.2s;
+    -ms-transition:.2s;
+    -moz-transition:.2s;
+    -webkit-transition:.2s;
+    transition:.2s;
+}
+
+.link-paragraph:hover:after,
+.link-paragraph.active:after,
+.link-paragraph:focus:after {
+    background: #fff;
+    width: 100%;
+}

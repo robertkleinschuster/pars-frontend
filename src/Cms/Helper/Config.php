@@ -37,6 +37,7 @@ class Config implements AdapterAwareInterface
         'frontend.timezone',
         'frontend.update',
         'frontend.google-key',
+        'frontend.google-maps-key',
     ];
 
     /**

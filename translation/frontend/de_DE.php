@@ -30,4 +30,8 @@ return [
     'error.404.subheading' => '404 Seite nicht gefunden',
     'error.404.text' => 'Wir hoffen Sie finden trotzdem wonach Sie gesucht haben.',
     'error.404.link.text' => 'Hier geht es zur Startseite.',
+    'tesla.charge_state' => 'Ladestatus: ',
+    'tesla.fast_charger' => 'Schnelllader: ',
+    'tesla.outside_temp' => 'Außentemperatur: ',
+    'tesla.inside_temp' => 'Innentemperatur: ',
 ];

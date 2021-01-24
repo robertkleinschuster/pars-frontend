@@ -1,0 +1,127 @@
+.icon-group-list {
+    display: flex;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.icon-group {
+    flex: 33%;
+    text-align: center;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+}
+
+.icon-group > p {
+    margin: 0;
+}
+
+.icon, .map-icon {
+    font-size: 50px;
+}
+
+.icon {
+    max-height: 50px;
+    margin-bottom: 10px;
+}
+
+.battery {
+    background-color: #bbb;
+    border: 2px solid #555;
+    height: 84px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 250px;
+    border-radius: 6px;
+}
+
+.battery:after {
+    background-color: #bbb;
+    border-right: 2px solid #555;
+    border-top: 2px solid #555;
+    border-bottom: 2px solid #555;
+    content: "";
+    display: block;
+    height: 42px;
+    position: absolute;
+    right: -18px;
+    top: 16px;
+    width: 14px;
+}
+
+.battery .battery-level {
+    background-color: #028f0c;
+    margin-top: 1px;
+    margin-left: 1px;
+    margin-right: 1px;
+    border-radius: 3px;
+    height: 78px;
+}
+
+.battery-label {
+    height: 100%;
+    font-size: 50px;
+    color: white;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+.battery .battery-level.high {
+    background-color: #66cd00;
+}
+
+.battery .battery-level.medium {
+    background-color: #fcd116;
+}
+
+.battery .battery-level.low {
+    background-color: #f33;
+}
+
+.detail-table {
+    font-size: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+#map {
+    height: 400px;
+}
+
+/* sm */
+@media (min-width: 576px) {
+    .battery {
+        width: 304px;
+    }
+}
+
+/* md */
+@media (min-width: 768px) {
+
+}
+
+/* lg */
+@media (min-width: 992px) {
+    .battery {
+        width: 304px;
+    }
+
+    #map {
+        height: 100%;
+    }
+
+    .detail-table {
+        margin-bottom: 0;
+    }
+
+    .icon-group-list {
+        font-size: 1.5rem;
+    }
+}
+/* lg */
+@media (min-width: 1200px) {  }
+

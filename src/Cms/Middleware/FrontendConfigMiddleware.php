@@ -43,6 +43,7 @@ class FrontendConfigMiddleware implements MiddlewareInterface
         $vars['favicon'] = $this->config->get('frontend.favicon');
         $vars['logo'] = $this->config->get('frontend.logo');
         $vars['googleKey'] = $this->config->get('frontend.google-key');
+        $vars['googleMapsKey'] = $this->config->get('frontend.google-maps-key');
         $vars['color'] = $this->config->get('frontend.color');
         $vars['host'] = $request->getUri()->getHost();
         return $handler->handle($request
