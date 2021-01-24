@@ -93,6 +93,7 @@ hr {
     background-color: transparent;
     text-decoration: none;
     position: relative;
+    max-height: 40px;
 }
 
 .nav-masthead .nav-link:after {
