@@ -83,6 +83,15 @@ hr {
     top: 1rem;
 }
 
+.masthead-brand-link-fluid .img-fluid {
+    -webkit-filter: drop-shadow(0 0 30px #000);
+    filter: drop-shadow(0 0 30px #000);
+}
+
+.masthead-brand-link-fluid {
+    text-shadow: 0 0 30px #000;
+}
+
 .nav-link {
     transition: border-bottom-color .2s ease-in-out, color .2s ease-in-out;
 }

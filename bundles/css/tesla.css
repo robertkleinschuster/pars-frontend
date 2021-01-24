@@ -25,7 +25,7 @@
 }
 
 .battery {
-    background-color: #bbb;
+    background: linear-gradient(0deg, rgb(120, 119, 119) 0%, rgb(143, 144, 143) 35%, rgb(177, 179, 177) 100%);
     border: 2px solid #555;
     height: 84px;
     margin-left: auto;
@@ -36,7 +36,7 @@
 }
 
 .battery:after {
-    background-color: #bbb;
+    background: linear-gradient(0deg, rgb(82, 82, 82) 0%, rgb(119, 120, 119) 35%, rgb(145, 146, 145) 100%);
     border-right: 2px solid #555;
     border-top: 2px solid #555;
     border-bottom: 2px solid #555;
@@ -50,7 +50,7 @@
 }
 
 .battery .battery-level {
-    background-color: #028f0c;
+    background: linear-gradient(0deg, rgb(15, 95, 1) 0%, rgba(9,121,19,1) 35%, rgb(66, 224, 0) 100%);
     margin-top: 1px;
     margin-left: 1px;
     margin-right: 1px;
@@ -60,24 +60,25 @@
 
 .battery-label {
     height: 100%;
+    padding-left: 5px;
     font-size: 50px;
     color: white;
     overflow: visible;
     white-space: nowrap;
     text-align: center;
+    text-shadow: 1px 1px 1px #000;
 }
 
-
 .battery .battery-level.high {
-    background-color: #66cd00;
+    background: linear-gradient(0deg, rgb(15, 95, 1) 0%, rgba(9,121,19,1) 35%, rgb(57, 173, 0) 100%);
 }
 
 .battery .battery-level.medium {
-    background-color: #fcd116;
+    background: linear-gradient(0deg, rgb(95, 64, 1) 0%, rgb(121, 93, 9) 35%, rgb(161, 122, 0) 100%);
 }
 
 .battery .battery-level.low {
-    background-color: #f33;
+    background: linear-gradient(0deg, rgb(95, 1, 1) 0%, rgb(121, 9, 9) 35%, rgb(177, 0, 0) 100%);
 }
 
 .detail-table {

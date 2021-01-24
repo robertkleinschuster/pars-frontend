@@ -33,7 +33,7 @@
                 <p><?= $data->drive_state->power ?? 0 ?> kW</p></div>
         </div>
         <div class="battery mb-4">
-            <div class="battery-level"
+            <div class="battery-level <?= $data->charge_state->usable_battery_level < 20 ? 'low' : ($data->charge_state->usable_battery_level < 40 ? 'medium' : 'high')?>"
                  style="width: calc(<?= $data->charge_state->usable_battery_level ?? 0 ?>% - 2px);">
                 <div class="battery-label">
                     <?= number_format(($data->charge_state->ideal_battery_range ?? 0) * 1.60934, 0, ',', ' ') ?> km
