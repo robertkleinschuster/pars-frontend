@@ -42,14 +42,30 @@
         </div>
         <table class="detail-table">
             <tbody>
+            <?php if ($data->display_name): ?>
+                <tr>
+                    <td class="pr-3"><?= $this->t('tesla.display_name') ?></td>
+                    <td><?= $data->display_name ?></td>
+                </tr>
+            <?php endif; ?>
             <tr>
                 <td class="pr-3"><?= $this->t('tesla.charge_state') ?></td>
-                <td><?= $data->charge_state->charging_state ?></td>
+                <td><?= $this->t($data->charge_state->charging_state) ?></td>
             </tr>
+            <?php if ($data->charge_state->charging_state == 'Charging' && $data->charge_state->charge_rate > 0): ?>
+                <tr>
+                    <td class="pr-3"><?= $this->t('tesla.charge_rate') ?></td>
+                    <td><?= number_format($data->charge_state->charge_rate * 1.60934, 0, ',', '.') ?> km/h</td>
+                </tr>
+            <?php endif; ?>
             <?php if ($data->charge_state->fast_charger_present): ?>
                 <tr>
                     <td class="pr-3"><?= $this->t('tesla.fast_charger') ?></td>
-                    <td><?= $data->charge_state->fast_charger_brand ?> - <?= $data->charge_state->fast_charger_type ?></td>
+                    <?php if ($data->charge_state->fast_charger_brand ==  $data->charge_state->fast_charger_type): ?>
+                        <td><?= $data->charge_state->fast_charger_brand ?></td>
+                    <?php else: ?>
+                        <td><?= $data->charge_state->fast_charger_brand ?> - <?= $data->charge_state->fast_charger_type ?></td>
+                    <?php endif; ?>
                 </tr>
             <?php endif; ?>
             <tr>

@@ -31,7 +31,10 @@ return [
     'error.404.text' => 'Wir hoffen Sie finden trotzdem wonach Sie gesucht haben.',
     'error.404.link.text' => 'Hier geht es zur Startseite.',
     'tesla.charge_state' => 'Ladestatus: ',
+    'Charging' => 'Lädt',
+    'tesla.display_name' => 'Anzeigename: ',
     'tesla.fast_charger' => 'Schnelllader: ',
+    'tesla.charge_rate' => 'Ladegeschwindigkeit: ',
     'tesla.outside_temp' => 'Außentemperatur: ',
     'tesla.inside_temp' => 'Innentemperatur: ',
 ];
