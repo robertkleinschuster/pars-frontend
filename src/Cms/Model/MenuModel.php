@@ -21,13 +21,13 @@ class MenuModel extends BaseModel
         $menuFinder->order(['CmsMenuType_Code']);
         $menuFinder->setCmsMenu_ID_Parent(null);
         $menuFinder->setArticleTranslation_Active(true);
-        $menuFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT');
         $menuFinder->addLinkedFinder(
             new CmsMenuBeanFinder($this->getAdapter()),
             'Menu_BeanList',
             'CmsMenu_ID',
             'CmsMenu_ID_Parent'
         );
+        $menuFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT');
         $list = $menuFinder->getBeanList();
         $cache->set($this->getLocale()->getLocale_Code(), $list->toArray(true), 86400);
         return $list;
