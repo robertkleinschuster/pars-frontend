@@ -46,7 +46,9 @@ class PageModel extends BaseModel
                     $bean = $pageFinder->getBean();
                     if ($bean instanceof CmsPageBean) {
                         $this->page = $bean;
-                        $cache->set($this->getLocale()->getLocale_Code(), $bean->toArray(true), 3600);
+                        if (!in_array($bean->CmsPageType_Code, ['tesla'])) {
+                            $cache->set($this->getLocale()->getLocale_Code(), $bean->toArray(true), 3600);
+                        }
                     }
                 }
             }
