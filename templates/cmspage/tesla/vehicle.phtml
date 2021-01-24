@@ -36,7 +36,7 @@
             <div class="battery-level"
                  style="width: calc(<?= $data->charge_state->usable_battery_level ?? 0 ?>% - 2px);">
                 <div class="battery-label">
-                    <?= number_format(($data->charge_state->est_battery_range ?? 0) * 1.60934, 0, ',', ' ') ?> km
+                    <?= number_format(($data->charge_state->ideal_battery_range ?? 0) * 1.60934, 0, ',', ' ') ?> km
                 </div>
             </div>
         </div>
