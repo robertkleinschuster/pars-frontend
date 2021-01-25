@@ -34,6 +34,6 @@ return [
     'tesla.charge_state' => 'Charge state: ',
     'tesla.charge_rate' => 'Charging speed: ',
     'tesla.fast_charger' => 'Fast charger: ',
-    'tesla.outside_temp' => 'Inside temperature: ',
-    'tesla.inside_temp' => 'Outside temperature: ',
+    'tesla.outside_temp' => 'Outside temperature: ',
+    'tesla.inside_temp' => 'Inside temperature: ',
 ];
