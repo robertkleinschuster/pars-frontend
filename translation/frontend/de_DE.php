@@ -32,6 +32,7 @@ return [
     'error.404.link.text' => 'Hier geht es zur Startseite.',
     'tesla.charge_state' => 'Ladestatus: ',
     'Charging' => 'Lädt',
+    'Disconnected' => 'Nicht angeschlossen',
     'tesla.display_name' => 'Anzeigename: ',
     'tesla.fast_charger' => 'Schnelllader: ',
     'tesla.charge_rate' => 'Ladegeschwindigkeit: ',
