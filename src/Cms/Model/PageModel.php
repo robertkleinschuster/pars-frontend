@@ -25,11 +25,14 @@ class PageModel extends BaseModel
                 if ($code == null) {
                     $code = $this->getCode();
                 }
-                $cache = 'page';
+                $cacheId = 'page';
                 if ($code != '/') {
-                    $cache .= $code;
+                    $cacheId .= $code;
                 }
-                $cache = new ParsCache($cache);
+                if (isset($id)) {
+                    $cacheId .= $id;
+                }
+                $cache = new ParsCache($cacheId);
                 if ($cache->has($this->getLocale()->getLocale_Code())) {
                     return new CmsPageBean($cache->get($this->getLocale()->getLocale_Code()));
                 }
