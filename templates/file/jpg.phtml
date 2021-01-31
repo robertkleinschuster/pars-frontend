@@ -1,4 +1,7 @@
 <picture>
+        <?php if ($lazy ?? false): ?>
+        <noscript class="loading-lazy">
+            <?php endif;?>
     <source media="(max-width: <?= ($width ?? 992) - 1?>px)"
             srcset="<?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 1, 'webp', $fit ?? null) ?> 1x,
         <?= $this->cmsimg($file, $static ?? null, $key ?? null, isset($width) ? $width/2 : null, isset($height) ? $height/2 : null, 2, 'webp', $fit ?? null) ?> 2x,
@@ -32,5 +35,8 @@
             height="<?= $height ?? null ?>"
             alt="<?= $alt ?? '' ?>"
     >
+            <?php if ($lazy ?? false): ?>
+        </noscript>
+                <?php endif;?>
 </picture>
 
