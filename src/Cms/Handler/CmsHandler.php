@@ -40,26 +40,29 @@ class CmsHandler extends FrontendHandler
         if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host') == $request->getUri()->getHost()))) {
             if (!$page->empty('CmsPage_ID_Redirect')) {
                 $redirect = $pageModel->getPage(null, $page->get('CmsPage_ID_Redirect'));
-                $redirectCode = $redirect->get('ArticleTranslation_Code');
-                $redirectCode = $redirectCode == '/' ? null : $redirectCode;
-                return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
-            }
-            if ($page->get('CmsPageType_Code') == 'redirect' && !$page->empty('ArticleTranslation_Path')) {
-                return new RedirectResponse($page->get('ArticleTranslation_Path'));
-            }
-            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
-            return new HtmlResponse(new CallbackStream(function () use ($request, $page, $pageCache, $cacheID) {
-                $this->initDefaultVars($request);
-                $this->assign('page', $page);
-                $out = $this->renderer->render('index::index');
-                if (in_array(
-                    $page->get('CmsPageType_Code'),
-                    ['home', 'gallery', 'about', 'faq', 'tiles', 'blog', 'columns']
-                )) {
-                    $pageCache->set($cacheID, $out, 300);
+                if ($redirect != null) {
+                    $redirectCode = $redirect->get('ArticleTranslation_Code');
+                    $redirectCode = $redirectCode == '/' ? null : $redirectCode;
+                    return new RedirectResponse($this->urlHelper->generate('cms', ['code' => $redirectCode]));
                 }
-                return $out;
-            }));
+            } else {
+                if ($page->get('CmsPageType_Code') == 'redirect' && !$page->empty('ArticleTranslation_Path')) {
+                    return new RedirectResponse($page->get('ArticleTranslation_Path'));
+                }
+                $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
+                return new HtmlResponse(new CallbackStream(function () use ($request, $page, $pageCache, $cacheID) {
+                    $this->initDefaultVars($request);
+                    $this->assign('page', $page);
+                    $out = $this->renderer->render('index::index');
+                    if (in_array(
+                        $page->get('CmsPageType_Code'),
+                        ['home', 'gallery', 'about', 'faq', 'tiles', 'blog', 'columns']
+                    )) {
+                        $pageCache->set($cacheID, $out, 300);
+                    }
+                    return $out;
+                }));
+            }
         }
 
         $paragraphModel = (new ModelFactory())($request, ParagraphModel::class);
