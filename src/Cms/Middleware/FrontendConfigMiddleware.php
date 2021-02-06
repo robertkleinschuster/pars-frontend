@@ -45,6 +45,7 @@ class FrontendConfigMiddleware implements MiddlewareInterface
         $vars['googleKey'] = $this->config->get('frontend.google-key');
         $vars['googleMapsKey'] = $this->config->get('frontend.google-maps-key');
         $vars['color'] = $this->config->get('frontend.color');
+        $vars['data-privacy-email'] = $this->config->get('frontend.data-privacy-email');
         $vars['host'] = $request->getUri()->getHost();
         return $handler->handle($request
             ->withAttribute(Config::class, $this->config)

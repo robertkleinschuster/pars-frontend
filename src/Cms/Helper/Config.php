@@ -38,6 +38,7 @@ class Config implements AdapterAwareInterface
         'frontend.update',
         'frontend.google-key',
         'frontend.google-maps-key',
+        'frontend.data-privacy-email',
     ];
 
     /**

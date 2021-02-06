@@ -25,10 +25,11 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
 
     public function register(Engine $engine)
     {
-        $engine->registerFunction('p', function (?string $message, array $data = []) {
+        $engine->registerFunction('p', function (?string $message, array $data = []) use($engine) {
             $matches = [];
             preg_match_all('/\{.*?\}|%7B.*?%7D|%257B.*?%257D/', $message, $matches);
             $replace = [];
+            $data = array_replace($engine->getData(), $data);
             $this->generateReplace($replace, $matches, $data);
             return str_replace(array_keys($replace), array_values($replace), $message);
         });
