@@ -27,7 +27,7 @@ class MenuModel extends BaseModel
             'CmsMenu_ID',
             'CmsMenu_ID_Parent'
         );
-        $menuFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT');
+        $menuFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default'));
         $list = $menuFinder->getBeanList();
         $cache->set($this->getLocale()->getLocale_Code(), $list->toArray(true), 86400);
         return $list;

@@ -33,7 +33,7 @@ class PostModel extends BaseModel
                 } else {
                     $finder->setCmsPost_ID($id);
                 }
-                if ($finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT') === 1) {
+                if ($finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default')) === 1) {
                     $bean = $finder->getBean();
                     if ($bean instanceof CmsPostBean) {
                         $this->page = $bean;
@@ -53,7 +53,7 @@ class PostModel extends BaseModel
         $finder->setArticle_ID($bean->Article_ID, true);
         $finder->setCmsPostState_Code('active');
         $finder->setArticleTranslation_Active(true);
-        $finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT');
+        $finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default'));
         $finder->limit(4, 0);
         $keywords = explode(',', $bean->ArticleTranslation_Keywords);
         foreach ($keywords as $keyword) {

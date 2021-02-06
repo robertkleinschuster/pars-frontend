@@ -4,6 +4,7 @@
 namespace Pars\Frontend\Cms\Form;
 
 
+use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Flash\FlashMessageMiddleware;
@@ -14,6 +15,7 @@ use Pars\Core\Database\DatabaseMiddleware;
 use Pars\Core\Localization\LocaleInterface;
 use Pars\Core\Logging\LoggingMiddleware;
 use Pars\Core\Translation\TranslatorMiddleware;
+use Pars\Frontend\Cms\Helper\Config;
 use Pars\Model\Article\Translation\ArticleTranslationBeanFinder;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -23,14 +25,27 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class CmsFormMiddelware implements MiddlewareInterface
 {
+
+    protected Config $config;
+
+    /**
+     * CmsFormMiddelware constructor.
+     * @param Config $config
+     */
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param ContainerInterface $container
      * @return CmsFormMiddelware
      */
     public function __invoke(ContainerInterface $container)
     {
-        return new CmsFormMiddelware();
+        return new CmsFormMiddelware(new Config($container->get(AdapterInterface::class)));
     }
+
 
     /**
      * @param ServerRequestInterface $request
@@ -60,7 +75,7 @@ class CmsFormMiddelware implements MiddlewareInterface
                 $finder = new ArticleTranslationBeanFinder($adapter);
                 $finder->setArticleTranslation_Code($code);
                 $form = (new FormFactory())($request->getParsedBody(), $adapter, $session, $guard, $translator);
-                if ($finder->findByLocaleWithFallback($locale->getLocale_Code(), 'de_AT')  == 1) {
+                if ($finder->findByLocaleWithFallback($locale->getLocale_Code(), $this->config->get('locale.default'))  == 1) {
                     $form->setBean($finder->getBean());
                 }
                 $form->submit();

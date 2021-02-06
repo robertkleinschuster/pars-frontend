@@ -30,7 +30,7 @@ return [
             \Pars\Frontend\Cms\Handler\BrowserconfigHandler::class => \Pars\Frontend\Base\Handler\FrontendHandlerFactory::class,
             \Pars\Frontend\Cms\Handler\RobotsHandler::class => \Pars\Frontend\Base\Handler\FrontendHandlerFactory::class,
             \Pars\Frontend\Cms\Handler\SitemapHandler::class => \Pars\Frontend\Base\Handler\FrontendHandlerFactory::class,
-            \Pars\Frontend\Cms\Form\CmsFormMiddelware::class => \Pars\Frontend\Cms\Form\CmsFormMiddelware::class,
+            \Pars\Frontend\Cms\Form\CmsFormMiddelware::class => \Pars\Frontend\Cms\Form\CmsFormMiddelwareFactory::class,
             \Mezzio\Middleware\ErrorResponseGenerator::class => \Pars\Frontend\Cms\Error\ErrorResponseGeneratorFactory::class,
             \Mezzio\Response\ServerRequestErrorResponseGenerator::class => \Pars\Frontend\Cms\Error\ServerRequestErrorResponseGeneratorFactory::class,
             \Mezzio\Handler\NotFoundHandler::class => \Pars\Frontend\Cms\Error\NotFoundHandlerFactory::class,

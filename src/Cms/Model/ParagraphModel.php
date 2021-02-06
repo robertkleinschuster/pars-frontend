@@ -26,7 +26,7 @@ class ParagraphModel extends BaseModel
             } else {
                 $paragraphFinder->setCmsParagraph_ID($id);
             }
-            if ($paragraphFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT') === 1) {
+            if ($paragraphFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default')) === 1) {
                 return $paragraphFinder->getBean();
             }
         } catch (\Exception $exception) {

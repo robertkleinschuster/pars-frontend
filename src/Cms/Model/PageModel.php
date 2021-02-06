@@ -45,7 +45,7 @@ class PageModel extends BaseModel
                 } else {
                     $pageFinder->setCmsPage_ID($id);
                 }
-                if ($pageFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), 'de_AT') === 1) {
+                if ($pageFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default')) === 1) {
                     $bean = $pageFinder->getBean();
                     if ($bean instanceof CmsPageBean) {
                         $this->page = $bean;
