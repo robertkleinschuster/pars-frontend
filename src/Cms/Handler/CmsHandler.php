@@ -32,7 +32,8 @@ class CmsHandler extends FrontendHandler
             return (new HtmlResponse($body))
                 ->withHeader('Content-Length', $contentLength)
                 ->withHeader('Cache-Control', $cacheControl)
-                ->withHeader('Expires', $expires);
+                ->withHeader('Expires', $expires)
+                ->withoutHeader('Pragma');
         }
 
         $pageModel = (new ModelFactory())($request, PageModel::class);
