@@ -11,6 +11,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Mezzio\Template\TemplateRendererInterface;
 use Pars\Core\Cache\ParsCache;
 use Pars\Frontend\Base\Handler\FrontendHandler;
+use Pars\Frontend\Cms\Helper\Config;
 use Pars\Frontend\Cms\Model\ModelFactory;
 use Pars\Frontend\Cms\Model\PageModel;
 use Pars\Frontend\Cms\Model\ParagraphModel;
@@ -22,13 +23,19 @@ class CmsHandler extends FrontendHandler
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+
+
         $cacheID =  md5($request->getUri());
         $pageCache = new ParsCache('page');
         if ($pageCache->has($cacheID) && $this->config[ConfigAggregator::ENABLE_CACHE]) {
+            /**
+             * @var Config $config
+             */
+            $config = $request->getAttribute(Config::class);
             $body = $pageCache->get($cacheID);
             $contentLength = strlen($body);
-            $cacheControl = 'max-age=300, public';
-            $expires = date_create('+5 minutes')->format('D, d M Y H:i:s').' GMT';
+            $cacheControl = 'max-age=' . intval($config->get('frontend.cache')) .', public';
+            $expires = date_create('+' . intval($config->get('frontend.cache')) . ' seconds')->format('D, d M Y H:i:s').' GMT';
             return (new HtmlResponse($body))
                 ->withHeader('Content-Length', $contentLength)
                 ->withHeader('Cache-Control', $cacheControl)
@@ -52,6 +59,10 @@ class CmsHandler extends FrontendHandler
                 }
                 $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $pageModel->getForm());
                 return new HtmlResponse(new CallbackStream(function () use ($request, $page, $pageCache, $cacheID) {
+                    /**
+                     * @var Config $config
+                     */
+                    $config = $request->getAttribute(Config::class);
                     $this->initDefaultVars($request);
                     $this->assign('page', $page);
                     $out = $this->renderer->render('index::index');
@@ -59,7 +70,7 @@ class CmsHandler extends FrontendHandler
                         $page->get('CmsPageType_Code'),
                         ['home', 'gallery', 'about', 'faq', 'tiles', 'blog', 'columns']
                     )) {
-                        $pageCache->set($cacheID, $out, 300);
+                        $pageCache->set($cacheID, $out, intval($config->get('frontend.cache')));
                     }
                     return $out;
                 }));
