@@ -18,7 +18,10 @@ class CmsContentExtension implements ExtensionInterface
         });
         $engine->registerFunction('menu', function (BeanListInterface $menu, string $type, ?string $host = null) use ($engine) {
             $menu = $menu->filter(function ($bean) use ($type, $host) {
-                return $bean->get('CmsMenuType_Code') == $type && ($bean->empty('ArticleTranslation_Host') || empty($host) || $bean->get('ArticleTranslation_Host') == $host);
+                return $bean->get('CmsMenuType_Code') == $type
+                    && (($bean->empty('ArticleTranslation_Host')
+                        || empty($host)
+                        || trim($bean->get('ArticleTranslation_Host')) == trim($host)));
             });
             if ($menu->count()) {
                 return $engine->render($menu->first()->get('CmsMenuType_Template'), ['menu' => $menu]);

@@ -45,7 +45,7 @@ class CmsHandler extends FrontendHandler
 
         $pageModel = (new ModelFactory())($request, PageModel::class);
         $page = $pageModel->getPage();
-        if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host') == $request->getUri()->getHost()))) {
+        if ($page != null && ($page->empty('ArticleTranslation_Host') || trim($page->get('ArticleTranslation_Host')) == trim($request->getUri()->getHost()))) {
             if (!$page->empty('CmsPage_ID_Redirect')) {
                 $redirect = $pageModel->getPage(null, $page->get('CmsPage_ID_Redirect'));
                 if ($redirect != null) {
