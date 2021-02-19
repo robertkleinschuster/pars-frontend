@@ -5,6 +5,7 @@ namespace Pars\Frontend\Cms\Middleware;
 
 
 use Mezzio\Helper\Template\TemplateVariableContainer;
+use Pars\Core\Bundles\BundlesMiddleware;
 use Pars\Frontend\Cms\Helper\Config;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -32,7 +33,7 @@ class FrontendConfigMiddleware implements MiddlewareInterface
     {
         $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
         $vars = [];
-        $vars['hash'] = $this->applicationConfig['bundles']['hash'] ?? '';
+        $vars['hash'] = $request->getAttribute(BundlesMiddleware::class)['hash'] ?? '';
         $vars['brand'] = $this->config->get('frontend.brand');
         $vars['keywords'] = $this->config->get('frontend.keywords');
         $vars['author'] = $this->config->get('frontend.author');

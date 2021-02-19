@@ -1,0 +1,128 @@
+.icon-group-list {
+  display: flex;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.icon-group {
+  flex: 33%;
+  text-align: center;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+
+.icon-group > p {
+  margin: 0;
+}
+
+.icon, .map-icon {
+  font-size: 50px;
+}
+
+.icon {
+  max-height: 50px;
+  margin-bottom: 10px;
+}
+
+.battery {
+  background: linear-gradient(0deg, rgb(120, 119, 119) 0%, rgb(143, 144, 143) 35%, rgb(177, 179, 177) 100%);
+  border: 2px solid #555;
+  height: 84px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 250px;
+  border-radius: 6px;
+}
+
+.battery:after {
+  background: linear-gradient(0deg, rgb(82, 82, 82) 0%, rgb(119, 120, 119) 35%, rgb(145, 146, 145) 100%);
+  border-right: 2px solid #555;
+  border-top: 2px solid #555;
+  border-bottom: 2px solid #555;
+  content: "";
+  display: block;
+  height: 42px;
+  position: absolute;
+  right: -18px;
+  top: 16px;
+  width: 14px;
+}
+
+.battery .battery-level {
+  background: linear-gradient(0deg, rgb(15, 95, 1) 0%, rgba(9,121,19,1) 35%, rgb(66, 224, 0) 100%);
+  margin-top: 1px;
+  margin-left: 1px;
+  margin-right: 1px;
+  border-radius: 3px;
+  height: 78px;
+}
+
+.battery-label {
+  height: 100%;
+  padding-left: 5px;
+  font-size: 50px;
+  color: white;
+  overflow: visible;
+  white-space: nowrap;
+  text-align: center;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.battery .battery-level.high {
+  background: linear-gradient(0deg, rgb(15, 95, 1) 0%, rgba(9,121,19,1) 35%, rgb(57, 173, 0) 100%);
+}
+
+.battery .battery-level.medium {
+  background: linear-gradient(0deg, rgb(95, 64, 1) 0%, rgb(121, 93, 9) 35%, rgb(161, 122, 0) 100%);
+}
+
+.battery .battery-level.low {
+  background: linear-gradient(0deg, rgb(95, 1, 1) 0%, rgb(121, 9, 9) 35%, rgb(177, 0, 0) 100%);
+}
+
+.detail-table {
+  font-size: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+#map {
+  height: 400px;
+}
+
+/* sm */
+@media (min-width: 576px) {
+  .battery {
+    width: 304px;
+  }
+}
+
+/* md */
+@media (min-width: 768px) {
+
+}
+
+/* lg */
+@media (min-width: 992px) {
+  .battery {
+    width: 304px;
+  }
+
+  #map {
+    height: 100%;
+  }
+
+  .detail-table {
+    margin-bottom: 0;
+  }
+
+  .icon-group-list {
+    font-size: 1.5rem;
+  }
+}
+/* lg */
+@media (min-width: 1200px) {  }
+

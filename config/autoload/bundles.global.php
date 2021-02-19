@@ -1,14 +1,10 @@
 <?php
-$hash = md5(random_bytes(5));
 return [
     'bundles' => [
-        'hash' => $hash,
         'list' => [
             [
                 'type' => 'js',
-                'output' => "critical_$hash.js",
-                'unlink' => "critical_*",
-                'critical' => true,
+                'output' => "critical.js",
                 'sources' => [
                     __DIR__ . '/../../bundles/js/insertion.js',
                     __DIR__ . '/../../bundles/js/scroll-state.js',
@@ -16,9 +12,7 @@ return [
             ],
             [
                 'type' => 'js',
-                'output' => "frontend-minimal_$hash.js",
-                'unlink' => "frontend-minimal_*.js",
-                'critical' => true,
+                'output' => "cms.js",
                 'sources' => [
                     __DIR__ . '/../../bundles/js/jquery-3.5.1.slim.min.js',
                     __DIR__ . '/../../bundles/js/bootstrap.bundle.min.js',
@@ -29,28 +23,28 @@ return [
                 ]
             ],
             [
-                'type' => 'css',
-                'output' => "frontend-critical_$hash.css",
-                'unlink' => "frontend-critical_*.css",
-                'critical' => true,
-                'sources' => [
-                    __DIR__ . '/../../bundles/css/bootstrap-reboot.min.css',
-                    __DIR__ . '/../../bundles/css/bootstrap-grid.min.css',
-                    __DIR__ . '/../../bundles/css/globals.css',
-                ]
+                'type' => 'scss',
+                'import' => __DIR__ . '/../../bundles/scss/critical',
+                'output' => "critical.css",
+                'entrypoint' => __DIR__ . '/../../bundles/scss/critical/critical.scss',
             ],
             [
-                'type' => 'css',
-                'output' => "frontend-bundle_$hash.css",
-                'unlink' => "frontend-bundle_*.css",
-                'critical' => false,
-                'sources' => [
-                    __DIR__ . '/../../bundles/css/bootstrap.min.css',
-                    __DIR__ . '/../../bundles/css/globals.css',
-                    __DIR__ . '/../../bundles/css/cms.css',
-                    __DIR__ . '/../../bundles/css/frontend.css',
-                    __DIR__ . '/../../bundles/css/tesla.css',
-                ]
+                'type' => 'scss',
+                'import' => __DIR__ . '/../../bundles/scss/base',
+                'output' => "base.css",
+                'entrypoint' => __DIR__ . '/../../bundles/scss/base/base.scss',
+            ],
+            [
+                'type' => 'scss',
+                'import' => __DIR__ . '/../../bundles/scss/cms',
+                'output' => "cms.css",
+                'entrypoint' => __DIR__ . '/../../bundles/scss/cms/cms.scss',
+            ],
+            [
+                'type' => 'scss',
+                'import' => __DIR__ . '/../../bundles/scss/tesla',
+                'output' => "tesla.css",
+                'entrypoint' => __DIR__ . '/../../bundles/scss/tesla/tesla.scss',
             ],
         ]
     ]

@@ -14,7 +14,12 @@ class JavascriptExtension implements ExtensionInterface
 
     public function register(Engine $engine)
     {
-        $engine->registerFunction('js', function ($file, $critical = false) {
+        $engine->registerFunction('js', function ($file, $critical = false) use($engine) {
+            $hash = $engine->getData()['hash'];
+            $file = $this->injectHash($file, $hash);
+            if (strpos($file, '/') === 0) {
+                $file = "/$file";
+            }
             $this->data[$file] = $critical;
         });
         $engine->registerFunction('jsflush', function () {
@@ -39,4 +44,20 @@ class JavascriptExtension implements ExtensionInterface
         });
     }
 
+    protected function injectHash(string $filename, string $hash): string
+    {
+        $exp = explode('.', $filename);
+        $result = '';
+        $count = count($exp);
+        foreach ($exp as $key => $item) {
+            if ($key === $count - 1) {
+                $result .= '_' . $hash;
+                $result .= '.' . $item;
+
+            } else {
+                $result .= $item;
+            }
+        }
+        return $result;
+    }
 }

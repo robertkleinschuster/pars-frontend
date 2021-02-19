@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="<?= $this->e($language ?? 'en') ?>">
-<?= $this->css("/frontend-critical_$hash.css", true) ?>
-<?= $this->css("/frontend-bundle_$hash.css") ?>
-<?= $this->js("/critical_$hash.js", true) ?>
-<?= $this->js("/frontend-minimal_$hash.js") ?>
+<?= $this->css("critical.css", true) ?>
+<?= $this->css("base.css") ?>
+<?= $this->css("cms.css") ?>
+<?= $this->js("critical.js", true) ?>
+<?= $this->js("cms.js") ?>
 <?php $bgfile = $this->bgflush(); ?>
 <?php if (isset($bgfile)): ?>
     <?php $this->og('og:image', $this->cmsimg($bgfile, $static ?? null, $key ?? null)) ?>
