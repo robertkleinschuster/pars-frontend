@@ -17,7 +17,7 @@ class JavascriptExtension implements ExtensionInterface
         $engine->registerFunction('js', function ($file, $critical = false) use($engine) {
             $hash = $engine->getData()['hash'];
             $file = $this->injectHash($file, $hash);
-            if (strpos($file, '/') === 0) {
+            if (strpos($file, '/') !== 0) {
                 $file = "/$file";
             }
             $this->data[$file] = $critical;
