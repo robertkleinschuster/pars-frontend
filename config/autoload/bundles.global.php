@@ -46,6 +46,12 @@ return [
                 'output' => "tesla.css",
                 'entrypoint' => __DIR__ . '/../../bundles/scss/tesla/tesla.scss',
             ],
+            [
+                'type' => 'scss',
+                'import' => __DIR__ . '/../../bundles/scss/noscript',
+                'output' => "noscript.css",
+                'entrypoint' => __DIR__ . '/../../bundles/scss/noscript/noscript.scss',
+            ],
         ]
     ]
 ];

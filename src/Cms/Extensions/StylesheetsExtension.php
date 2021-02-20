@@ -39,11 +39,19 @@ class StylesheetsExtension implements ExtensionInterface
                         }
                     }
                 } else {
-                    $ret .= " 
+                    if (strpos($file, 'noscript') !== false) {
+                        $ret .= " 
+    <noscript>
+        <link rel=\"stylesheet\" href=\"$file\">
+    </noscript>";
+                    } else {
+                        $ret .= " 
     <link rel=\"preload\" href=\"$file\" as=\"style\" class='style-insertion'>
     <noscript>
         <link rel=\"stylesheet\" href=\"$file\">
     </noscript>";
+                    }
+
                 }
             }
             return $ret;
