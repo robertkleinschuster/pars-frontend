@@ -38,7 +38,10 @@ if (e.length) {
     e.forEach(function (e) {
         var href = e.getAttribute('href');
         if (href.startsWith('/') || href.startsWith('http')) {
-            var link = '//' + window.location.host + href;
+            var link = href;
+            if (!href.startsWith('http')) {
+                link = '//' + window.location.host + href;
+            }
             href = href.replace('http:', '');
             href = href.replace('https:', '');
             if (document.querySelectorAll('link[href="' + href + '"]').length === 0) {
