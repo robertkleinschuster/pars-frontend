@@ -42,9 +42,9 @@ if (e.length) {
             if (!href.startsWith('http')) {
                 link = '//' + window.location.host + href;
             }
-            href = href.replace('http:', '');
-            href = href.replace('https:', '');
-            if (document.querySelectorAll('link[href="' + href + '"]').length === 0) {
+            link = link.replace('http:', '');
+            link = link.replace('https:', '');
+            if (document.querySelectorAll('link[href="' + link + '"]').length === 0) {
                 var hint = document.createElement("link");
                 hint.rel = "prefetch";
                 hint.as = "document";
