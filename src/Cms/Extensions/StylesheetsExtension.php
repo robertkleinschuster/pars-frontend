@@ -39,7 +39,7 @@ class StylesheetsExtension implements ExtensionInterface
                     }
                 } else {
                     $ret .= " 
-    <link rel=\"preload\" href=\"$file\" as=\"style\" class='style-insertion' onload=\"this.onload=null;this.rel='stylesheet'\">
+    <link rel=\"preload\" href=\"$file\" as=\"style\" class='style-insertion'>
     <noscript>
         <link rel=\"stylesheet\" href=\"$file\">
     </noscript>";
