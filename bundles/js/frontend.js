@@ -19,38 +19,33 @@ var e = document.querySelectorAll('a');
 if (e.length) {
     e.forEach(function (e) {
         e.addEventListener('mouseover', function (e) {
-            var href = this.getAttribute('href');
-            var link = '//' + window.location.host + this.getAttribute('href');
-            if (href.startsWith('/') || href.startsWith('http')) {
-                if (document.querySelectorAll('link[href="' + link + '"]').length === 0) {
-                    var hint = document.createElement("link");
-                    hint.rel = "prefetch";
-                    hint.as = "document";
-                    hint.href = link;
-                    document.head.appendChild(hint);
-                }
-            }
+            injectLink(this);
         });
     });
 }
 var e = document.querySelectorAll('.nav-link');
 if (e.length) {
     e.forEach(function (e) {
-        var href = e.getAttribute('href');
-        if (href.startsWith('/') || href.startsWith('http')) {
-            var link = href;
-            if (!href.startsWith('http')) {
-                link = '//' + window.location.host + href;
-            }
-            link = link.replace('http:', '');
-            link = link.replace('https:', '');
-            if (document.querySelectorAll('link[href="' + link + '"]').length === 0) {
-                var hint = document.createElement("link");
-                hint.rel = "prefetch";
-                hint.as = "document";
-                hint.href = link;
-                document.head.appendChild(hint);
-            }
-        }
+      injectLink(e);
     });
+}
+
+function injectLink(e)
+{
+    var href = e.getAttribute('href');
+    if (href.startsWith('/') || href.startsWith('http')) {
+        var link = href;
+        if (!href.startsWith('http')) {
+            link = '//' + window.location.host + href;
+        }
+        link = link.replace('http:', '');
+        link = link.replace('https:', '');
+        if (document.querySelectorAll('link[href="' + link + '"]').length === 0) {
+            var hint = document.createElement("link");
+            hint.rel = "prefetch";
+            hint.as = "document";
+            hint.href = link;
+            document.head.appendChild(hint);
+        }
+    }
 }
