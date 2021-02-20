@@ -7,6 +7,7 @@ namespace Pars\Frontend\Cms\Extensions;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Pars\Core\Cache\ParsCache;
+use Pars\Helper\Filesystem\FilesystemHelper;
 
 class StylesheetsExtension implements ExtensionInterface
 {
@@ -48,20 +49,9 @@ class StylesheetsExtension implements ExtensionInterface
             return $ret;
         });
     }
+
     protected function injectHash(string $filename, string $hash): string
     {
-        $exp = explode('.', $filename);
-        $result = '';
-        $count = count($exp);
-        foreach ($exp as $key => $item) {
-            if ($key === $count - 1) {
-                $result .= '_' . $hash;
-                $result .= '.' . $item;
-
-            } else {
-                $result .= $item;
-            }
-        }
-        return $result;
+        return FilesystemHelper::injectHash($filename, $hash);
     }
 }
