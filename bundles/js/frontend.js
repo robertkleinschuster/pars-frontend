@@ -46,6 +46,11 @@ function injectLink(e)
             hint.as = "document";
             hint.href = link;
             document.head.appendChild(hint);
+            var hint = document.createElement("link");
+            hint.rel = "prerender";
+            hint.as = "document";
+            hint.href = link;
+            document.head.appendChild(hint);
         }
     }
 }
