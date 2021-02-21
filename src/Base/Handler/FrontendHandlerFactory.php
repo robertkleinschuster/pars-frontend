@@ -12,6 +12,10 @@ class FrontendHandlerFactory
 {
     public function __invoke(ContainerInterface $container, $requestedName)
     {
-        return new $requestedName($container->get(TemplateRendererInterface::class), $container->get(UrlHelper::class), $container->get('config'));
+        return new $requestedName(
+            $container->get(TemplateRendererInterface::class),
+            $container->get(UrlHelper::class),
+            $container->get('config')
+        );
     }
 }
