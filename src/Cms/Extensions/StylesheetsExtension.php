@@ -89,8 +89,8 @@ class StylesheetsExtension implements ExtensionInterface
     {
         $ret = "";
         asort($this->data, SORT_NATURAL);
-        foreach ($this->data as $file => $critical) {
-            if ($critical < 10) {
+        foreach ($this->data as $file => $order) {
+            if ($order < 10) {
                 $ret .= $this->getInlineFromCache($file);
             } else {
                 if (strpos($file, 'noscript') !== false) {
