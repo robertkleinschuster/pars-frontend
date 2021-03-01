@@ -73,8 +73,13 @@ class CmsFormMiddelware implements MiddlewareInterface
             $code = $request->getAttribute('code', '/');
             try {
                 $finder = new ArticleTranslationBeanFinder($adapter);
-                $finder->setArticleTranslation_Code($code);
-                $form = (new FormFactory())($request->getParsedBody(), $adapter, $session, $guard, $translator);
+                $data = $request->getParsedBody();
+                if (isset($data['Article_ID'])) {
+                    $finder->setArticle_ID($data['Article_ID']);
+                } else {
+                    $finder->setArticleTranslation_Code($code);
+                }
+                $form = (new FormFactory())($data, $adapter, $session, $guard, $translator);
                 if ($finder->findByLocaleWithFallback($locale->getLocale_Code(), $this->config->get('locale.default'))  == 1) {
                     $form->setBean($finder->getBean());
                 }

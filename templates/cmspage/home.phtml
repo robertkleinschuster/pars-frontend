@@ -2,9 +2,9 @@
 <h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
-<?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
-    <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
-        <?= $this->paragraph($paragraph, ['img_width' => 1106, 'img_height' => 600]) ?>
+<?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
+    <?php foreach ($page->get('CmsBlock_BeanList') as $block): ?>
+        <?= $this->block($block, ['img_width' => 1106, 'img_height' => 600]) ?>
     <?php endforeach; ?>
 <?php endif; ?>
 <?php if (isset($page) && $page->isset('CmsPost_BeanList')): ?>

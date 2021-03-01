@@ -5,17 +5,17 @@
     </div>
 </div>
 <div class="row mb-4">
-    <?php $pictureList = (isset($page) && $page->isset('CmsParagraph_BeanList')) ? $page->get('CmsParagraph_BeanList')->filter(function ($bean) {
-        return $bean->get('CmsParagraphType_Code') == 'picture';
+    <?php $pictureList = (isset($page) && $page->isset('CmsBlock_BeanList')) ? $page->get('CmsBlock_BeanList')->filter(function ($bean) {
+        return $bean->get('CmsBlockType_Code') == 'picture';
     }) : null; ?>
     <?php if ($pictureList && $pictureList->count()): ?>
     <div class="col-md-6 px-3">
         <div class="no-p-margin">
             <?= $this->p($page->get('ArticleTranslation_Text')) ?>
         </div>
-        <?php foreach ($pictureList as $paragraph): ?>
+        <?php foreach ($pictureList as $block): ?>
             <div class="text-center">
-                <?= $this->paragraph($paragraph) ?>
+                <?= $this->block($block) ?>
             </div>
         <?php endforeach; ?>
     </div>
@@ -111,11 +111,11 @@
         </div>
     </div>
 
-    <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
-        <?php foreach ($page->get('CmsParagraph_BeanList')->filter(function ($bean) {
-            return $bean->get('CmsParagraphType_Code') != 'picture';
-        }) as $paragraph): ?>
-            <?= $this->paragraph($paragraph) ?>
+    <?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
+        <?php foreach ($page->get('CmsBlock_BeanList')->filter(function ($bean) {
+            return $bean->get('CmsBlockType_Code') != 'picture';
+        }) as $block): ?>
+            <?= $this->block($block) ?>
         <?php endforeach; ?>
     <?php endif; ?>
     <?php if (isset($page) && $page->isset('CmsPost_BeanList')): ?>

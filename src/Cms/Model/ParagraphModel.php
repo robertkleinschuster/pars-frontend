@@ -4,33 +4,33 @@
 namespace Pars\Frontend\Cms\Model;
 
 
-use Pars\Model\Cms\Paragraph\CmsParagraphBeanFinder;
+use Pars\Model\Cms\Block\CmsBlockBeanFinder;
 
-class ParagraphModel extends BaseModel
+class BlockModel extends BaseModel
 {
     /**
      * @param string|null $code
      * @return \Niceshops\Bean\Type\Base\BeanInterface|null
      */
-    public function getParagraph(?string $code = null, int $id = null)
+    public function getBlock(?string $code = null, int $id = null)
     {
         try {
             if ($code == null) {
                 $code = $this->getCode();
             }
-            $paragraphFinder = new CmsParagraphBeanFinder($this->getAdapter());
-            $paragraphFinder->setCmsParagraphState_Code('active');
-            $paragraphFinder->setArticleTranslation_Active(true);
+            $blockFinder = new CmsBlockBeanFinder($this->getAdapter());
+            $blockFinder->setCmsBlockState_Code('active');
+            $blockFinder->setArticleTranslation_Active(true);
             if ($id === null) {
-                $paragraphFinder->setArticleTranslation_Code($code);
+                $blockFinder->setArticleTranslation_Code($code);
             } else {
-                $paragraphFinder->setCmsParagraph_ID($id);
+                $blockFinder->setCmsBlock_ID($id);
             }
-            if ($paragraphFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default')) === 1) {
-                return $paragraphFinder->getBean();
+            if ($blockFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default')) === 1) {
+                return $blockFinder->getBean();
             }
         } catch (\Exception $exception) {
-            $this->getLogger()->error('Error finding requested paragraph.', ['exception' => $exception]);
+            $this->getLogger()->error('Error finding requested block.', ['exception' => $exception]);
         }
         return null;
     }

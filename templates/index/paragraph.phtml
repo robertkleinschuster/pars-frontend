@@ -1,9 +1,9 @@
 <?php $this->layout('layout::default', [
-    'language' => Locale::getPrimaryLanguage($paragraph->get('Locale_Code')),
-    'locale' => $paragraph->get('Locale_Code'),
-    'title' => $this->p($brand . ' - ' . $paragraph->get('ArticleTranslation_Title')),
-    'description' => $this->p($paragraph->get('ArticleTranslation_Teaser')),
-    'keywords' => $this->p($paragraph->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
-    'footer' => $this->p($paragraph->get('ArticleTranslation_Footer'))
+    'language' => Locale::getPrimaryLanguage($block->get('Locale_Code')),
+    'locale' => $block->get('Locale_Code'),
+    'title' => $this->p($brand . ' - ' . $block->get('ArticleTranslation_Title')),
+    'description' => $this->p($block->get('ArticleTranslation_Teaser')),
+    'keywords' => $this->p($block->get('ArticleTranslation_Keywords')) . (!empty($keywords) ? ', ' . $keywords : ''),
+    'footer' => $this->p($block->get('ArticleTranslation_Footer'))
 ]) ?>
-<?= $this->paragraph($paragraph) ?>
+<?= $this->block($block) ?>

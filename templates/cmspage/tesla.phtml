@@ -1,9 +1,9 @@
 <?= $this->css("tesla.css", 20) ?>
-<?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
+<?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 pb-3 mb-3">
-        <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
+        <?php foreach ($page->get('CmsBlock_BeanList') as $block): ?>
             <div class="col">
-                <?= $this->paragraph($paragraph, ['img_width' => 1106, 'img_height' => 600]) ?>
+                <?= $this->block($block, ['img_width' => 1106, 'img_height' => 600]) ?>
             </div>
         <?php endforeach; ?>
     </div>

@@ -14,7 +14,7 @@ use Pars\Frontend\Base\Handler\FrontendHandler;
 use Pars\Frontend\Cms\Helper\Config;
 use Pars\Frontend\Cms\Model\ModelFactory;
 use Pars\Frontend\Cms\Model\PageModel;
-use Pars\Frontend\Cms\Model\ParagraphModel;
+use Pars\Frontend\Cms\Model\BlockModel;
 use Pars\Frontend\Cms\Model\PostModel;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -77,13 +77,13 @@ class CmsHandler extends FrontendHandler
             }
         }
 
-        $paragraphModel = (new ModelFactory())($request, ParagraphModel::class);
-        $paragraph = $paragraphModel->getParagraph();
-        if ($paragraph != null) {
-            return new HtmlResponse(new CallbackStream(function () use ($request, $paragraph) {
+        $blockModel = (new ModelFactory())($request, BlockModel::class);
+        $block = $blockModel->getBlock();
+        if ($block != null) {
+            return new HtmlResponse(new CallbackStream(function () use ($request, $block) {
                 $this->initDefaultVars($request);
-                $this->assign('paragraph', $paragraph);
-                return $this->renderer->render('index::paragraph');
+                $this->assign('block', $block);
+                return $this->renderer->render('index::block');
             }));
         }
 

@@ -28,8 +28,8 @@ class CmsContentExtension implements ExtensionInterface
             }
             return '';
         });
-        $engine->registerFunction('paragraph', function (BeanInterface $bean, $data = []) use ($engine) {
-            return $engine->render($bean->get('CmsParagraphType_Template'), array_replace(['paragraph' => $bean], $data));
+        $engine->registerFunction('block', function (BeanInterface $bean, $data = []) use ($engine) {
+            return $engine->render($bean->get('CmsBlockType_Template'), array_replace(['block' => $bean], $data));
         });
         $engine->registerFunction('post', function (BeanInterface $bean, $data = []) use ($engine) {
             return $engine->render($bean->get('CmsPostType_Template'), array_replace(['post' => $bean], $data));

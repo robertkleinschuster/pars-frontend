@@ -20,15 +20,15 @@
     <h3 class="card-header"><?= $page->get('ArticleTranslation_SubHeading') ?></h3>
     <div class="card-body">
         <ul class="list-group  <?= empty($errors['option']) ?: 'is-invalid' ?>">
-            <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
-                <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
-                    <label class="list-group-item list-group-item-action mb-0" for="<?= $paragraph->get('Article_Code') ?>">
+            <?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
+                <?php foreach ($page->get('CmsBlock_BeanList') as $block): ?>
+                    <label class="list-group-item list-group-item-action mb-0" for="<?= $block->get('Article_Code') ?>">
                         <label class="form-check mb-0">
-                            <input class="form-check-input <?= empty($errors['option']) ?: 'is-invalid' ?>" type="radio" name='option' id="<?= $paragraph->get('Article_Code') ?>" value="<?= $paragraph->get('Article_Code') ?>">
-                            <label class="form-check-label" for="<?= $paragraph->get('Article_Code') ?>">
-                                <?= $paragraph->get('ArticleTranslation_Name') ?>
+                            <input class="form-check-input <?= empty($errors['option']) ?: 'is-invalid' ?>" type="radio" name='option' id="<?= $block->get('Article_Code') ?>" value="<?= $block->get('Article_Code') ?>">
+                            <label class="form-check-label" for="<?= $block->get('Article_Code') ?>">
+                                <?= $block->get('ArticleTranslation_Name') ?>
                             </label>
-                            <a class="float-right btn-link small" href="<?= $this->cmspath($paragraph)?>"><?= $this->t('poll.form.option.more_info')?></a>
+                            <a class="float-right btn-link small" href="<?= $this->cmspath($block)?>"><?= $this->t('poll.form.option.more_info')?></a>
                         </label>
                     </label>
                 <?php endforeach; ?>

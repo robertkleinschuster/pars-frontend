@@ -2,16 +2,16 @@
 <h2><?= $page->get('ArticleTranslation_SubHeading') ?></h2>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
-<?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
-    <?php foreach ($page->get('CmsParagraph_BeanList')->filter(function($bean){return $bean->get('CmsParagraphType_Code') == 'banner';}) as $paragraph): ?>
-        <?= $this->paragraph($paragraph) ?>
+<?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
+    <?php foreach ($page->get('CmsBlock_BeanList')->filter(function($bean){return $bean->get('CmsBlockType_Code') == 'banner';}) as $block): ?>
+        <?= $this->block($block) ?>
     <?php endforeach; ?>
 <?php endif; ?>
-<?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
+<?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-        <?php foreach ($page->get('CmsParagraph_BeanList')->filter(function($bean){return $bean->get('CmsParagraphType_Code') != 'banner';}) as $paragraph): ?>
+        <?php foreach ($page->get('CmsBlock_BeanList')->filter(function($bean){return $bean->get('CmsBlockType_Code') != 'banner';}) as $block): ?>
             <div class="col mb-3">
-                <?= $this->paragraph($paragraph) ?>
+                <?= $this->block($block) ?>
             </div>
         <?php endforeach; ?>
     </div>

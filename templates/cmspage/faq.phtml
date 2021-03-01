@@ -4,22 +4,22 @@
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
 
 <div class="accordion" id="faq">
-    <?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
-        <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
+    <?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
+        <?php foreach ($page->get('CmsBlock_BeanList') as $block): ?>
             <div class="card">
-                <div class="card-header" id="<?= $paragraph->get('Article_Code') ?>_heading">
+                <div class="card-header" id="<?= $block->get('Article_Code') ?>_heading">
                     <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                                data-target="#<?= $paragraph->get('Article_Code') ?>" aria-expanded="false"
-                                aria-controls="<?= $paragraph->get('Article_Code') ?>">
-                            <?= $paragraph->get('ArticleTranslation_Name') ?>
+                                data-target="#<?= $block->get('Article_Code') ?>" aria-expanded="false"
+                                aria-controls="<?= $block->get('Article_Code') ?>">
+                            <?= $block->get('ArticleTranslation_Name') ?>
                         </button>
                     </h2>
                 </div>
-                <div id="<?= $paragraph->get('Article_Code') ?>" class="collapse"
-                     aria-labelledby="<?= $paragraph->get('Article_Code') ?>_heading" data-parent="#faq">
+                <div id="<?= $block->get('Article_Code') ?>" class="collapse"
+                     aria-labelledby="<?= $block->get('Article_Code') ?>_heading" data-parent="#faq">
                     <div class="card-body">
-                        <?= $this->paragraph($paragraph) ?>
+                        <?= $this->block($block) ?>
                     </div>
                 </div>
             </div>

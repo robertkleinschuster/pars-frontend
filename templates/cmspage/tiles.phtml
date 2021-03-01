@@ -3,11 +3,11 @@
 <?= $this->insert('cmspage::includes/hero_banner', ['bean' => $page]); ?>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Teaser')) ?></p>
 <p class="lead"><?= $this->p($page->get('ArticleTranslation_Text')) ?></p>
-<?php if (isset($page) && $page->isset('CmsParagraph_BeanList')): ?>
+<?php if (isset($page) && $page->isset('CmsBlock_BeanList')): ?>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-        <?php foreach ($page->get('CmsParagraph_BeanList') as $paragraph): ?>
+        <?php foreach ($page->get('CmsBlock_BeanList') as $block): ?>
             <div class="col">
-                <?= $this->paragraph($paragraph, ['img_width' => 300, 'img_height' => 300]) ?>
+                <?= $this->block($block, ['img_width' => 300, 'img_height' => 300]) ?>
             </div>
         <?php endforeach; ?>
     </div>
