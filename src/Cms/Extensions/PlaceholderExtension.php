@@ -4,28 +4,37 @@
 namespace Pars\Frontend\Cms\Extensions;
 
 
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\Adapter\AdapterAwareTrait;
 use Laminas\I18n\Translator\TranslatorAwareInterface;
 use Laminas\I18n\Translator\TranslatorAwareTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
+use Pars\Helper\String\StringHelper;
+use Pars\Model\Cms\Block\CmsBlockBeanFinder;
 
 class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterface
 {
     use TranslatorAwareTrait;
+    use AdapterAwareTrait;
 
+    protected Engine $engine;
+    protected array $blockBean_Map = [];
 
     /**
      * TranslatorExtension constructor.
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, Adapter $adapter)
     {
         $this->setTranslator($translator);
+        $this->setDbAdapter($adapter);
     }
 
     public function register(Engine $engine)
     {
-        $engine->registerFunction('p', function (?string $message, array $data = []) use($engine) {
+        $this->engine = $engine;
+        $engine->registerFunction('p', function (?string $message, array $data = []) use ($engine) {
             $matches = [];
             preg_match_all('/\{.*?\}|%7B.*?%7D|%257B.*?%257D/', $message, $matches);
             $replace = [];
@@ -42,17 +51,54 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
      */
     protected function generateReplace(array &$replace, array $matches, array $data)
     {
+        $blockCodes = [];
         foreach ($matches as $match) {
             if (is_array($match)) {
                 $this->generateReplace($replace, $match, $data);
             } else {
-                $key = str_replace('}', '', str_replace('{', '', $match));
-                if (isset($data[$key])) {
-                    $replace[$match] = $data[$key];
+                $key = trim(str_replace('}', '', str_replace('{', '', $match)));
+                if (StringHelper::startsWith($key, 'block:')) {
+                    $exp = explode(':', $key);
+                    if (is_array($exp) && isset($exp[1])) {
+                        $blockCodes[$exp[1]] = $match;
+                    }
                 } else {
-                    $replace[$match] = $this->getTranslator()->translate($key, 'frontend');
+                    if (isset($data[$key])) {
+                        $replace[$match] = $data[$key];
+                    } else {
+                        $replace[$match] = $this->getTranslator()->translate($key, 'frontend');
+                    }
                 }
             }
         }
+        $codeList = array_keys($blockCodes);
+        $blockmap = $this->getBlock_Bean_Map($codeList, $data['locale']);
+        foreach ($blockmap as $code => $bean) {
+            $replace[$blockCodes[$code]] = $this->engine->render(
+                $bean->get('CmsBlockType_Template'),
+                array_replace(['block' => $bean], $data)
+            );
+        }
     }
+
+
+    protected function getBlock_Bean_Map(array $codeList, string $locale)
+    {
+        $id = md5(implode($codeList) . $locale);
+        if (isset($this->blockBean_Map[$id])) {
+            return $this->blockBean_Map[$id];
+        } else {
+            $this->blockBean_Map[$id] = [];
+        }
+        $finder = new CmsBlockBeanFinder($this->adapter);
+        $finder->setArticle_Code_List($codeList);
+        $finder->setCmsBlockState_Code('active');
+        $finder->setArticleTranslation_Active(true);
+        $finder->findByLocaleWithFallback($locale, 'de_AT');
+        foreach ($finder->getBeanListDecorator() as $bean) {
+            $this->blockBean_Map[$id][$bean->get('Article_Code')] = $bean;
+        }
+        return $this->blockBean_Map[$id];
+    }
+
 }
