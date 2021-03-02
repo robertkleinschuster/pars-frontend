@@ -4,6 +4,7 @@
 namespace Pars\Frontend\Cms\Model;
 
 
+use Pars\Frontend\Cms\Form\FormFactory;
 use Pars\Model\Cms\Block\CmsBlockBeanFinder;
 
 class BlockModel extends BaseModel
@@ -33,5 +34,18 @@ class BlockModel extends BaseModel
             $this->getLogger()->error('Error finding requested block.', ['exception' => $exception]);
         }
         return null;
+    }
+
+    public function getForm()
+    {
+        $block = $this->getBlock();
+        $factory = new FormFactory();
+        return $factory->createFormForBlock(
+            $block,
+            $this->getAdapter(),
+            $this->getSession(),
+            $this->getGuard(),
+            $this->getTranslator()
+        );
     }
 }

@@ -8,6 +8,8 @@ use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\Diactoros\CallbackStream;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Mezzio\Csrf\CsrfMiddleware;
+use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
 use Pars\Core\Cache\ParsCache;
 use Pars\Frontend\Base\Handler\FrontendHandler;
@@ -23,6 +25,8 @@ class CmsHandler extends FrontendHandler
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $this->assign('session', $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE));
+        $this->assign('guard', $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE));
 
 
         $cacheID =  md5($request->getUri());
@@ -80,6 +84,7 @@ class CmsHandler extends FrontendHandler
         $blockModel = (new ModelFactory())($request, BlockModel::class);
         $block = $blockModel->getBlock();
         if ($block != null) {
+            $this->renderer->addDefaultParam(TemplateRendererInterface::TEMPLATE_ALL, 'form', $blockModel->getForm());
             return new HtmlResponse(new CallbackStream(function () use ($request, $block) {
                 $this->initDefaultVars($request);
                 $this->assign('block', $block);

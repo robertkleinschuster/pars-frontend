@@ -4,7 +4,10 @@
 namespace Pars\Frontend\Cms\Middleware;
 
 
+use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Helper\Template\TemplateVariableContainer;
+use Mezzio\Session\SessionInterface;
+use Mezzio\Session\SessionMiddleware;
 use Pars\Core\Bundles\BundlesMiddleware;
 use Pars\Frontend\Cms\Helper\Config;
 use Psr\Http\Message\ResponseInterface;

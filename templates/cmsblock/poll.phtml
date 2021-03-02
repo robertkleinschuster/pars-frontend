@@ -1,0 +1,52 @@
+<?php if (isset($success)): ?>
+    <div class="card text-dark">
+        <h3 class="card-header"><?= $block->get('ArticleTranslation_SubHeading') ?></h3>
+        <div class="card-body">
+            <div class="alert alert-success" role="alert">
+                <?= $this->t('poll.form.success') ?>
+            </div>
+        </div>
+    </div>
+<?php else: ?>
+    <?php if (isset($form) && $form instanceof \Pars\Frontend\Cms\Form\Poll\PollForm): ?>
+        <?= $this->form($form, 'card text-dark mb-4') ?>
+        <h3 class="card-header"><?= $block->get('ArticleTranslation_SubHeading') ?></h3>
+        <div class="card-body">
+            <ul class="list-group  <?= empty($errors['option']) ?: 'is-invalid' ?>">
+                <?php if (isset($block) && $block->isset('CmsBlock_BeanList')): ?>
+                    <?php foreach ($block->get('CmsBlock_BeanList') as $block): ?>
+                        <label class="list-group-item list-group-item-action mb-0" for="<?= $block->get('Article_Code') ?>">
+                            <label class="form-check mb-0">
+                                <input class="form-check-input <?= empty($errors['option']) ?: 'is-invalid' ?>" type="radio" name='option' id="<?= $block->get('Article_Code') ?>" value="<?= $block->get('Article_Code') ?>">
+                                <label class="form-check-label" for="<?= $block->get('Article_Code') ?>">
+                                    <?= $block->get('ArticleTranslation_Name') ?>
+                                </label>
+                                <a class="float-right btn-link small" href="<?= $this->cmspath($block)?>"><?= $this->t('poll.form.option.more_info')?></a>
+                            </label>
+                        </label>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </ul>
+            <?php if (!empty($errors['option'])): ?>
+                <?php foreach ($errors['option'] as $error): ?>
+                    <div id="email-error" class="invalid-feedback">
+                        <?= $error ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <hr>
+            <div class="form-group">
+                <label for="name"><?= $this->t('poll.form.name') ?></label>
+                <input class="form-control" type="text" name="name" id="name" value="<?= $attributes['name'] ?? '' ?>" autocomplete="name">
+                <small class="text-muted"><?= $this->t('poll.form.name.hint')?></small>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-block btn-success">
+                <?= $this->t('poll.form.submit') ?>
+            </button>
+        </div>
+        <?= $this->form($form) ?>
+    <?php endif; ?>
+
+<?php endif; ?>

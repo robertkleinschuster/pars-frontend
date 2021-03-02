@@ -49,12 +49,15 @@ class FormFactory
      * @throws \Niceshops\Bean\Type\Base\BeanException
      */
     public function createFormForPage(
-        CmsPageBean $page,
+        ?CmsPageBean $page,
         AdapterInterface $adapter,
         SessionInterface $session,
         CsrfGuardInterface $guard,
         TranslatorInterface $translator
     ) {
+        if (!$page) {
+            return null;
+        }
         $id = null;
         switch ($page->get('CmsPageType_Code')) {
             case 'contact':
@@ -65,6 +68,7 @@ class FormFactory
         }
         if ($id !== null) {
             $form = $this->createForm($id, [], $adapter, $session, $guard, $translator);
+            $form->setBean($page);
             $form->generateToken();
             return $form;
         }
@@ -79,14 +83,17 @@ class FormFactory
      * @param TranslatorInterface $translator
      */
     public function createFormForBlock(
-        CmsBlockBean $block,
+        ?CmsBlockBean $block,
         AdapterInterface $adapter,
         SessionInterface $session,
         CsrfGuardInterface $guard,
         TranslatorInterface $translator
     ) {
+        if (!$block) {
+            return null;
+        }
         $id = null;
-        switch ($page->get('CmsBlockType_Code')) {
+        switch ($block->get('CmsBlockType_Code')) {
             case 'contact':
                 $id = ContactForm::id();
                 break;
@@ -95,6 +102,7 @@ class FormFactory
         }
         if ($id !== null) {
             $form = $this->createForm($id, [], $adapter, $session, $guard, $translator);
+            $form->setBean($block);
             $form->generateToken();
             return $form;
         }

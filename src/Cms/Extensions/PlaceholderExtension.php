@@ -11,6 +11,8 @@ use Laminas\I18n\Translator\TranslatorAwareTrait;
 use Laminas\I18n\Translator\TranslatorInterface;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
+use League\Plates\Template\Template;
+use Pars\Frontend\Cms\Form\FormFactory;
 use Pars\Helper\String\StringHelper;
 use Pars\Model\Cms\Block\CmsBlockBeanFinder;
 
@@ -21,7 +23,7 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
 
     protected Engine $engine;
     protected array $blockBean_Map = [];
-
+    public ?Template $template = null;
     /**
      * TranslatorExtension constructor.
      */
@@ -74,14 +76,19 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
         $codeList = array_keys($blockCodes);
         $blockmap = $this->getBlock_Bean_Map($codeList, $data['locale']);
         foreach ($blockmap as $code => $bean) {
-            $replace[$blockCodes[$code]] = $this->engine->render(
-                $bean->get('CmsBlockType_Template'),
-                array_replace(['block' => $bean], $data)
-            );
+            $formFactory = new FormFactory();
+            $form = $formFactory->createFormForBean($bean, $this->adapter, $data['session'], $data['guard'], $this->translator);
+            $this->engine->addData(['form' => $form]);
+            $replace[$blockCodes[$code]] = $this->engine->getFunction('block')->call($this->template, [$bean]);
         }
     }
 
-
+    /**
+     * @param array $codeList
+     * @param string $locale
+     * @return array|mixed
+     * @throws \Niceshops\Bean\Type\Base\BeanException
+     */
     protected function getBlock_Bean_Map(array $codeList, string $locale)
     {
         $id = md5(implode($codeList) . $locale);

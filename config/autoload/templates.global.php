@@ -16,6 +16,7 @@ return [
     ],
     'templates' => [
         'paths' => [
+            'base' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'base']),
             'index' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'index']),
             'error' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'error']),
             'layout' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'templates', 'layout']),

@@ -39,6 +39,12 @@ class FormExtension implements ExtensionInterface
                     $name = $form::PARAMETER_ID;
                     $value = $form::id();
                     $html .= "<input type=\"hidden\" name=\"$name\" value=\"$value\">";
+                    if ($form->hasBean() && $form->getBean()->exists('Article_ID')) {
+                        $name = 'Article_ID';
+                        $value = $form->getBean()->get('Article_ID');
+                        $html .= "<input type=\"hidden\" name=\"$name\" value=\"$value\">";
+
+                    }
                 }
                 $html .= "{$content}";
                 $html .= "</form>";
