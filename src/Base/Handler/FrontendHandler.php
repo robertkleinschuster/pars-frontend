@@ -4,6 +4,7 @@
 namespace Pars\Frontend\Base\Handler;
 
 
+use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Helper\Template\TemplateVariableContainer;
 use Mezzio\Helper\UrlHelper;
 use Mezzio\Session\SessionMiddleware;
@@ -61,6 +62,7 @@ abstract class FrontendHandler implements RequestHandlerInterface
 
         $this->assign('session', $session);
         $this->assign('import', new ImportLoader(new ImportBeanFinder($adapter)));
+        $this->assign('guard', $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE));
 
         $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
         foreach ($container->mergeForTemplate([]) as $key => $value) {
