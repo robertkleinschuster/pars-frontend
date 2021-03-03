@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Model;
-
 
 use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Session\SessionMiddleware;
@@ -12,6 +10,10 @@ use Pars\Core\Translation\TranslatorMiddleware;
 use Pars\Frontend\Cms\Helper\Config;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Class ModelFactory
+ * @package Pars\Frontend\Cms\Model
+ */
 class ModelFactory
 {
     /**
@@ -31,5 +33,4 @@ class ModelFactory
         $code = $request->getAttribute('code', '/');
         return new $class($adapter, $translator, $session, $locale, $code, $logger, $config, $guard);
     }
-
 }

@@ -5,17 +5,21 @@ namespace Pars\Frontend\Cms\Helper;
 use Laminas\I18n\Translator\TranslatorAwareInterface;
 use Laminas\I18n\Translator\TranslatorAwareTrait;
 
+/**
+ * Class CmsPlaceholder
+ * @package Pars\Frontend\Cms\Helper
+ */
 class CmsPlaceholder implements TranslatorAwareInterface
 {
     use TranslatorAwareTrait;
 
-    private $locale;
+    private string $locale;
 
     /**
      * CmsPlaceholder constructor.
-     * @param $locale
+     * @param string $locale
      */
-    public function __construct($locale)
+    public function __construct(string $locale)
     {
         $this->locale = $locale;
     }
@@ -24,7 +28,7 @@ class CmsPlaceholder implements TranslatorAwareInterface
      * @param string|null $content
      * @return string|null
      */
-    public function __invoke(?string $content)
+    public function __invoke(?string $content): ?string
     {
         return $this->replace($content);
     }

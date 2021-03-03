@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Form\Contact;
-
 
 use Laminas\Mail\Message;
 use Laminas\Mail\Transport\Sendmail;
@@ -85,6 +83,4 @@ class ContactForm extends AbstractForm
             }
         }
     }
-
-
 }

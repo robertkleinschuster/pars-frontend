@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterAwareTrait;
@@ -89,7 +87,7 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
      * @return array|mixed
      * @throws \Niceshops\Bean\Type\Base\BeanException
      */
-    protected function getBlock_Bean_Map(array $codeList, string $locale)
+    protected function getBlock_Bean_Map(array $codeList, string $locale): array
     {
         $id = md5(implode($codeList) . $locale);
         if (isset($this->blockBean_Map[$id])) {
@@ -107,5 +105,4 @@ class PlaceholderExtension implements ExtensionInterface, TranslatorAwareInterfa
         }
         return $this->blockBean_Map[$id];
     }
-
 }

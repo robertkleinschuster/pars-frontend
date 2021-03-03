@@ -1,11 +1,13 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Helper;
-
 
 use Pars\Model\Import\ImportBeanFinder;
 
+/**
+ * Class ImportLoader
+ * @package Pars\Frontend\Cms\Helper
+ */
 class ImportLoader
 {
     protected ImportBeanFinder $finder;

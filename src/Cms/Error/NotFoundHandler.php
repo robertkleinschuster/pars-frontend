@@ -19,6 +19,7 @@ use Pars\Frontend\Cms\Model\ModelFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+
 use function sprintf;
 
 class NotFoundHandler implements RequestHandlerInterface
@@ -56,7 +57,7 @@ class NotFoundHandler implements RequestHandlerInterface
         string $layout = self::LAYOUT_DEFAULT
     ) {
         // Factory cast to closure in order to provide return type safety.
-        $this->responseFactory = function () use ($responseFactory) : ResponseInterface {
+        $this->responseFactory = function () use ($responseFactory): ResponseInterface {
             return $responseFactory();
         };
         $this->renderer = $renderer;
@@ -69,7 +70,7 @@ class NotFoundHandler implements RequestHandlerInterface
      *
      * @param ServerRequestInterface $request Passed to internal handler
      */
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->renderer === null) {
             return $this->generatePlainTextResponse($request);
@@ -81,7 +82,7 @@ class NotFoundHandler implements RequestHandlerInterface
     /**
      * Generates a plain text response indicating the request method and URI.
      */
-    private function generatePlainTextResponse(ServerRequestInterface $request) : ResponseInterface
+    private function generatePlainTextResponse(ServerRequestInterface $request): ResponseInterface
     {
         $response = ($this->responseFactory)()->withStatus(StatusCodeInterface::STATUS_NOT_FOUND);
         $response->getBody()
@@ -102,7 +103,7 @@ class NotFoundHandler implements RequestHandlerInterface
     private function generateTemplatedResponse(
         TemplateRendererInterface $renderer,
         ServerRequestInterface $request
-    ) : ResponseInterface {
+    ): ResponseInterface {
 
         $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
         foreach ($container->mergeForTemplate([]) as $key => $value) {

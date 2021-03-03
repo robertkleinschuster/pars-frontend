@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use Mezzio\Helper\ServerUrlHelper;
 use Mezzio\Helper\UrlHelper;
@@ -14,6 +12,4 @@ class PathExtensionFactory
     {
         return new PathExtension($container->get(UrlHelper::class), $container->get(ServerUrlHelper::class));
     }
-
-
 }

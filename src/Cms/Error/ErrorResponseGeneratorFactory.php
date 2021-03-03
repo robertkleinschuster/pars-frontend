@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Error;
 
 use Mezzio\Template\TemplateRendererInterface;
@@ -8,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 class ErrorResponseGeneratorFactory
 {
-    public function __invoke(ContainerInterface $container) : ErrorResponseGenerator
+    public function __invoke(ContainerInterface $container): ErrorResponseGenerator
     {
         $config = $container->has('config') ? $container->get('config') : [];
 

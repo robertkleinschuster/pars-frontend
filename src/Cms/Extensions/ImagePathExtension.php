@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Glide\Urls\UrlBuilderFactory;
 use League\Plates\Engine;
@@ -51,7 +49,7 @@ class ImagePathExtension implements ExtensionInterface
                 ksort($p);
                 $ext = (isset($p['fm']) ? $p['fm'] : pathinfo($img)['extension']);
                 $ext = ($ext === 'pjpg') ? 'jpg' : $ext;
-                $md5 = md5($img.'?'.http_build_query($p));
+                $md5 = md5($img . '?' . http_build_query($p));
                 if ($cache->has($md5)) {
                     $ret = $cache->get($md5);
                 } else {
@@ -68,5 +66,4 @@ class ImagePathExtension implements ExtensionInterface
             return $ret;
         });
     }
-
 }

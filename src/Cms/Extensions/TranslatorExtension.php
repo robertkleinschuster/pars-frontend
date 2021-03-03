@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use Laminas\I18n\Translator\TranslatorAwareInterface;
 use Laminas\I18n\Translator\TranslatorAwareTrait;
@@ -29,5 +27,4 @@ class TranslatorExtension implements ExtensionInterface, TranslatorAwareInterfac
             return $this->getTranslator()->translate($message, 'frontend');
         });
     }
-
 }

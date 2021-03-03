@@ -1,14 +1,20 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Model;
 
-
+use Niceshops\Bean\Type\Base\BeanException;
 use Pars\Core\Cache\ParsCache;
+use Pars\Frontend\Cms\Form\Contact\ContactForm;
 use Pars\Frontend\Cms\Form\FormFactory;
+use Pars\Frontend\Cms\Form\Poll\PollForm;
 use Pars\Model\Cms\Page\CmsPageBean;
 use Pars\Model\Cms\Page\CmsPageBeanFinder;
+use Psr\SimpleCache\InvalidArgumentException;
 
+/**
+ * Class PageModel
+ * @package Pars\Frontend\Cms\Model
+ */
 class PageModel extends BaseModel
 {
     protected ?CmsPageBean $page = null;
@@ -16,9 +22,10 @@ class PageModel extends BaseModel
     /**
      * @param string|null $code
      * @param int|null $id
-     * @return \Niceshops\Bean\Type\Base\BeanInterface|null
+     * @return CmsPageBean|null
+     * @throws InvalidArgumentException
      */
-    public function getPage(?string $code = null, int $id = null)
+    public function getPage(?string $code = null, int $id = null): ?CmsPageBean
     {
         try {
             if (null === $this->page) {
@@ -45,7 +52,12 @@ class PageModel extends BaseModel
                 } else {
                     $pageFinder->setCmsPage_ID($id);
                 }
-                if ($pageFinder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default')) === 1) {
+                if (
+                    $pageFinder->findByLocaleWithFallback(
+                        $this->getLocale()->getLocale_Code(),
+                        $this->getConfig()->get('locale.default')
+                    ) === 1
+                ) {
                     $bean = $pageFinder->getBean();
                     if ($bean instanceof CmsPageBean) {
                         $this->page = $bean;
@@ -61,7 +73,11 @@ class PageModel extends BaseModel
         return $this->page;
     }
 
-
+    /**
+     * @return ContactForm|PollForm|null
+     * @throws InvalidArgumentException
+     * @throws BeanException
+     */
     public function getForm()
     {
         $page = $this->getPage();

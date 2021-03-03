@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Error;
-
 
 use Laminas\Stratigility\Utils;
 use Mezzio\Helper\Template\TemplateVariableContainer;
@@ -40,7 +38,7 @@ class ErrorResponseGenerator
         Throwable $e,
         ServerRequestInterface $request,
         ResponseInterface $response
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $response->withStatus(Utils::getStatusCode($e, $response));
 
 
@@ -76,7 +74,6 @@ class ErrorResponseGenerator
                     $localeModel->getLocale()->getLocale_Code()
                 );
             } catch (\Throwable $t) {
-
             }
 
             return $this->prepareTemplatedResponse(

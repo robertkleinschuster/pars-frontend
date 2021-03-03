@@ -1,16 +1,23 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Model;
-
 
 use Pars\Core\Cache\ParsCache;
 use Pars\Model\Cms\Menu\CmsMenuBeanFinder;
 use Pars\Model\Cms\Menu\CmsMenuBeanList;
+use Psr\SimpleCache\InvalidArgumentException;
 
+/**
+ * Class MenuModel
+ * @package Pars\Frontend\Cms\Model
+ */
 class MenuModel extends BaseModel
 {
-    public function getMenuList()
+    /**
+     * @return CmsMenuBeanList
+     * @throws InvalidArgumentException
+     */
+    public function getMenuList(): CmsMenuBeanList
     {
         $cache = new ParsCache('menu');
         if ($cache->has($this->getLocale()->getLocale_Code())) {

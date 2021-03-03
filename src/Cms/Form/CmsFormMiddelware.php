@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Form;
-
 
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -22,7 +20,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\SimpleCache\InvalidArgumentException;
 
+/**
+ * Class CmsFormMiddelware
+ * @package Pars\Frontend\Cms\Form
+ */
 class CmsFormMiddelware implements MiddlewareInterface
 {
 
@@ -51,6 +54,7 @@ class CmsFormMiddelware implements MiddlewareInterface
      * @param ServerRequestInterface $request
      * @param RequestHandlerInterface $handler
      * @return ResponseInterface
+     * @throws InvalidArgumentException
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -111,5 +115,4 @@ class CmsFormMiddelware implements MiddlewareInterface
         }
         return $handler->handle($request->withAttribute(TemplateVariableContainer::class, $container->merge($vars)));
     }
-
 }

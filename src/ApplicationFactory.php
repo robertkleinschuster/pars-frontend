@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend;
-
 
 use Laminas\HttpHandlerRunner\RequestHandlerRunner;
 use Mezzio\Application;
@@ -10,6 +8,10 @@ use Mezzio\MiddlewareFactory;
 use Mezzio\Router\RouteCollector;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class ApplicationFactory
+ * @package Pars\Frontend
+ */
 class ApplicationFactory extends \Mezzio\Container\ApplicationFactory
 {
     public function __invoke(ContainerInterface $container): Application
@@ -25,6 +27,4 @@ class ApplicationFactory extends \Mezzio\Container\ApplicationFactory
         (require realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'config', 'routes.php'])))($app, $factory, $container);
         return $app;
     }
-
-
 }

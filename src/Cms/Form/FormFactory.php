@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Form;
-
 
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
@@ -76,11 +74,13 @@ class FormFactory
     }
 
     /**
-     * @param CmsBlockBean $block
+     * @param CmsBlockBean|null $block
      * @param AdapterInterface $adapter
      * @param SessionInterface $session
      * @param CsrfGuardInterface $guard
      * @param TranslatorInterface $translator
+     * @return ContactForm|PollForm|null
+     * @throws \Niceshops\Bean\Type\Base\BeanException
      */
     public function createFormForBlock(
         ?CmsBlockBean $block,

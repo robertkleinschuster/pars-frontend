@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Form\Base;
-
 
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\I18n\Translator\TranslatorAwareInterface;
@@ -19,6 +17,10 @@ use Pars\Helper\Validation\ValidationHelperAwareTrait;
 use Pars\Model\Article\Data\ArticleDataBeanFinder;
 use Pars\Model\Article\Data\ArticleDataBeanProcessor;
 
+/**
+ * Class AbstractForm
+ * @package Pars\Frontend\Cms\Form\Base
+ */
 abstract class AbstractForm implements ValidationHelperAwareInterface, TranslatorAwareInterface, BeanAwareInterface
 {
     use ValidationHelperAwareTrait;
@@ -51,8 +53,7 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
         SessionInterface $session,
         CsrfGuardInterface $guard,
         TranslatorInterface $translator
-    )
-    {
+    ) {
         $this->data = $data;
         $this->adapter = $adapter;
         $this->session = $session;
@@ -61,9 +62,11 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
         $this->initialize();
     }
 
+    /**
+     *
+     */
     protected function initialize()
     {
-
     }
 
     /**
@@ -123,7 +126,6 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
     }
 
     /**
-     * @param array $data
      */
     public function submit()
     {
@@ -139,7 +141,11 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
         }
     }
 
-    protected function translate(string $message)
+    /**
+     * @param string $message
+     * @return string
+     */
+    protected function translate(string $message): string
     {
         return $this->getTranslator()->translate($message, 'frontend');
     }
@@ -213,20 +219,20 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
     /**
      * @return string
      */
-    public abstract static function id(): string;
+    abstract public static function id(): string;
 
 
     /**
      * @param array $data
      * @return array
      */
-    protected abstract function sanitize(array $data): array;
+    abstract protected function sanitize(array $data): array;
 
     /**
      * @param array $data
      * @return bool
      */
-    protected abstract function validate(array $data): bool;
+    abstract protected function validate(array $data): bool;
 
     /**
      * @param array $data
@@ -256,6 +262,9 @@ abstract class AbstractForm implements ValidationHelperAwareInterface, Translato
         return !$this->getValidationHelper()->hasError();
     }
 
-
-    protected abstract function success(BeanInterface $bean);
+    /**
+     * @param BeanInterface $bean
+     * @return mixed
+     */
+    abstract protected function success(BeanInterface $bean);
 }

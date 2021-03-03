@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Form\Base;
-
 
 class Validate
 {
@@ -52,5 +50,4 @@ class Validate
     {
         return filter_var($url, FILTER_VALIDATE_URL);
     }
-
 }

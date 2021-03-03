@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Handler;
-
 
 use Laminas\Diactoros\CallbackStream;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -48,8 +46,7 @@ class CmsHandler extends FrontendHandler
             $page != null
             && (
                 $page->empty('ArticleTranslation_Host')
-                || trim($page->get('ArticleTranslation_Host')) == trim($request->getUri()->getHost()
-                )
+                || trim($page->get('ArticleTranslation_Host')) == trim($request->getUri()->getHost())
             )
         ) {
             if (!$page->empty('CmsPage_ID_Redirect')) {

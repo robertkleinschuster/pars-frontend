@@ -1,4 +1,5 @@
 <?php
+
 return [
     'mezzio-session-cache' => [
         // Detailed in the above section; allows using a different

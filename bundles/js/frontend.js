@@ -26,7 +26,7 @@ if (e.length) {
 var e = document.querySelectorAll('.nav-link');
 if (e.length) {
     e.forEach(function (e) {
-      injectLink(e);
+        injectLink(e);
     });
 }
 

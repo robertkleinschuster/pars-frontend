@@ -1,4 +1,5 @@
 <?php
+
 return [
     'localization' => [
         'redirect' => true,

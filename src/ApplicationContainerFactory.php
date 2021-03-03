@@ -1,8 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Pars\Frontend;
 
+/**
+ * Class ApplicationContainerFactory
+ * @package Pars\Frontend
+ */
 class ApplicationContainerFactory
 {
     public function __invoke()

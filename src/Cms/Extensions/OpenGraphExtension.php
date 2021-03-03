@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -27,5 +25,4 @@ class OpenGraphExtension implements ExtensionInterface
             return $ret;
         });
     }
-
 }

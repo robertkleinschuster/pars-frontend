@@ -1,15 +1,18 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Helper;
-
 
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterAwareInterface;
 use Laminas\Db\Adapter\AdapterAwareTrait;
 use Pars\Core\Cache\ParsCache;
 use Pars\Model\Config\ConfigBeanFinder;
+use Psr\SimpleCache\InvalidArgumentException;
 
+/**
+ * Class Config
+ * @package Pars\Frontend\Cms\Helper
+ */
 class Config implements AdapterAwareInterface
 {
     use AdapterAwareTrait;
@@ -45,6 +48,7 @@ class Config implements AdapterAwareInterface
 
     /**
      * Config constructor.
+     * @param Adapter $adapter
      */
     public function __construct(Adapter $adapter)
     {
@@ -54,6 +58,7 @@ class Config implements AdapterAwareInterface
     /**
      * @param string|null $key
      * @return array|mixed|null
+     * @throws InvalidArgumentException
      */
     public function get(string $key = null)
     {
@@ -72,6 +77,4 @@ class Config implements AdapterAwareInterface
         }
         return isset($this->data[$key]) ? $this->data[$key] : '';
     }
-
-
 }

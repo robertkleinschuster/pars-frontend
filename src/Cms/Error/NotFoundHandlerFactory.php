@@ -13,11 +13,12 @@ namespace Pars\Frontend\Cms\Error;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
+
 use function array_key_exists;
 
 class NotFoundHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : NotFoundHandler
+    public function __invoke(ContainerInterface $container): NotFoundHandler
     {
         $config   = $container->has('config') ? $container->get('config') : [];
         $renderer = $container->has(TemplateRendererInterface::class)

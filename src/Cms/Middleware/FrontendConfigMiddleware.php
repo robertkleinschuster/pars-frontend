@@ -1,13 +1,8 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Middleware;
 
-
-use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Helper\Template\TemplateVariableContainer;
-use Mezzio\Session\SessionInterface;
-use Mezzio\Session\SessionMiddleware;
 use Pars\Core\Bundles\BundlesMiddleware;
 use Pars\Frontend\Cms\Helper\Config;
 use Psr\Http\Message\ResponseInterface;
@@ -15,6 +10,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * Class FrontendConfigMiddleware
+ * @package Pars\Frontend\Cms\Middleware
+ */
 class FrontendConfigMiddleware implements MiddlewareInterface
 {
     protected Config $config;
@@ -31,7 +30,11 @@ class FrontendConfigMiddleware implements MiddlewareInterface
         $this->applicationConfig = $applicationConfig;
     }
 
-
+    /**
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $container = $request->getAttribute(TemplateVariableContainer::class, new TemplateVariableContainer());
@@ -51,9 +54,9 @@ class FrontendConfigMiddleware implements MiddlewareInterface
         $vars['color'] = $this->config->get('frontend.color');
         $vars['data-privacy-email'] = $this->config->get('frontend.data-privacy-email');
         $vars['host'] = $request->getUri()->getHost();
-        return $handler->handle($request
-            ->withAttribute(Config::class, $this->config)
-            ->withAttribute(TemplateVariableContainer::class, $container->merge($vars)));
+        return $handler->handle(
+            $request->withAttribute(Config::class, $this->config)
+            ->withAttribute(TemplateVariableContainer::class, $container->merge($vars))
+        );
     }
-
 }

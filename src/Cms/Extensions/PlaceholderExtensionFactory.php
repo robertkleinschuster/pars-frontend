@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\I18n\Translator\TranslatorInterface;
@@ -17,5 +15,4 @@ class PlaceholderExtensionFactory
             $container->get(AdapterInterface::class)
         );
     }
-
 }

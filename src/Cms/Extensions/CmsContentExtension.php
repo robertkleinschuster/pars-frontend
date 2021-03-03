@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -47,24 +45,23 @@ class CmsContentExtension implements ExtensionInterface
             }
             return '';
         });
-        $engine->registerFunction('date', function ($date, $format = 'j.n.Y'){
+        $engine->registerFunction('date', function ($date, $format = 'j.n.Y') {
             if ($date instanceof \DateTime) {
                 return $date->format($format);
             }
             return '';
         });
-        $engine->registerFunction('time', function ($date, $format = 'G:i'){
+        $engine->registerFunction('time', function ($date, $format = 'G:i') {
             if ($date instanceof \DateTime) {
                 return $date->format($format);
             }
             return '';
         });
-        $engine->registerFunction('datetime', function ($date, $format = 'j.n.Y G:i'){
+        $engine->registerFunction('datetime', function ($date, $format = 'j.n.Y G:i') {
             if ($date instanceof \DateTime) {
                 return $date->format($format);
             }
             return '';
         });
     }
-
 }

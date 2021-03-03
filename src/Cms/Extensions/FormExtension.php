@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -26,7 +24,6 @@ class FormExtension implements ExtensionInterface
                         $action = $form->getAction();
                         $html .= " action=\"$action\"";
                     }
-
                 }
                 if ($this->class) {
                     $html .= " class=\"{$this->class}\"";
@@ -43,7 +40,6 @@ class FormExtension implements ExtensionInterface
                         $name = 'Article_ID';
                         $value = $form->getBean()->get('Article_ID');
                         $html .= "<input type=\"hidden\" name=\"$name\" value=\"$value\">";
-
                     }
                 }
                 $html .= "{$content}";
@@ -57,5 +53,4 @@ class FormExtension implements ExtensionInterface
             return '';
         });
     }
-
 }

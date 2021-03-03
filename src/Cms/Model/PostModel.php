@@ -1,13 +1,16 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Model;
 
-
-use Pars\Model\Authentication\User\UserBeanFinder;
+use Niceshops\Bean\Finder\FinderBeanListDecorator;
+use Niceshops\Bean\Type\Base\BeanException;
 use Pars\Model\Cms\Post\CmsPostBean;
 use Pars\Model\Cms\Post\CmsPostBeanFinder;
 
+/**
+ * Class PostModel
+ * @package Pars\Frontend\Cms\Model
+ */
 class PostModel extends BaseModel
 {
     protected ?CmsPostBean $page = null;
@@ -15,9 +18,9 @@ class PostModel extends BaseModel
     /**
      * @param string|null $code
      * @param int|null $id
-     * @return \Niceshops\Bean\Type\Base\BeanInterface|null
+     * @return CmsPostBean|null
      */
-    public function getPost(?string $code = null, int $id = null)
+    public function getPost(?string $code = null, int $id = null): ?CmsPostBean
     {
         try {
             if (null === $this->page) {
@@ -46,21 +49,27 @@ class PostModel extends BaseModel
         return $this->page;
     }
 
-    public function getSimilarPosts(CmsPostBean $bean)
+    /**
+     * @param CmsPostBean $bean
+     * @return FinderBeanListDecorator
+     * @throws BeanException
+     */
+    public function getSimilarPosts(CmsPostBean $bean): FinderBeanListDecorator
     {
         $finder = new CmsPostBeanFinder($this->getAdapter());
         $finder->initPublished($this->getConfig()->get('frontend.timezone'));
         $finder->setArticle_ID($bean->Article_ID, true);
         $finder->setCmsPostState_Code('active');
         $finder->setArticleTranslation_Active(true);
-        $finder->findByLocaleWithFallback($this->getLocale()->getLocale_Code(), $this->getConfig()->get('locale.default'));
+        $finder->findByLocaleWithFallback(
+            $this->getLocale()->getLocale_Code(),
+            $this->getConfig()->get('locale.default')
+        );
         $finder->limit(4, 0);
         $keywords = explode(',', $bean->ArticleTranslation_Keywords);
         foreach ($keywords as $keyword) {
             $finder->search(trim($keyword), ['ArticleTranslation_Keywords']);
-
         }
         return $finder->getBeanListDecorator();
     }
-
 }

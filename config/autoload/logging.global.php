@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'psr_log' => [
         'Logger' => [

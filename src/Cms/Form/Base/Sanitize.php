@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Form\Base;
-
 
 class Sanitize
 {

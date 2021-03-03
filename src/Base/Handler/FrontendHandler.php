@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Base\Handler;
-
 
 use Mezzio\Csrf\CsrfMiddleware;
 use Mezzio\Helper\Template\TemplateVariableContainer;
@@ -18,15 +16,21 @@ use Pars\Model\Import\ImportBeanFinder;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * Class FrontendHandler
+ * @package Pars\Frontend\Base\Handler
+ */
 abstract class FrontendHandler implements RequestHandlerInterface
 {
     protected TemplateRendererInterface $renderer;
-    protected $urlHelper;
+    protected UrlHelper $urlHelper;
     protected array $config;
 
     /**
      * FrontendHandler constructor.
      * @param TemplateRendererInterface $renderer
+     * @param UrlHelper $urlHelper
+     * @param array $config
      */
     public function __construct(TemplateRendererInterface $renderer, UrlHelper $urlHelper, array $config)
     {

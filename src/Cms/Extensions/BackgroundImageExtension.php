@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -16,8 +14,7 @@ class BackgroundImageExtension implements ExtensionInterface
             $this->file = $file;
         });
         $engine->registerFunction('bgflush', function () {
-           return $this->file;
+            return $this->file;
         });
     }
-
 }

@@ -36,6 +36,7 @@ use Psr\Container\ContainerInterface;
  *     'contact'
  * );
  */
+
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/{locale}/sitemap[.xml]', \Pars\Frontend\Cms\Handler\SitemapHandler::class, 'sitemap');
     $app->get('/{locale}/browserconfig[.xml]', \Pars\Frontend\Cms\Handler\BrowserconfigHandler::class, 'browserconfig');

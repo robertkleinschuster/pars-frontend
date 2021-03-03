@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Error;
-
 
 use Laminas\Stratigility\Utils;
 use Mezzio\Response\ErrorResponseGeneratorTrait;
@@ -31,7 +29,7 @@ class ServerRequestErrorResponseGenerator
         TemplateRendererInterface $renderer = null,
         string $template = self::TEMPLATE_DEFAULT
     ) {
-        $this->responseFactory = function () use ($responseFactory) : ResponseInterface {
+        $this->responseFactory = function () use ($responseFactory): ResponseInterface {
             return $responseFactory();
         };
         $this->config = $config;
@@ -40,7 +38,7 @@ class ServerRequestErrorResponseGenerator
         $this->template  = $template;
     }
 
-    public function __invoke(\Throwable $e) : ResponseInterface
+    public function __invoke(\Throwable $e): ResponseInterface
     {
         $response = ($this->responseFactory)();
         $response = $response->withStatus(Utils::getStatusCode($e, $response));

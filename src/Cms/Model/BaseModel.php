@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Model;
-
 
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterAwareInterface;
@@ -18,6 +16,10 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class BaseModel
+ * @package Pars\Frontend\Cms\Model
+ */
 class BaseModel implements AdapterAwareInterface, TranslatorAwareInterface, LoggerAwareInterface
 {
     use AdapterAwareTrait;
@@ -32,10 +34,14 @@ class BaseModel implements AdapterAwareInterface, TranslatorAwareInterface, Logg
 
     /**
      * BaseModel constructor.
+     * @param Adapter $adapter
+     * @param Translator $translator
      * @param SessionInterface $session
      * @param LocaleInterface $locale
-     * @param Config $config
      * @param string $code
+     * @param LoggerInterface $logger
+     * @param Config $config
+     * @param CsrfGuardInterface $guard
      */
     public function __construct(
         Adapter $adapter,
@@ -45,9 +51,8 @@ class BaseModel implements AdapterAwareInterface, TranslatorAwareInterface, Logg
         string $code,
         LoggerInterface $logger,
         Config $config,
-    CsrfGuardInterface $guard
-    )
-    {
+        CsrfGuardInterface $guard
+    ) {
         $this->session = $session;
         $this->locale = $locale;
         $this->code = $code;
@@ -126,8 +131,4 @@ class BaseModel implements AdapterAwareInterface, TranslatorAwareInterface, Logg
     {
         return $this->adapter;
     }
-
-
-
-
 }

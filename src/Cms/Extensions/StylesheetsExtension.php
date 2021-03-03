@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -85,7 +83,6 @@ class StylesheetsExtension implements ExtensionInterface
                     $ret .= "<link rel=\"preload\" href=\"$file\" as=\"style\" class='style-insertion'>";
                     $ret .= "<noscript><link rel=\"stylesheet\" href=\"$file\"></noscript>";
                 }
-
             }
         }
         return $ret;

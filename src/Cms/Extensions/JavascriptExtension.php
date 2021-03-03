@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -15,7 +13,7 @@ class JavascriptExtension implements ExtensionInterface
 
     public function register(Engine $engine)
     {
-        $engine->registerFunction('js', function ($file, $critical = false) use($engine) {
+        $engine->registerFunction('js', function ($file, $critical = false) use ($engine) {
             $hash = $engine->getData()['hash'];
             $file = $this->injectHash($file, $hash);
             if (strpos($file, '/') !== 0) {

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'translator' => [
         'locale' => ['de_AT', 'en_US'],

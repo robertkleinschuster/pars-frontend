@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pars\Frontend\Cms\Extensions;
-
 
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -63,8 +61,7 @@ class PathExtension implements ExtensionInterface
         ?string $locale = null,
         ?array $params = [],
         ?string $id = null
-    )
-    {
+    ) {
         $route = [];
         if ($code != null) {
             if ($code == '/') {
@@ -95,8 +92,7 @@ class PathExtension implements ExtensionInterface
         ?string $locale = null,
         ?array $params = [],
         ?string $id = null
-    )
-    {
+    ) {
         return $this->serverUrlHelper->generate($this->generatePath($code, $locale, $params, $id));
     }
 }

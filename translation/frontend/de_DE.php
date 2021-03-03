@@ -1,4 +1,5 @@
 <?php
+
 return [
     'contact.form.name' => 'Wie lautet Ihr Name?',
     'contact.form.email' => 'Wie lautet Ihre E-Mail Adresse?',
