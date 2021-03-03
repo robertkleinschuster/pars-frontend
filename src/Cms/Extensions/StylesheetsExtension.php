@@ -27,11 +27,6 @@ class StylesheetsExtension implements ExtensionInterface
     protected Engine $engine;
 
     /**
-     * @var ParsCache
-     */
-    protected ParsCache $cache;
-
-    /**
      * @return Engine
      */
     public function getEngine(): Engine
@@ -40,20 +35,11 @@ class StylesheetsExtension implements ExtensionInterface
     }
 
     /**
-     * @return ParsCache
-     */
-    public function getCache(): ParsCache
-    {
-        return $this->cache;
-    }
-
-    /**
      * @param Engine $engine
      */
     public function register(Engine $engine)
     {
         $this->engine = $engine;
-        $this->cache = new ParsCache('stylesheets');
         $engine->registerFunction('css', [$this, 'css']);
         $engine->registerFunction('cssflush', [$this, 'cssflush']);
     }
@@ -112,7 +98,7 @@ class StylesheetsExtension implements ExtensionInterface
      */
     protected function getInlineFromCache(string $file): string
     {
-        $cache = $this->getCache();
+        $cache = new ParsCache('stylesheets');
         $ret = "";
         $cacheID = md5($file);
         if ($cache->has($cacheID)) {
