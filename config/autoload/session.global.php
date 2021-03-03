@@ -15,7 +15,7 @@ return [
 
         // The name of the session cookie. This name must comply with
         // the syntax outlined in https://tools.ietf.org/html/rfc6265.html
-        'cookie_name' => 'PARSFRONTENDSID',
+        'cookie_name' => 'PFSID',
 
         // The (sub)domain that the cookie is available to. Setting this
         // to a subdomain (such as 'www.example.com') will make the cookie
